@@ -11,6 +11,7 @@
           #devShell = import ./shell.nix { inherit pkgs; };
           packages = flake-utils.lib.flattenTree {
             hello = pkgs.hello;
+            wake = import ./wake.nix { inherit pkgs /* wake */; };
           };
           # defaultPackage = packages.foo;
           defaultPackage = packages.hello;
