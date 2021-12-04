@@ -32,7 +32,25 @@
     "root": {
       "inputs": {
         "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "wake-src": "wake-src"
+      }
+    },
+    "wake-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1636753498,
+        "narHash": "sha256-p4/qrPB1KKXHpE5uOCuNRcISDthXhgsvRg1jiL/WbjQ=",
+        "owner": "sifive",
+        "repo": "wake",
+        "rev": "f5271d1dbd5ef8aa30de18dd475f0c789aed8e70",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sifive",
+        "ref": "v0.24.0",
+        "repo": "wake",
+        "type": "github"
       }
     }
   },
