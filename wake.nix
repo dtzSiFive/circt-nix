@@ -7,5 +7,7 @@ stdenv.mkDerivation {
 
   nativeBuildInputs = [ pkgconfig ];
   buildInputs = [ dash fuse gmp ncurses re2 sqlite ];
+
+  # install via wake?
 }
 
