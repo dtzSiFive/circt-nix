@@ -1,4 +1,4 @@
-{ wake-src, stdenv, pkgconfig, dash, fuse, gmp, ncurses, re2c, sqlite }:
+{ wake-src, stdenv, pkgconfig, dash, fuse, gmp, ncurses, re2c, re2, sqlite }:
 
 stdenv.mkDerivation {
   pname = "wake";
@@ -6,7 +6,7 @@ stdenv.mkDerivation {
   src = wake-src;
 
   nativeBuildInputs = [ pkgconfig re2c ];
-  buildInputs = [ dash fuse gmp ncurses sqlite ];
+  buildInputs = [ dash fuse gmp ncurses re2 sqlite ];
 
   # install via wake?
 
