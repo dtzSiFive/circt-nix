@@ -9,5 +9,7 @@ stdenv.mkDerivation {
   buildInputs = [ dash fuse gmp ncurses re2 sqlite ];
 
   # install via wake?
+
+  enableParallelBuilding = true;
 }
 
