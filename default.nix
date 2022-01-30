@@ -25,6 +25,7 @@ let
       echo ------
       ls projects
       echo ------
+      find .
       chmod u+rw -R mlir
     '';
   });
