@@ -31,7 +31,7 @@
   outputs = { self, nixpkgs, flake-utils, circt-src, wake-src }:
     flake-utils.lib.eachDefaultSystem
       (system:
-        let pkgs = nixpkgs.legacyPackages.system; in
+        let pkgs = nixpkgs.legacyPackages.${system}; in
         rec {
           #devShell = import ./shell.nix { inherit pkgs; };
           packages = flake-utils.lib.flattenTree {

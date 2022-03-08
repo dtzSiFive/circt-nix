@@ -1,5 +1,24 @@
 {
   "nodes": {
+    "circt-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1646759284,
+        "narHash": "sha256-JhoFUobs2olh3ANuKCW3HRArCy+VNAc/TvAX83nlC8A=",
+        "ref": "main",
+        "rev": "2c2e129f290d7f84439e960116a5e7d299ea9d25",
+        "revCount": 3636,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/llvm/circt"
+      },
+      "original": {
+        "ref": "main",
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/llvm/circt"
+      }
+    },
     "flake-utils": {
       "locked": {
         "lastModified": 1638122382,
@@ -31,6 +50,7 @@
     },
     "root": {
       "inputs": {
+        "circt-src": "circt-src",
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
         "wake-src": "wake-src"
