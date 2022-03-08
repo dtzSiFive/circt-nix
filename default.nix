@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {} }:
+{ pkgs ? import <nixpkgs> {}, circt-src }:
 
 let
 
@@ -14,6 +14,7 @@ let
   # circt (source) as flake input? >:D
 
   mlir-llvm = llvm: llvm.overrideAttrs(o: {
+    src = "${circt-src}/llvm";
     cmakeFlags = o.cmakeFlags ++ [
       "-DLLVM_ENABLE_ASSERTIONS=ON"
       "-DLLVM_ENABLE_PROJECTS=mlir"
