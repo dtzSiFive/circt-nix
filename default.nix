@@ -28,7 +28,7 @@ let
     #  find .
     #'';
   });
-  llvmTest = mlir-llvm pkgs.llvmPackages_latest.llvm;
+  llvmTest = mlir-llvm pkgs.llvmPackages_14.llvm;
 
 in
 
