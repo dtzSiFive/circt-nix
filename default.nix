@@ -14,21 +14,21 @@ let
   # circt (source) as flake input? >:D
 
   mlir-llvm = llvm: llvm.overrideAttrs(o: {
-    src = "${circt-src}/llvm";
+    src = "${circt-src}/llvm/llvm";
     cmakeFlags = o.cmakeFlags ++ [
       "-DLLVM_ENABLE_ASSERTIONS=ON"
       "-DLLVM_ENABLE_PROJECTS=mlir"
     ];
 
-    postPatch = o.postPatch or "" + ''
-      pwd
-      ls
-      echo ------
-      ls projects
-      echo ------
-      find .
-      chmod u+rw -R mlir
-    '';
+    ## postPatch = o.postPatch or "" + ''
+    ##   pwd
+    ##   ls
+    ##   echo ------
+    ##   ls projects
+    ##   echo ------
+    ##   find .
+    ##   chmod u+rw -R mlir
+    ## '';
   });
   llvmTest = mlir-llvm pkgs.llvmPackages_latest.llvm;
 
