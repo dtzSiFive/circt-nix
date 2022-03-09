@@ -21,6 +21,14 @@ let
       "-DLLVM_ENABLE_PROJECTS=mlir"
     ];
 
+    postPatch = o.postPatch or "" + ''
+      # create with sane permissions
+      mkdir -p build/lib/cmake/mlir
+      echo "-------"
+      pwd
+      ls -la
+      chmod u+rw -R ..
+    '';
     #prePatch = o.prePatch or "" + ''
     #  pwd
     #  ls
