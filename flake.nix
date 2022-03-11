@@ -34,6 +34,14 @@
       #rev = "main";
       flake = false;
     };
+    nixkpgs = {
+      type = "github";
+      #owner = "NixOS";
+      owner = "dtzWill";
+      repo = "nixpkgs";
+      ref = "feature/flang";
+      #ref = "mast
+    };
   };
 
   outputs = { self, nixpkgs, flake-utils, circt-src, llvm-submodule-src, wake-src }:
