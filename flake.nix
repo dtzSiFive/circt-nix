@@ -45,7 +45,7 @@
           packages = flake-utils.lib.flattenTree {
             hello = pkgs.hello;
             wake = pkgs.callPackage ./wake.nix { inherit wake-src; };
-            circt = import ./default.nix { inherit pkgs circt-src; };
+            circt = import ./default.nix { inherit pkgs circt-src llvm-submodule-src; };
           };
           # defaultPackage = packages.foo;
           defaultPackage = packages.circt;

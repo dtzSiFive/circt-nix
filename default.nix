@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {}, circt-src }:
+{ pkgs ? import <nixpkgs> {}, circt-src, llvm-submodule-src }:
 
 let
 
