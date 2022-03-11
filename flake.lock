@@ -48,6 +48,22 @@
         "type": "github"
       }
     },
+    "nixkpgs": {
+      "locked": {
+        "lastModified": 1647033098,
+        "narHash": "sha256-URgHQLa3jJzJZQ1X08xI9WAcFt/Q84q47HC3Ek2D4QY=",
+        "owner": "dtzWill",
+        "repo": "nixpkgs",
+        "rev": "43bbb8c9151e1b22ee867442c0fc4fb141707193",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dtzWill",
+        "ref": "feature/flang",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1646506091,
@@ -67,6 +83,7 @@
         "circt-src": "circt-src",
         "flake-utils": "flake-utils",
         "llvm-submodule-src": "llvm-submodule-src",
+        "nixkpgs": "nixkpgs",
         "nixpkgs": "nixpkgs",
         "wake-src": "wake-src"
       }
