@@ -22,9 +22,10 @@ let
   });
   llvm-cmake = pkgs.runCommand "llvm-cmake-patched" {} ''
     mkdir -p $out/lib
-    cp -r ${libllvm-new}/lib/cmake $out/lib
+    cp -r ${libllvm-new.dev}/lib/cmake $out/lib
     for x in $out/lib/cmake/llvm/{TableGen,AddLLVM}.cmake; do
       substituteInPlace "$x" --replace 'DESTINATION ''${LLVM_INSTALL_TOOLS_DIR}' 'DESTINATION ''${CMAKE_INSTALL_BINDIR}'
+    done
   '';
 
   ##
