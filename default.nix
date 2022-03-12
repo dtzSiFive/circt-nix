@@ -10,6 +10,7 @@ let
   mlir-new = pkgs.llvmPackages_14.mlir.overrideAttrs (o: {
     src = mlir-src;
     sourceRoot = "mlir-src/mlir";
+    patches = [ ./mlir-gnu-installdirs.patch ];
   });
 
   ##
