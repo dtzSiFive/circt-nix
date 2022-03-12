@@ -2,6 +2,16 @@
 
 let
 
+  mlir-src = pkgs.runCommand "mlir-src" {} ''
+    mkdir -p $out
+    cp -r ${llvm-submodule-src}/{cmake,mlir} -t $out
+  '';
+
+  mlir-new = pkgs.llvmPackages_14.mlir.overrideAttrs (o: {
+    src = mlir-src;
+    sourceRoot = "mlir-src/mlir";
+  });
+
   ##
   # Plan:
   # Fetch circt tree all-at-once.
@@ -48,7 +58,7 @@ let
     pname = "circt";
     version = "0.0.8-git"; # TODO: better
     nativeBuildInputs = with pkgs; [ cmake ];
-    buildInputs = with pkgs.llvmPackages_14; [ libllvm mlir ];
+    buildInputs = with pkgs.llvmPackages_14; [ libllvm mlir-new ];
     src = circt-src;
   };
 
