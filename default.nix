@@ -65,11 +65,24 @@ let
   circt = pkgs.stdenv.mkDerivation {
     pname = "circt";
     version = "0.0.8-git"; # TODO: better
-    nativeBuildInputs = with pkgs; [ cmake ];
-    buildInputs = with pkgs.llvmPackages_14; [ libllvm mlir-new ];
+    nativeBuildInputs = with pkgs; [ cmake cmakeCurses ];
+    buildInputs = with pkgs.llvmPackages_14; [ mlir-new libllvm-new ];
     src = circt-src;
 
     patches = [ ./no-deps-mlir-utils.patch ];
+    cmakeFlags = [
+      "-DMLIR_DIR=${mlir-new.dev}/lib/cmake/mlir"
+      "-DMLIR_TABLEGEN_EXE=${mlir-new}/bin/mlir-tblgen"
+      "-DMLIR_TABLEGEN=${mlir-new}/bin/mlir-tblgen"
+    ];
+
+    postPatch = ''
+      substituteInPlace CMakeLists.txt \
+        --replace 'set(MLIR_TABLEGEN_EXE $<TARGET_FILE:mlir-tblgen>)' \
+                  'set(MLIR_TABLEGEN_EXE "ASDF")'
+    '';
+
+    enableParallelBuilding = false;
   };
 
 in
