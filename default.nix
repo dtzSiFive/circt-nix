@@ -65,8 +65,8 @@ let
   circt = pkgs.stdenv.mkDerivation {
     pname = "circt";
     version = "0.0.8-git"; # TODO: better
-    nativeBuildInputs = with pkgs; [ cmake cmakeCurses ninja ];
-    buildInputs = with pkgs.llvmPackages_14; [ mlir-new libllvm-new ];
+    nativeBuildInputs = with pkgs; [ cmake ];
+    buildInputs = [ mlir-new libllvm-new ];
     src = circt-src;
 
     patches = [
