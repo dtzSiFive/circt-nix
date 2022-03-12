@@ -75,7 +75,6 @@ let
     ];
     postPatch = ''
       substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir-new}/bin/mlir-tblgen"
-      grep MLIR_TABLEGEN CMakeLists.txt
     '';
     #cmakeFlags = [
     #  "-DMLIR_DIR=${mlir-new.dev}/lib/cmake/mlir"
@@ -89,7 +88,7 @@ let
     #              'set(MLIR_TABLEGEN_EXE "ASDF")'
     #'';
 
-    enableParallelBuilding = false;
+    # enableParallelBuilding = false;
   };
 
 in
