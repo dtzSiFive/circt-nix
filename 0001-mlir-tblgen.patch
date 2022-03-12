@@ -1,0 +1,26 @@
+From 9b3e58084c6c9c5e586452316bb251e4ddc047f9 Mon Sep 17 00:00:00 2001
+From: Will Dietz <w@wdtz.org>
+Date: Sat, 12 Mar 2022 17:06:17 -0600
+Subject: [PATCH] mlir-tblgen
+
+---
+ CMakeLists.txt | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 6eca9a4a..9ab70e37 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -114,6 +114,9 @@ endif ()
+     set(CIRCT_GTEST_AVAILABLE 0)
+   endif()
+ 
++  find_program(MLIR_TABLEGEN_EXE "mlir-tblgen" ${LLVM_TOOLS_BINARY_DIR}
++    NO_DEFAULT_PATH)
++  set(MLIR_TABLEGEN_EXE @MLIR_TABLEGEN_EXE@)
+ else()
+   # CMake library generation settings.
+   set(BUILD_SHARED_LIBS OFF CACHE BOOL "Default to building a static mondo-lib")
+-- 
+2.35.1
+

@@ -69,18 +69,25 @@ let
     buildInputs = with pkgs.llvmPackages_14; [ mlir-new libllvm-new ];
     src = circt-src;
 
-    patches = [ ./no-deps-mlir-utils.patch ];
-    cmakeFlags = [
-      "-DMLIR_DIR=${mlir-new.dev}/lib/cmake/mlir"
-      "-DMLIR_TABLEGEN_EXE=${mlir-new}/bin/mlir-tblgen"
-      "-DMLIR_TABLEGEN=${mlir-new}/bin/mlir-tblgen"
+    patches = [
+      ./no-deps-mlir-utils.patch
+      ./0001-mlir-tblgen.patch
     ];
-
     postPatch = ''
-      substituteInPlace CMakeLists.txt \
-        --replace 'set(MLIR_TABLEGEN_EXE $<TARGET_FILE:mlir-tblgen>)' \
-                  'set(MLIR_TABLEGEN_EXE "ASDF")'
+      substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir-new}/bin/mlir-tblgen"
+      grep MLIR_TABLEGEN CMakeLists.txt
     '';
+    #cmakeFlags = [
+    #  "-DMLIR_DIR=${mlir-new.dev}/lib/cmake/mlir"
+    #  "-DMLIR_TABLEGEN_EXE=${mlir-new}/bin/mlir-tblgen"
+    #  "-DMLIR_TABLEGEN=${mlir-new}/bin/mlir-tblgen"
+    #];
+
+    #postPatch = ''
+    #  substituteInPlace CMakeLists.txt \
+    #    --replace 'set(MLIR_TABLEGEN_EXE $<TARGET_FILE:mlir-tblgen>)' \
+    #              'set(MLIR_TABLEGEN_EXE "ASDF")'
+    #'';
 
     enableParallelBuilding = false;
   };
