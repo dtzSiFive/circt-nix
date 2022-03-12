@@ -76,6 +76,9 @@ let
     postPatch = ''
       substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir-new}/bin/mlir-tblgen"
     '';
+    cmakeFlags = [
+      "-DLLVM_TOOLS_INSTALL_DIR=${placeholder "out"}/bin"
+    ];
     #cmakeFlags = [
     #  "-DMLIR_DIR=${mlir-new.dev}/lib/cmake/mlir"
     #  "-DMLIR_TABLEGEN_EXE=${mlir-new}/bin/mlir-tblgen"
