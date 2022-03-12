@@ -18,6 +18,7 @@ let
     sourceRoot = "mlir-src/mlir";
     patches = [ ./mlir-gnu-installdirs.patch ];
     buildInputs = [ pkgs.vulkan-loader pkgs.vulkan-headers libllvm-new ];
+    cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_DIR=${llvm-cmake}/lib/cmake/llvm" ];
   });
   llvm-cmake = pkgs.runCommand "llvm-cmake-patched" {} ''
     mkdir -p $out/lib
@@ -84,6 +85,7 @@ let
     '';
     cmakeFlags = [
       "-DLLVM_TOOLS_INSTALL_DIR=${placeholder "out"}/bin"
+      "-DLLVM_DIR=${llvm-cmake}/lib/cmake/llvm"
     ];
     #cmakeFlags = [
     #  "-DMLIR_DIR=${mlir-new.dev}/lib/cmake/mlir"
