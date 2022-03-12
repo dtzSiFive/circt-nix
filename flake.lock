@@ -48,7 +48,7 @@
         "type": "github"
       }
     },
-    "nixkpgs": {
+    "nixpkgs": {
       "locked": {
         "lastModified": 1647033098,
         "narHash": "sha256-URgHQLa3jJzJZQ1X08xI9WAcFt/Q84q47HC3Ek2D4QY=",
@@ -64,26 +64,11 @@
         "type": "github"
       }
     },
-    "nixpkgs": {
-      "locked": {
-        "lastModified": 1646506091,
-        "narHash": "sha256-sWNAJE2m+HOh1jtXlHcnhxsj6/sXrHgbqVNcVRlveK4=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "3e644bd62489b516292c816f70bf0052c693b3c7",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
     "root": {
       "inputs": {
         "circt-src": "circt-src",
         "flake-utils": "flake-utils",
         "llvm-submodule-src": "llvm-submodule-src",
-        "nixkpgs": "nixkpgs",
         "nixpkgs": "nixpkgs",
         "wake-src": "wake-src"
       }

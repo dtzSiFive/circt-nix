@@ -45,9 +45,11 @@ let
   #});
   #llvmTest = mlir-llvm pkgs.llvmPackages_14.llvm;
   circt = pkgs.stdenv.mkDerivation {
+    pname = "circt";
+    version = "0.0.8-git"; # TODO: better
     nativeBuildInputs = with pkgs; [ cmake ];
     buildInputs = with pkgs.llvmPackages_14; [ libllvm mlir ];
-    src = ./.;
+    src = circt-src;
   };
 
 in
