@@ -32,6 +32,8 @@
       repo = "llvm-project";
       #submodules = true;
       #rev = "main";
+      # From circt submodule
+      rev = "2dc90eee46309a2dd4b9fdf0d6ecb8a519a8b0fc";
       flake = false;
     };
     nixpkgs = {
