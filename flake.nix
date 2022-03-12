@@ -34,7 +34,7 @@
       #rev = "main";
       flake = false;
     };
-    nixkpgs = {
+    nixpkgs = {
       type = "github";
       #owner = "NixOS";
       owner = "dtzWill";
