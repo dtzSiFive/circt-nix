@@ -7,10 +7,17 @@ let
     cp -r ${llvm-submodule-src}/{cmake,mlir} -t $out
   '';
 
+  #mlir-new = (pkgs.llvmPackages_14.mlir.overrideAttrs (o: {
+  #  sourceRoot = "mlir-src/mlir";
+  #  patches = [ ./mlir-gnu-installdirs.patch ];
+  #})).override { monorepoSrc = llvm-submodule-src; };
+  # XXX: override monorepoSrc only?
+  libllvm-new = pkgs.llvmPackages_14.libllvm.override { monorepoSrc = llvm-submodule-src; };
   mlir-new = pkgs.llvmPackages_14.mlir.overrideAttrs (o: {
     src = mlir-src;
     sourceRoot = "mlir-src/mlir";
     patches = [ ./mlir-gnu-installdirs.patch ];
+    buildInputs = [ pkgs.vulkan-loader pkgs.vulkan-headers libllvm-new ];
   });
 
   ##
