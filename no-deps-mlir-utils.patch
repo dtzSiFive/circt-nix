@@ -1,0 +1,25 @@
+From b2edc6bd11d8aa5e5a27a43b1534070bfa104667 Mon Sep 17 00:00:00 2001
+From: Will Dietz <w@wdtz.org>
+Date: Sat, 12 Mar 2022 15:09:17 -0600
+Subject: [PATCH] test: no deps on mlir utilities, not available for DEPENDS
+
+---
+ test/CMakeLists.txt | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/test/CMakeLists.txt b/test/CMakeLists.txt
+index a9592561..df7bfae2 100644
+--- a/test/CMakeLists.txt
++++ b/test/CMakeLists.txt
+@@ -24,8 +24,6 @@ set(CIRCT_TEST_DEPENDS
+   esi-tester
+   handshake-runner
+   firtool
+-  mlir-opt
+-  mlir-cpu-runner
+   )
+ 
+ if (CIRCT_GTEST_AVAILABLE)
+-- 
+2.35.1
+

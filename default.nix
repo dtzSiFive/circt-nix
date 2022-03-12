@@ -68,6 +68,8 @@ let
     nativeBuildInputs = with pkgs; [ cmake ];
     buildInputs = with pkgs.llvmPackages_14; [ libllvm mlir-new ];
     src = circt-src;
+
+    patches = [ ./no-deps-mlir-utils.patch ];
   };
 
 in
