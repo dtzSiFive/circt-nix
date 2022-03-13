@@ -24,7 +24,7 @@ let
     mkdir -p $out/lib
     cp -r ${libllvm-new.dev}/lib/cmake $out/lib
     for x in $out/lib/cmake/llvm/{TableGen,AddLLVM}.cmake; do
-      substituteInPlace "$x" --replace 'DESTINATION ''${LLVM_INSTALL_TOOLS_DIR}' 'DESTINATION ''${CMAKE_INSTALL_BINDIR}'
+      substituteInPlace "$x" --replace 'DESTINATION ''${LLVM_TOOLS_INSTALL_DIR}' 'DESTINATION ''${CMAKE_INSTALL_BINDIR}'
     done
   '';
 
@@ -85,7 +85,7 @@ let
       substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir-new}/bin/mlir-tblgen"
     '';
     cmakeFlags = [
-      "-DLLVM_TOOLS_INSTALL_DIR=${placeholder "out"}/bin"
+      # "-DLLVM_TOOLS_INSTALL_DIR=${placeholder "out"}/bin"
       "-DLLVM_DIR=${llvm-cmake}/lib/cmake/llvm"
     ];
     #cmakeFlags = [
