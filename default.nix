@@ -107,4 +107,8 @@ in
 
 #  llvmTest
 
-circt
+{
+  inherit circt;
+  mlir = mlir-new;
+  llvm = llvm-cmake;
+}
