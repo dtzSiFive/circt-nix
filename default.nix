@@ -97,6 +97,7 @@ let
     ];
 
     doCheck = true;
+    checkTarget = "check-all";
     #cmakeFlags = [
     #  "-DMLIR_DIR=${mlir-new.dev}/lib/cmake/mlir"
     #  "-DMLIR_TABLEGEN_EXE=${mlir-new}/bin/mlir-tblgen"
