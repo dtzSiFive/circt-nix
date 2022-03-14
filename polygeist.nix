@@ -49,5 +49,6 @@ stdenv.mkDerivation {
   '';
 
   doCheck = true;
-  checkTarget = "check-all";
+  #checkTarget = "check-all";
+  checkTarget = "check-mlir-clang check-polygeist-opt";
 }
