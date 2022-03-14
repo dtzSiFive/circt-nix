@@ -57,7 +57,7 @@
             wake = pkgs.callPackage ./wake.nix { inherit wake-src; };
             # gitAndTools = pkgs.gitAndTools;
             inherit (import ./default.nix { inherit pkgs circt-src llvm-submodule-src; })
-              circt mlir llvm;
+              circt mlir llvm libclang;
             polygeist = pkgs.callPackage ./polygeist.nix { inherit mlir llvm; inherit (pkgs.llvmPackages_14) clang-unwrapped; };
           };
           # defaultPackage = packages.foo;

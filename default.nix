@@ -21,6 +21,11 @@ let
     buildInputs = [ pkgs.vulkan-loader pkgs.vulkan-headers libllvm-new ];
     cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_DIR=${llvm-cmake}/lib/cmake/llvm" ];
   });
+  clang-new = pkgs.llvmPackages_14.libclang.override {
+    monorepoSrc = llvm-submodule-src;
+    libllvm = libllvm-new;
+    version = llvm-submodule-src.rev;
+  };
   llvm-cmake = pkgs.runCommand "llvm-cmake-patched" {} ''
     mkdir -p $out/lib
     cp -r ${libllvm-new.dev}/lib/cmake $out/lib
@@ -112,4 +117,5 @@ in
   inherit circt;
   mlir = mlir-new;
   llvm = llvm-cmake;
+  libclang = clang-new;
 }
