@@ -47,4 +47,7 @@ stdenv.mkDerivation {
     mkdir -p $out/bin
     install -Dm755 bin/{mlir-clang,polygeist-opt} -t $out/bin
   '';
+
+  doCheck = true;
+  checkTarget = "check-all";
 }
