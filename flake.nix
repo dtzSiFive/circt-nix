@@ -58,7 +58,7 @@
             # gitAndTools = pkgs.gitAndTools;
             inherit (import ./default.nix { inherit pkgs circt-src llvm-submodule-src; })
               circt mlir llvm libclang;
-            polygeist = pkgs.callPackage ./polygeist.nix { inherit mlir llvm; inherit (pkgs.llvmPackages_14) clang-unwrapped; };
+            polygeist = pkgs.callPackage ./polygeist.nix { inherit mlir llvm; clang-unwrapped = libclang; };
           };
           # defaultPackage = packages.foo;
           defaultPackage = packages.circt;
