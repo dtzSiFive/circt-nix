@@ -93,6 +93,7 @@ let
     cmakeFlags = [
       # "-DLLVM_TOOLS_INSTALL_DIR=${placeholder "out"}/bin"
       "-DLLVM_DIR=${llvm-cmake}/lib/cmake/llvm"
+      "-DLLVM_EXTERNAL_LIT=${pkgs.lit}/bin/lit"
     ];
     #cmakeFlags = [
     #  "-DMLIR_DIR=${mlir-new.dev}/lib/cmake/mlir"
