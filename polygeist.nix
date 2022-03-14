@@ -30,6 +30,6 @@ stdenv.mkDerivation {
 
     substituteInPlace lib/polygeist/Passes/CMakeLists.txt --replace "LINK_LIBS PUBLIC" "LINK_LIBS"
 
-      substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir-new}/bin/mlir-tblgen"
+      substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir}/bin/mlir-tblgen"
   '';
 }
