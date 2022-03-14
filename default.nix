@@ -20,10 +20,6 @@ let
     patches = [ ./mlir-gnu-installdirs.patch ];
     buildInputs = [ pkgs.vulkan-loader pkgs.vulkan-headers libllvm-new ];
     cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_DIR=${llvm-cmake}/lib/cmake/llvm" ];
-    postPatch = o.postPatch or "" + ''
-      find .
-      exit 4
-    '';
   });
   llvm-cmake = pkgs.runCommand "llvm-cmake-patched" {} ''
     mkdir -p $out/lib
