@@ -98,6 +98,10 @@ let
 
     doCheck = true;
     checkTarget = "check-circt";
+
+    preCheck = ''
+      export LD_LIBRARY_PATH=$LD_LIBRARY_PATH''${LD_LIBRARY_PATH:+:}$PWD/lib
+    '';
     #cmakeFlags = [
     #  "-DMLIR_DIR=${mlir-new.dev}/lib/cmake/mlir"
     #  "-DMLIR_TABLEGEN_EXE=${mlir-new}/bin/mlir-tblgen"
