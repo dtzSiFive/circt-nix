@@ -31,5 +31,11 @@ stdenv.mkDerivation {
     substituteInPlace lib/polygeist/Passes/CMakeLists.txt --replace "LINK_LIBS PUBLIC" "LINK_LIBS"
 
     substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir}/bin/mlir-tblgen"
+
+    substituteInPlace lib/polygeist/Passes/ConvertPolygeistToLLVM.cpp \
+      --replace StdToLLVM FuncToLLVM
+    for x in tools/mlir-clang/CMakeLists.txt tools/mlir-clang/mlir-clang.cc lib/polygeist/Passes/ConvertPolygeistToLLVM.cpp; do
+      substituteInPlace "$x" --replace StandardToLLVM FuncToLLVM
+    done
   '';
 }
