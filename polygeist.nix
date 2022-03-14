@@ -19,6 +19,8 @@ stdenv.mkDerivation {
     "-DCLANG_DIR=${lib.getDev clang-unwrapped}/lib/cmake/clang"
     "-DMLIR_DIR=${lib.getDev mlir}/lib/cmake/mlir"
     # "-DMLIR_TABLEGEN_EXE=${lib.getBin mlir}/bin/mlir-tblgen"
+    "-DLLVM_BUILD_TOOLS=ON"
+    "-DLLVM_INSTALL_TOOLS=ON"
   ];
 
   patches = [ ./polygeist-mlir-tblgen.patch ];
