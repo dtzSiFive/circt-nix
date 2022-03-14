@@ -37,5 +37,8 @@ stdenv.mkDerivation {
     for x in tools/mlir-clang/CMakeLists.txt tools/mlir-clang/mlir-clang.cc lib/polygeist/Passes/ConvertPolygeistToLLVM.cpp; do
       substituteInPlace "$x" --replace StandardToLLVM FuncToLLVM
     done
+    substituteInPlace tools/mlir-clang/mlir-clang.cc --replace createLowerToLLVMPass createConvertFuncToLLVMPass
+
+    substituteInPlace tools/polygeist-opt/polygeist-opt.cpp --replace mlir/Support/MlirOptMain.h mlir/Tools/mlir-opt/MlirOptMain.h
   '';
 }
