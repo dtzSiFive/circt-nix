@@ -18,11 +18,18 @@ stdenv.mkDerivation {
     "-DLLVM_DIR=${lib.getDev llvm}/lib/cmake/llvm"
     "-DCLANG_DIR=${lib.getDev clang-unwrapped}/lib/cmake/clang"
     "-DMLIR_DIR=${lib.getDev mlir}/lib/cmake/mlir"
+    # "-DMLIR_TABLEGEN_EXE=${lib.getBin mlir}/bin/mlir-tblgen"
   ];
+
+  patches = [ ./polygeist-mlir-tblgen.patch ];
 
   postPatch = ''
     substituteInPlace tools/mlir-clang/CMakeLists.txt \
       --replace '"''${LLVM_SOURCE_DIR}/../clang' \
                 '"${clang-unwrapped.src}/clang'
+
+    substituteInPlace lib/polygeist/Passes/CMakeLists.txt --replace "LINK_LIBS PUBLIC" "LINK_LIBS"
+
+      substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir-new}/bin/mlir-tblgen"
   '';
 }
