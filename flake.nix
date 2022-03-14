@@ -52,13 +52,14 @@
         let pkgs = nixpkgs.legacyPackages.${system}; in
         rec {
           #devShell = import ./shell.nix { inherit pkgs; };
-          packages = flake-utils.lib.flattenTree ({
+          packages = flake-utils.lib.flattenTree rec {
             hello = pkgs.hello;
             wake = pkgs.callPackage ./wake.nix { inherit wake-src; };
             # gitAndTools = pkgs.gitAndTools;
-          } //
-           (import ./default.nix { inherit pkgs circt-src llvm-submodule-src; })
-           );
+            inherit (import ./default.nix { inherit pkgs circt-src llvm-submodule-src; })
+              circt mlir llvm;
+            polygeist = pkgs.callPackage ./polygeist.nix { inherit mlir llvm; inherit (pkgs.llvmPackages_14) clang-unwrapped; };
+          };
           # defaultPackage = packages.foo;
           defaultPackage = packages.circt;
 

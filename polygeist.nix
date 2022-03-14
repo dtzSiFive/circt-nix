@@ -1,4 +1,4 @@
-{ stdenv, cmake, fetchFromGitHub, clang-unwrapped, llvm, mlir }:
+{ stdenv, lib, cmake, fetchFromGitHub, clang-unwrapped, llvm, mlir }:
 
 stdenv.mkDerivation {
   pname = "polygeist";
@@ -15,9 +15,9 @@ stdenv.mkDerivation {
   buildInputs = [ llvm mlir ];
 
   cmakeFlags = [
-    "-DLLVM_DIR=${llvm.dev}/lib/cmake/llvm"
-    "-DCLANG_DIR=${clang-unwrapped.dev}/lib/cmake/clang"
-    "-DMLIR_DIR=${mlir.dev}/lib/cmake/mlir"
+    "-DLLVM_DIR=${lib.getDev llvm}/lib/cmake/llvm"
+    "-DCLANG_DIR=${lib.getDev clang-unwrapped}/lib/cmake/clang"
+    "-DMLIR_DIR=${lib.getDev mlir}/lib/cmake/mlir"
   ];
 
   postPatch = ''
