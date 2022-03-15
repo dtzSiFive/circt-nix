@@ -12,8 +12,8 @@ stdenv.mkDerivation {
   src = circt-src;
 
   patches = [
-    ./no-deps-mlir-utils.patch
-    ./0001-mlir-tblgen.patch
+    ./patches/no-deps-mlir-utils.patch
+    ./patches/0001-mlir-tblgen.patch
   ];
   postPatch = ''
     substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir}/bin/mlir-tblgen"
