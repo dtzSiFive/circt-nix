@@ -44,6 +44,11 @@
       ref = "feature/flang";
       #ref = "mast
     };
+    # From README.md: https://github.com/edolstra/flake-compat
+    flake-compat = {
+      url = github:edolstra/flake-compat;
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, flake-utils, circt-src, llvm-submodule-src, wake-src }:
