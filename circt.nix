@@ -19,7 +19,6 @@ stdenv.mkDerivation {
     substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir}/bin/mlir-tblgen"
   '';
   cmakeFlags = [
-    # "-DLLVM_TOOLS_INSTALL_DIR=${placeholder "out"}/bin"
     "-DLLVM_DIR=${libllvm}/lib/cmake/llvm"
     "-DLLVM_EXTERNAL_LIT=${lit}/bin/lit"
   ];
@@ -30,17 +29,4 @@ stdenv.mkDerivation {
   preCheck = ''
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH''${LD_LIBRARY_PATH:+:}$PWD/lib
   '';
-  #cmakeFlags = [
-  #  "-DMLIR_DIR=${mlir-new.dev}/lib/cmake/mlir"
-  #  "-DMLIR_TABLEGEN_EXE=${mlir-new}/bin/mlir-tblgen"
-  #  "-DMLIR_TABLEGEN=${mlir-new}/bin/mlir-tblgen"
-  #];
-
-  #postPatch = ''
-  #  substituteInPlace CMakeLists.txt \
-  #    --replace 'set(MLIR_TABLEGEN_EXE $<TARGET_FILE:mlir-tblgen>)' \
-  #              'set(MLIR_TABLEGEN_EXE "ASDF")'
-  #'';
-
-  # enableParallelBuilding = false;
 }
