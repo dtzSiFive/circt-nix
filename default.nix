@@ -31,13 +31,16 @@ let
     libllvm = llvm-cmake;
     version = llvm-submodule-src.rev;
   };
-  llvm-cmake = (pkgs.runCommand "llvm-cmake-patched" {} ''
-    mkdir -p $out/lib
-    cp -r ${libllvm-new.dev}/lib/cmake $out/lib
-    for x in $out/lib/cmake/llvm/{TableGen,AddLLVM}.cmake; do
+  llvm-cmake = pkgs.runCommand "llvm-cmake-patched" { outputs = [ "out" "lib" "dev" ]; } ''
+    mkdir -p $dev/lib
+    cp -r ${libllvm-new.dev}/lib/cmake $dev/lib
+    for x in $dev/lib/cmake/llvm/{TableGen,AddLLVM}.cmake; do
       substituteInPlace "$x" --replace 'DESTINATION ''${LLVM_TOOLS_INSTALL_DIR}' 'DESTINATION ''${CMAKE_INSTALL_BINDIR}'
     done
-  '') // { lib = llvm-cmake.out; };
+    ln -s ${libllvm-new.dev}/{bin,include,nix-support} $dev/
+    ln -s ${libllvm-new.lib} $lib
+    ln -s ${libllvm-new.out} $out
+  '';
 
   ##
   # Plan:
