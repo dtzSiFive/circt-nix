@@ -14,10 +14,10 @@ let
       ln -s ${libllvm-unpatched.lib} $lib
       ln -s ${libllvm-unpatched.out} $out
     '';
-    mlir = pkgs.llvmPackages_14.mlir.override {
+    mlir = llvmPackages.mlir.override {
       inherit monorepoSrc libllvm version;
     };
-    libclang = pkgs.llvmPackages_14.libclang.override {
+    libclang = llvmPackages.libclang.override {
       inherit monorepoSrc libllvm version;
     };
   };

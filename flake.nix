@@ -56,7 +56,7 @@
             hello = pkgs.hello;
             wake = pkgs.callPackage ./wake.nix { inherit wake-src; };
             # gitAndTools = pkgs.gitAndTools;
-            inherit (pkgs.callPackage ./default.nix { inherit llvm-submodule-src; llvmPackages = pkgs.llvmPackages_14; })
+            inherit (pkgs.callPackage ./llvm.nix { inherit llvm-submodule-src; llvmPackages = pkgs.llvmPackages_14; })
               mlir libllvm libllvm-unpatched libclang; # explicitly enumerate so can use below
             circt = import ./circt.nix {
               inherit (pkgs) stdenv cmake lit;
