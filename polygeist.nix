@@ -22,7 +22,7 @@ stdenv.mkDerivation {
     "-DLLVM_EXTERNAL_LIT=${lit}/bin/lit"
   ];
 
-  patches = [ ./patches/polygeist-mlir-tblgen.patch ];
+  patches = [ ./patches/polygeist-mlir-tblgen-path.patch ];
 
   postPatch = ''
     substituteInPlace tools/mlir-clang/CMakeLists.txt \
