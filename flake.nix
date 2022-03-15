@@ -51,28 +51,32 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, circt-src, llvm-submodule-src, wake-src }:
-    flake-utils.lib.eachDefaultSystem
+  outputs = { self
+    , nixpkgs
+    , flake-compat, flake-utils
+    , circt-src, llvm-submodule-src
+    , wake-src }: flake-utils.lib.eachDefaultSystem
       (system:
-        let pkgs = nixpkgs.legacyPackages.${system}; in
-        rec {
-          #devShell = import ./shell.nix { inherit pkgs; };
-          packages = flake-utils.lib.flattenTree rec {
-            hello = pkgs.hello;
-            wake = pkgs.callPackage ./wake.nix { inherit wake-src; };
-            # gitAndTools = pkgs.gitAndTools;
-            inherit (pkgs.callPackage ./llvm.nix { inherit llvm-submodule-src; llvmPackages = pkgs.llvmPackages_14; })
-              mlir libllvm libllvm-unpatched libclang; # explicitly enumerate so can use below
-            circt = import ./circt.nix {
-              inherit (pkgs) stdenv cmake lit;
-              inherit libllvm mlir circt-src;
+        let pkgs = nixpkgs.legacyPackages.${system};
+            newLLVMPkgs = pkgs.callPackage ./llvm.nix {
+              inherit llvm-submodule-src;
+              llvmPackages = pkgs.llvmPackages_14;
             };
-            polygeist = pkgs.callPackage ./polygeist.nix { inherit mlir; llvm = libllvm; clang-unwrapped = libclang; };
-          };
-          # defaultPackage = packages.foo;
+        in rec {
+          #devShell = import ./shell.nix { inherit pkgs; };
+          packages = flake-utils.lib.flattenTree (newLLVMPkgs // rec {
+            circt = pkgs.callPackage ./circt.nix {
+              inherit circt-src;
+              inherit (newLLVMPkgs) libllvm mlir;
+            };
+            polygeist = pkgs.callPackage ./polygeist.nix {
+              inherit (newLLVMPkgs) mlir;
+              llvm = newLLVMPkgs.libllvm;
+              clang-unwrapped = newLLVMPkgs.libclang;
+            };
+            wake = pkgs.callPackage ./wake.nix { inherit wake-src; };
+          });
           defaultPackage = packages.circt;
-
-          #defaultPackage = import ./build.nix { inherit self pkgs; };
         }
       );
 }
