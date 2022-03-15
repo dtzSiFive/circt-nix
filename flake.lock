@@ -3,17 +3,33 @@
     "circt-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1647271555,
-        "narHash": "sha256-rYljzZCvvyZaxku597PTtmcbtq+N1QP6To41EFCq/WY=",
+        "lastModified": 1647357094,
+        "narHash": "sha256-gaQvJB0fNmrYkusS8TnbtT0xZQYPFBBvxAmeE35zt4U=",
         "owner": "llvm",
         "repo": "circt",
-        "rev": "80e0e7a2884cf834ec0bb31d7c09588b7d9bf6bd",
+        "rev": "24a47bda3a264c6ec7b18c6f8bbac96295725d79",
         "type": "github"
       },
       "original": {
         "owner": "llvm",
         "ref": "main",
         "repo": "circt",
+        "type": "github"
+      }
+    },
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1641205782,
+        "narHash": "sha256-4jY7RCWUoZ9cKD8co0/4tFARpWB+57+r1bLLvXNJliY=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "b7547d3eed6f32d06102ead8991ec52ab0a4f1a7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
         "type": "github"
       }
     },
@@ -68,6 +84,7 @@
     "root": {
       "inputs": {
         "circt-src": "circt-src",
+        "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "llvm-submodule-src": "llvm-submodule-src",
         "nixpkgs": "nixpkgs",
