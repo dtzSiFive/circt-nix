@@ -56,9 +56,13 @@
             hello = pkgs.hello;
             wake = pkgs.callPackage ./wake.nix { inherit wake-src; };
             # gitAndTools = pkgs.gitAndTools;
-            inherit (import ./default.nix { inherit pkgs circt-src llvm-submodule-src; })
-              circt mlir llvm libclang;
-            polygeist = pkgs.callPackage ./polygeist.nix { inherit mlir llvm; clang-unwrapped = libclang; };
+            inherit (pkgs.callPackage ./default.nix { inherit llvm-submodule-src; llvmPackages = pkgs.llvmPackages_14; })
+              mlir libllvm libllvm-unpatched libclang; # explicitly enumerate so can use below
+            circt = import ./circt.nix {
+              inherit (pkgs) stdenv cmake lit;
+              inherit libllvm mlir circt-src;
+            };
+            polygeist = pkgs.callPackage ./polygeist.nix { inherit mlir; llvm = libllvm; clang-unwrapped = libclang; };
           };
           # defaultPackage = packages.foo;
           defaultPackage = packages.circt;
