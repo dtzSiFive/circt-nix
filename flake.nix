@@ -4,11 +4,12 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-    wake-src = {
+    circt-src = {
       type = "github";
-      owner = "sifive";
-      repo = "wake";
-      ref = "v0.24.0";
+      owner = "llvm";
+      repo = "circt";
+      #submodules = true;
+      ref = "main";
       flake = false;
     };
     #circt-git-src = {
@@ -18,20 +19,10 @@
     #  flake = false;
     #  submodules = true;
     #};
-    circt-src = {
-      type = "github";
-      owner = "llvm";
-      repo = "circt";
-      #submodules = true;
-      ref = "main";
-      flake = false;
-    };
     llvm-submodule-src = {
       type = "github";
       owner = "llvm";
       repo = "llvm-project";
-      #submodules = true;
-      #rev = "main";
       # From circt submodule
       rev = "61814586620deca51ecf6477e19c6afa8e28ad90";
       flake = false;
@@ -43,6 +34,13 @@
       repo = "nixpkgs";
       ref = "feature/flang";
       #ref = "mast
+    };
+    wake-src = {
+      type = "github";
+      owner = "sifive";
+      repo = "wake";
+      ref = "v0.24.0";
+      flake = false;
     };
     # From README.md: https://github.com/edolstra/flake-compat
     flake-compat = {
