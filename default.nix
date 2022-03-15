@@ -13,26 +13,31 @@ let
   #})).override { monorepoSrc = llvm-submodule-src; };
   # XXX: override monorepoSrc only?
   libllvm-new = pkgs.llvmPackages_14.libllvm.override { monorepoSrc = llvm-submodule-src; };
-  mlir-new = pkgs.llvmPackages_14.mlir.overrideAttrs (o: {
-    src = mlir-src;
-    sourceRoot = "mlir-src/mlir";
-    version = llvm-submodule-src.rev;
-    patches = [ ./mlir-gnu-installdirs.patch ];
-    buildInputs = [ pkgs.vulkan-loader pkgs.vulkan-headers libllvm-new ];
-    cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_DIR=${llvm-cmake}/lib/cmake/llvm" ];
-  });
-  clang-new = pkgs.llvmPackages_14.libclang.override {
+  mlir-new = pkgs.llvmPackages_14.mlir.override {
     monorepoSrc = llvm-submodule-src;
-    libllvm = libllvm-new;
+    libllvm = llvm-cmake; # libllvm-new;
     version = llvm-submodule-src.rev;
   };
-  llvm-cmake = pkgs.runCommand "llvm-cmake-patched" {} ''
+  #mlir-new = pkgs.llvmPackages_14.mlir.overrideAttrs (o: {
+  #  src = mlir-src;
+  #  sourceRoot = "mlir-src/mlir";
+  #  version = llvm-submodule-src.rev;
+  #  patches = [ ./mlir-gnu-installdirs.patch ];
+  #  buildInputs = [ pkgs.vulkan-loader pkgs.vulkan-headers libllvm-new ];
+  #  cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_DIR=${llvm-cmake}/lib/cmake/llvm" ];
+  #});
+  clang-new = pkgs.llvmPackages_14.libclang.override {
+    monorepoSrc = llvm-submodule-src;
+    libllvm = llvm-cmake;
+    version = llvm-submodule-src.rev;
+  };
+  llvm-cmake = (pkgs.runCommand "llvm-cmake-patched" {} ''
     mkdir -p $out/lib
     cp -r ${libllvm-new.dev}/lib/cmake $out/lib
     for x in $out/lib/cmake/llvm/{TableGen,AddLLVM}.cmake; do
       substituteInPlace "$x" --replace 'DESTINATION ''${LLVM_TOOLS_INSTALL_DIR}' 'DESTINATION ''${CMAKE_INSTALL_BINDIR}'
     done
-  '';
+  '') // { lib = llvm-cmake.out; };
 
   ##
   # Plan:
