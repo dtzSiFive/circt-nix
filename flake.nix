@@ -44,6 +44,7 @@
               inherit circt-src;
               inherit (newLLVMPkgs) libllvm mlir;
             };
+            default = circt;
             polygeist = pkgs.callPackage ./polygeist.nix {
               inherit (newLLVMPkgs) mlir;
               llvm = newLLVMPkgs.libllvm;
@@ -51,7 +52,6 @@
             };
             wake = pkgs.callPackage ./wake.nix { inherit wake-src; };
           });
-          defaultPackage = packages.circt;
         }
       );
 }
