@@ -3,7 +3,8 @@
 
 
   inputs = {
-    flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "github:dtzWill/nixpkgs/feature/flang"; # /feature/flang";
+
     circt-src.url = "github:llvm/circt/main";
     circt-src.flake = false;
     llvm-submodule-src = {
@@ -14,9 +15,10 @@
       rev = "61814586620deca51ecf6477e19c6afa8e28ad90";
       flake = false;
     };
-    nixpkgs.url = "github:dtzWill/nixpkgs/feature/flang"; # /feature/flang";
     wake-src.url = "github:sifive/wake/v0.24.0";
     wake-src.flake = false;
+
+    flake-utils.url = "github:numtide/flake-utils";
     # From README.md: https://github.com/edolstra/flake-compat
     flake-compat = {
       url = github:edolstra/flake-compat;
