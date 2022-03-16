@@ -40,11 +40,12 @@
         in rec {
           #devShell = import ./shell.nix { inherit pkgs; };
           packages = flake-utils.lib.flattenTree (newLLVMPkgs // rec {
+            default = circt; # default for `nix build` etc.
+
             circt = pkgs.callPackage ./circt.nix {
               inherit circt-src;
               inherit (newLLVMPkgs) libllvm mlir;
             };
-            default = circt;
             polygeist = pkgs.callPackage ./polygeist.nix {
               inherit (newLLVMPkgs) mlir;
               llvm = newLLVMPkgs.libllvm;
