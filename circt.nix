@@ -2,6 +2,7 @@
 , libllvm, mlir, lit
 , circt-src
 , capnproto, verilator
+, python3
 }:
 
 
@@ -9,7 +10,7 @@
 stdenv.mkDerivation {
   pname = "circt";
   version = "0.0.8-git-${circt-src.shortRev}";
-  nativeBuildInputs = [ cmake ];
+  nativeBuildInputs = [ cmake python3 ];
   buildInputs = [ mlir libllvm capnproto verilator ];
   src = circt-src;
 
@@ -29,6 +30,10 @@ stdenv.mkDerivation {
 
   doCheck = true;
   checkTarget = "check-circt check-circt-integration";
+
+  preCheck = ''
+    patchShebangs bin/*.py
+  '';
 
   preCheck = ''
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH''${LD_LIBRARY_PATH:+:}$PWD/lib
