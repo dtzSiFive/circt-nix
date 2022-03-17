@@ -1,14 +1,16 @@
 { stdenv, cmake
 , libllvm, mlir, lit
 , circt-src
+, capnproto, verilator
 }:
 
 
+# TODO: or-tools, needs cmake bits maybe?
 stdenv.mkDerivation {
   pname = "circt";
   version = "0.0.8-git-${circt-src.shortRev}";
   nativeBuildInputs = [ cmake ];
-  buildInputs = [ mlir libllvm ];
+  buildInputs = [ mlir libllvm capnproto verilator ];
   src = circt-src;
 
   patches = [
@@ -21,6 +23,7 @@ stdenv.mkDerivation {
   cmakeFlags = [
     "-DLLVM_DIR=${libllvm}/lib/cmake/llvm"
     "-DLLVM_EXTERNAL_LIT=${lit}/bin/lit"
+    "-DCapnProto_DIR=${capnproto}/lib/cmake/CapnProto"
   ];
 
   doCheck = true;
