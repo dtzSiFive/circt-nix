@@ -24,10 +24,11 @@
       url = github:edolstra/flake-compat;
       flake = false;
     };
+    nixpkgs-lit.url = "github:dtzWill/nixpkgs/fix/lit-psutil";
   };
 
   outputs = { self
-    , nixpkgs
+    , nixpkgs, nixpkgs-lit
     , flake-compat, flake-utils
     , circt-src, llvm-submodule-src
     , wake-src }: flake-utils.lib.eachDefaultSystem
@@ -37,19 +38,23 @@
               inherit llvm-submodule-src;
               llvmPackages = pkgs.llvmPackages_14;
             };
+            lit = nixpkgs-lit.legacyPackages.${system}.lit;
         in rec {
           #devShell = import ./shell.nix { inherit pkgs; };
           packages = flake-utils.lib.flattenTree (newLLVMPkgs // rec {
             default = circt; # default for `nix build` etc.
+            inherit lit;
 
             circt = pkgs.callPackage ./circt.nix {
               inherit circt-src;
               inherit (newLLVMPkgs) libllvm mlir;
+              inherit lit;
             };
             polygeist = pkgs.callPackage ./polygeist.nix {
               inherit (newLLVMPkgs) mlir;
               llvm = newLLVMPkgs.libllvm;
               clang-unwrapped = newLLVMPkgs.libclang;
+              inherit lit;
             };
             wake = pkgs.callPackage ./wake.nix { inherit wake-src; };
           });
