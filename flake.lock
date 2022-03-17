@@ -81,6 +81,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-lit": {
+      "locked": {
+        "lastModified": 1647539577,
+        "narHash": "sha256-Sv2JWLFH113Pl+1dGtzw7wfBJGnRhdSs7jf26sn5CpM=",
+        "owner": "dtzWill",
+        "repo": "nixpkgs",
+        "rev": "aec54bdb6e14506a30deafe2a0118b67527c11e3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dtzWill",
+        "ref": "fix/lit-psutil",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "circt-src": "circt-src",
@@ -88,6 +104,7 @@
         "flake-utils": "flake-utils",
         "llvm-submodule-src": "llvm-submodule-src",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-lit": "nixpkgs-lit",
         "wake-src": "wake-src"
       }
     },
