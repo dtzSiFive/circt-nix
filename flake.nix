@@ -3,8 +3,8 @@
 
 
   inputs = {
-    #nixpkgs.url = "github:dtzWill/nixpkgs/feature/flang"; # /feature/flang";
-    nixpkgs.url = "github:dtzWill/nixpkgs/experimental/mlir-musl-misc";
+    nixpkgs.url = "github:dtzWill/nixpkgs/feature/flang";
+    #nixpkgs.url = "github:dtzWill/nixpkgs/experimental/mlir-musl-misc"; # for capnproto musl fix
 
     circt-src.url = "github:llvm/circt/main";
     circt-src.flake = false;
