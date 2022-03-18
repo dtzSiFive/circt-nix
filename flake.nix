@@ -33,7 +33,7 @@
     , circt-src, llvm-submodule-src
     , wake-src }: flake-utils.lib.eachDefaultSystem
       (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
+        let pkgs = nixpkgs.legacyPackages.${system}.pkgsMusl;
             newLLVMPkgs = pkgs.callPackage ./llvm.nix {
               inherit llvm-submodule-src;
               llvmPackages = pkgs.llvmPackages_14;
