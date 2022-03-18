@@ -67,16 +67,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1647628750,
-        "narHash": "sha256-1gDPTdQSpa/M3LiC8xkeO/W40VP6lJbgY4KQO15gbzA=",
+        "lastModified": 1647644687,
+        "narHash": "sha256-TjjvdyXn25vgMyGzjhjvrL8/G+UN3nz3MeuzKlNMjAk=",
         "owner": "dtzWill",
         "repo": "nixpkgs",
-        "rev": "a8efe627cb2c7066372b7b50c43db9e3dc360b25",
+        "rev": "74f1fa747a235d133de135cb66a69b91f38ea719",
         "type": "github"
       },
       "original": {
         "owner": "dtzWill",
-        "ref": "experimental/mlir-musl-misc",
+        "ref": "feature/flang",
         "repo": "nixpkgs",
         "type": "github"
       }
