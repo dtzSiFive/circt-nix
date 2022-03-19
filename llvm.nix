@@ -1,6 +1,16 @@
-{ runCommand, llvmPackages, llvm-submodule-src }:
+{ lib, fetchpatch, runCommand, llvmPackages, llvm-submodule-src }:
 let
-  monorepoSrc = llvm-submodule-src;
+  patchsrc = src: patches: runCommand "patched-src" {} (''
+    cp -r ${src} "$out"
+    chmod u+rw -R $out
+  '' + lib.concatMapStringsSep "\n" (p: "patch -p1 -i ${p} -d $out") patches);
+  monorepoSrc = patchsrc llvm-submodule-src [
+    (fetchpatch {
+      url = "https://github.com/llvm/llvm-project/commit/03078ec20b12605fd4dfd9fe9c98a26c9d2286d7.patch";
+      sha256 = "sha256-fxK4gMfbKcOVhCjynKTx5R9qx+e7Y3eSAoocjTL3ewY=";
+      revert = true;
+    })
+  ];
   version = "git-${llvm-submodule-src.shortRev}";
   newPkgs = rec  {
     libllvm-unpatched = llvmPackages.libllvm.override { inherit monorepoSrc version; };
