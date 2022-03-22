@@ -3,6 +3,7 @@
 , circt-src
 , capnproto, verilator
 , python3
+, llvmUtilsSrc
 }:
 
 
@@ -26,6 +27,7 @@ stdenv.mkDerivation {
     "-DLLVM_EXTERNAL_LIT=${lit}/bin/lit"
     "-DLLVM_LIT_ARGS=-v"
     "-DCapnProto_DIR=${capnproto}/lib/cmake/CapnProto"
+    "-DLLVM_BUILD_MAIN_SRC_DIR=${llvmUtilsSrc}"
   ];
 
   doCheck = true;

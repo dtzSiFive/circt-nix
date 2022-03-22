@@ -48,7 +48,7 @@
 
             circt = pkgs.callPackage ./circt.nix {
               inherit circt-src;
-              inherit (newLLVMPkgs) libllvm mlir;
+              inherit (newLLVMPkgs) libllvm mlir llvmUtilsSrc;
               inherit lit;
             };
             polygeist = pkgs.callPackage ./polygeist.nix {

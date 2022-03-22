@@ -31,6 +31,10 @@ let
       # Hack to use our MLIR as build-tools (tblgen), since not doing cross here anyway
       buildLlvmTools = { inherit mlir; };
     };
+    llvmUtilsSrc = runCommand "llvm-src-for-unittests" {} ''
+      mkdir -p "$out/utils"
+      cp -r ${monorepoSrc}/llvm/utils/unittest -t "$out/utils"
+    '';
   };
 in
   newPkgs
