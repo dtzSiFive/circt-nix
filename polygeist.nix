@@ -2,13 +2,13 @@
 
 stdenv.mkDerivation {
   pname = "polygeist";
-  version = "unstable-2022-03-09";
+  version = "unstable-2022-03-24";
 
   src = fetchFromGitHub {
     owner = "wsmoses";
     repo = "polygeist";
-    rev = "6ba6b7b8ac07c9d60994eb46b46682a9f76ea34e";
-    sha256 = "sha256-tkraEngeC1Ko8JS+e2gxOQBP1VWEfbGptkC+DLN46aU=";
+    rev = "e7489c467b85c7275ee0ac21a5498801bc071c69";
+    sha256 = "sha256-wVVP9Eg7r/aPq26sg58XZ4KuGVTzerazxVBrpxLuhxc=";
   };
 
   nativeBuildInputs = [ cmake ];
