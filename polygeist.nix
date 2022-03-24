@@ -30,18 +30,6 @@ stdenv.mkDerivation {
                 '"${clang-unwrapped.src}/clang'
 
     substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir}/bin/mlir-tblgen"
-
-  ''
-  # Patch for latest MLIR
-  + ''
-    substituteInPlace lib/polygeist/Passes/ConvertPolygeistToLLVM.cpp \
-      --replace StdToLLVM FuncToLLVM
-    for x in tools/mlir-clang/CMakeLists.txt tools/mlir-clang/mlir-clang.cc lib/polygeist/Passes/ConvertPolygeistToLLVM.cpp; do
-      substituteInPlace "$x" --replace StandardToLLVM FuncToLLVM
-    done
-    substituteInPlace tools/mlir-clang/mlir-clang.cc --replace createLowerToLLVMPass createConvertFuncToLLVMPass
-
-    substituteInPlace tools/polygeist-opt/polygeist-opt.cpp --replace mlir/Support/MlirOptMain.h mlir/Tools/mlir-opt/MlirOptMain.h
   '';
 
   postInstall = ''
