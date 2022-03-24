@@ -54,7 +54,4 @@ stdenv.mkDerivation {
 
   #checkTarget = "check-all";
   checkTarget = "check-mlir-clang check-polygeist-opt";
-
-  # Doesn't work with LLVM/MLIR we're using for CIRCT
-  meta.broken = true;
 }
