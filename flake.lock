@@ -81,22 +81,6 @@
         "type": "github"
       }
     },
-    "polygeist-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1648265761,
-        "narHash": "sha256-qZx1RIldAKsjh47v/Xxjv23AQ7+EMcZ93rq1oy6GQko=",
-        "owner": "wsmoses",
-        "repo": "polygeist",
-        "rev": "745d684105acd62ae93bdfdbd46b8febf5d3921f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "wsmoses",
-        "repo": "polygeist",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "circt-src": "circt-src",
@@ -104,7 +88,6 @@
         "flake-utils": "flake-utils",
         "llvm-submodule-src": "llvm-submodule-src",
         "nixpkgs": "nixpkgs",
-        "polygeist-src": "polygeist-src",
         "wake-src": "wake-src"
       }
     },
