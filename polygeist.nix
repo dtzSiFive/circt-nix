@@ -1,15 +1,10 @@
-{ stdenv, lib, cmake, fetchFromGitHub, clang-unwrapped, llvm, mlir, lit }:
+{ stdenv, lib, polygeist-src, cmake, fetchFromGitHub, clang-unwrapped, llvm, mlir, lit }:
 
 stdenv.mkDerivation {
   pname = "polygeist";
   version = "unstable-2022-03-24";
 
-  src = fetchFromGitHub {
-    owner = "wsmoses";
-    repo = "polygeist";
-    rev = "e7489c467b85c7275ee0ac21a5498801bc071c69";
-    sha256 = "sha256-wVVP9Eg7r/aPq26sg58XZ4KuGVTzerazxVBrpxLuhxc=";
-  };
+  src = polygeist-src;
 
   nativeBuildInputs = [ cmake ];
   buildInputs = [ llvm mlir ];
