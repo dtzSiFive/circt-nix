@@ -25,16 +25,12 @@
       url = github:edolstra/flake-compat;
       flake = false;
     };
-
-    polygeist-src.url = "github:wsmoses/polygeist";
-    polygeist-src.flake = false;
   };
 
   outputs = { self
     , nixpkgs
     , flake-compat, flake-utils
     , circt-src, llvm-submodule-src
-    , polygeist-src
     , wake-src }: flake-utils.lib.eachDefaultSystem
       (system:
         let pkgs = nixpkgs.legacyPackages.${system};
@@ -52,7 +48,6 @@
               inherit (newLLVMPkgs) libllvm mlir llvmUtilsSrc;
             };
             polygeist = pkgs.callPackage ./polygeist.nix {
-              inherit polygeist-src;
               inherit (newLLVMPkgs) mlir;
               llvm = newLLVMPkgs.libllvm;
               clang-unwrapped = newLLVMPkgs.libclang;
