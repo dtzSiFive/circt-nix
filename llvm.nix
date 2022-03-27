@@ -5,7 +5,6 @@ let
     chmod u+rw -R $out
   '' + lib.concatMapStringsSep "\n" (p: "patch -p1 -i ${p} -d $out") patches);
   monorepoSrc = patchsrc llvm-submodule-src [
-    ./patches/mlir-set-CMAKE_INCLUDE_CURRENT_DIR.patch
   ];
   version = "git-${llvm-submodule-src.shortRev}";
   newPkgs = rec  {
