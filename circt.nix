@@ -4,6 +4,7 @@
 , capnproto, verilator
 , python3
 , llvmUtilsSrc
+, ninja
 }:
 
 
@@ -11,7 +12,7 @@
 stdenv.mkDerivation {
   pname = "circt";
   version = "0.2.0-git-${circt-src.shortRev}";
-  nativeBuildInputs = [ cmake python3 ];
+  nativeBuildInputs = [ cmake python3 ninja ];
   buildInputs = [ mlir libllvm capnproto verilator ];
   src = circt-src;
 
