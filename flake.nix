@@ -3,9 +3,8 @@
 
 
   inputs = {
+    # Use Nixpkgs branch until MLIR at least is merged into nixpkgs proper
     nixpkgs.url = "github:dtzWill/nixpkgs/feature/flang";
-    #nixpkgs.url = "github:dtzWill/nixpkgs/experimental/mlir-musl-misc"; # for capnproto musl fix
-
     circt-src.url = "github:llvm/circt/main";
     circt-src.flake = false;
     llvm-submodule-src = {
