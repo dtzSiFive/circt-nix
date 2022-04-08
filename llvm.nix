@@ -25,8 +25,6 @@ let
     libclang = llvmPackages.libclang.override {
       inherit monorepoSrc libllvm version;
     };
-    clangUseLLVM = llvmPackages.clangUseLLVM.override { cc = libclang; };
-    clang = clangUseLLVM;
     flang = llvmPackages.flang.override {
       inherit monorepoSrc libclang libllvm mlir version;
       # Hack to use our MLIR as build-tools (tblgen), since not doing cross here anyway
