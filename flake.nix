@@ -6,7 +6,7 @@
     # Use Nixpkgs branch until MLIR at least is merged into nixpkgs proper
     nixpkgs.url = "github:dtzWill/nixpkgs/feature/flang";
     #circt-src.url = "github:llvm/circt/main";
-    circt-src.url = "github:dtzSiFive/circt/feature/cleaner-help-options-in-tools";
+    circt-src.url = "github:llvm/circt/dev/dtz/cleaner-help-options-in-tools";
     circt-src.flake = false;
     llvm-submodule-src = {
       type = "github";
