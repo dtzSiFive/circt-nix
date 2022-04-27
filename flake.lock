@@ -3,16 +3,16 @@
     "circt-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1651017212,
-        "narHash": "sha256-K98md70uaWrB210lZ/mnvbLtOdzyzSxHgFnydyss+Ks=",
-        "owner": "dtzSiFive",
+        "lastModified": 1651067797,
+        "narHash": "sha256-MpSTGj76gfEkwW8TvrtnrXFyk0/0euTZVYtlvnXKB7E=",
+        "owner": "llvm",
         "repo": "circt",
-        "rev": "1d0b4012ccb14407707c30ca1eb4a088fd840f4d",
+        "rev": "baf71060622d0e956d23d14399c3f896cecf7779",
         "type": "github"
       },
       "original": {
-        "owner": "dtzSiFive",
-        "ref": "feature/cleaner-help-options-in-tools",
+        "owner": "llvm",
+        "ref": "dev/dtz/cleaner-help-options-in-tools",
         "repo": "circt",
         "type": "github"
       }
