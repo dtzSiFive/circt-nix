@@ -5,15 +5,15 @@
   inputs = {
     # Use Nixpkgs branch until MLIR at least is merged into nixpkgs proper
     nixpkgs.url = "github:dtzWill/nixpkgs/feature/flang";
-    #circt-src.url = "github:llvm/circt/main";
-    circt-src.url = "github:llvm/circt/dev/dtz/cleaner-help-options-in-tools";
+    circt-src.url = "github:llvm/circt/main";
+    #circt-src.url = "github:llvm/circt/dev/dtz/cleaner-help-options-in-tools";
     circt-src.flake = false;
     llvm-submodule-src = {
       type = "github";
       owner = "llvm";
       repo = "llvm-project";
       # From circt submodule
-      rev = "6b0bed7ea563624622c3c1fb1a3c90cd32c78db6";
+      rev = "2d014b72ccb51de9a9627c31667a3edf8cca7616";
       flake = false;
     };
     wake-src.url = "github:sifive/wake/v0.24.0";
