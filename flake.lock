@@ -3,16 +3,16 @@
     "circt-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1651067797,
-        "narHash": "sha256-MpSTGj76gfEkwW8TvrtnrXFyk0/0euTZVYtlvnXKB7E=",
+        "lastModified": 1651179311,
+        "narHash": "sha256-AxzxDTf88HXzMy6r1sa4RM+ujUQab0vyjxz+pp85cFQ=",
         "owner": "llvm",
         "repo": "circt",
-        "rev": "baf71060622d0e956d23d14399c3f896cecf7779",
+        "rev": "d7b253d905096dacd747d6867f4681ccb34f89c4",
         "type": "github"
       },
       "original": {
         "owner": "llvm",
-        "ref": "dev/dtz/cleaner-help-options-in-tools",
+        "ref": "main",
         "repo": "circt",
         "type": "github"
       }
@@ -51,17 +51,17 @@
     "llvm-submodule-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1650406449,
-        "narHash": "sha256-8Vr5aQusLviljrsRkxgm5QLw+i5SO8W3AAJNtdLW4+c=",
+        "lastModified": 1650929898,
+        "narHash": "sha256-Dr5+cKC21KnGx6aqGHTfECqlagp3IRjKH37eXkbwias=",
         "owner": "llvm",
         "repo": "llvm-project",
-        "rev": "6b0bed7ea563624622c3c1fb1a3c90cd32c78db6",
+        "rev": "2d014b72ccb51de9a9627c31667a3edf8cca7616",
         "type": "github"
       },
       "original": {
         "owner": "llvm",
         "repo": "llvm-project",
-        "rev": "6b0bed7ea563624622c3c1fb1a3c90cd32c78db6",
+        "rev": "2d014b72ccb51de9a9627c31667a3edf8cca7616",
         "type": "github"
       }
     },
