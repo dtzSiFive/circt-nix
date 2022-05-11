@@ -11,7 +11,7 @@
 # TODO: or-tools, needs cmake bits maybe?
 stdenv.mkDerivation {
   pname = "circt";
-  version = "0.4.0-git-${circt-src.shortRev}";
+  version = "0.8.0-git-${circt-src.shortRev}";
   nativeBuildInputs = [ cmake python3 ninja ];
   buildInputs = [ mlir libllvm capnproto verilator ];
   src = circt-src;
