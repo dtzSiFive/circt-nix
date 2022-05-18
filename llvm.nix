@@ -19,9 +19,22 @@ let
       ln -s ${libllvm-unpatched.lib} $lib
       ln -s ${libllvm-unpatched.out} $out
     '';
-    mlir = llvmPackages.mlir.override {
+    mlir = (llvmPackages.mlir.override {
       inherit monorepoSrc libllvm version;
-    };
+    }).overrideAttrs (o: {
+      postPatch = ''
+        # Patch around check for being built native (maybe because not built w/LLVM?)
+        # TODO: Find a way to fix this check (instead of forcing it) for the standalone case
+        for x in lib/CAPI/CMakeLists.txt lib/CMakeLists.txt python/CMakeLists.txt test/CAPI/CMakeLists.txt test/CMakeLists.txt tools/CMakeLists.txt unittests/CMakeLists.txt; do
+          substituteInPlace "$x" \
+            --replace 'if(TARGET ''${LLVM_NATIVE_ARCH})' 'if (1)'
+        done
+        for x in test/CMakeLists.txt lib/ExecutionEngine/CMakeLists.txt; do
+          substituteInPlace "$x" \
+              --replace 'if(NOT TARGET ''${LLVM_NATIVE_ARCH})' 'if (0)'
+        done
+      '';
+    });
     libclang = llvmPackages.libclang.override {
       inherit monorepoSrc libllvm version;
     };
