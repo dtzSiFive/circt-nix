@@ -5,6 +5,8 @@
 , python3
 , llvmUtilsSrc
 , ninja
+, doxygen
+, graphviz-nox
 }:
 
 
@@ -12,7 +14,7 @@
 stdenv.mkDerivation {
   pname = "circt";
   version = "0.9.0-git-${circt-src.shortRev}";
-  nativeBuildInputs = [ cmake python3 ninja ];
+  nativeBuildInputs = [ cmake python3 ninja doxygen graphviz-nox ];
   buildInputs = [ mlir libllvm capnproto verilator ];
   src = circt-src;
 
@@ -29,7 +31,10 @@ stdenv.mkDerivation {
     "-DLLVM_LIT_ARGS=-v"
     "-DCapnProto_DIR=${capnproto}/lib/cmake/CapnProto"
     "-DLLVM_BUILD_MAIN_SRC_DIR=${llvmUtilsSrc}"
+    "-DCIRCT_INCLUDE_DOCS=ON"
   ];
+
+  postBuild = "ninja doxygen-circt circt-doc";
 
   doCheck = true;
   # No integration tests for now, bits aren't working
