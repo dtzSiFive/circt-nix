@@ -3,11 +3,11 @@
     "circt-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1653523808,
-        "narHash": "sha256-VR3mOqEA4IJ4TkXt8ZjSw2RU4HAqoW8R0NjCfTPpMys=",
+        "lastModified": 1654093374,
+        "narHash": "sha256-rqctehI+Ak99WXBvbs4BJ6iNkRQyIluMlFFV9SDXseM=",
         "owner": "llvm",
         "repo": "circt",
-        "rev": "b5bda63bcafa777c94635d36174c4658014949d5",
+        "rev": "fc14c9426487a3dbcc20cd259eb6114faa093f80",
         "type": "github"
       },
       "original": {
@@ -35,11 +35,11 @@
     },
     "flake-utils": {
       "locked": {
-        "lastModified": 1652776076,
-        "narHash": "sha256-gzTw/v1vj4dOVbpBSJX4J0DwUR6LIyXo7/SuuTJp1kM=",
+        "lastModified": 1653893745,
+        "narHash": "sha256-0jntwV3Z8//YwuOjzhV2sgJJPt+HY6KhU7VZUL0fKZQ=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "04c1b180862888302ddfb2e3ad9eaa63afc60cf8",
+        "rev": "1ed9fb1935d260de5fe1c2f7ee0ebaae17ed2fa1",
         "type": "github"
       },
       "original": {
@@ -51,17 +51,17 @@
     "llvm-submodule-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1653067460,
-        "narHash": "sha256-IuGmb026YJ8nNVv7tUzNbdqF6sB3wcdizPMUTbiu72U=",
+        "lastModified": 1653714228,
+        "narHash": "sha256-c+USb7SnXLhBtPZOp8tu6sYNWKN17P2TCKjju52q7bw=",
         "owner": "llvm",
         "repo": "llvm-project",
-        "rev": "54e3bf5f37d67441dafbc66838a54a385293a2e1",
+        "rev": "068b8af7961caafadeffd1a99a103ef1d7a36e21",
         "type": "github"
       },
       "original": {
         "owner": "llvm",
         "repo": "llvm-project",
-        "rev": "54e3bf5f37d67441dafbc66838a54a385293a2e1",
+        "rev": "068b8af7961caafadeffd1a99a103ef1d7a36e21",
         "type": "github"
       }
     },
