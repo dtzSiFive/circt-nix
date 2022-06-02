@@ -13,7 +13,7 @@
 # TODO: or-tools, needs cmake bits maybe?
 stdenv.mkDerivation {
   pname = "circt";
-  version = "1.0.0-git-${circt-src.shortRev}";
+  version = "1.1.0-git-${circt-src.shortRev}";
   nativeBuildInputs = [ cmake python3 ninja doxygen graphviz-nox ];
   buildInputs = [ mlir libllvm capnproto verilator ];
   src = circt-src;
