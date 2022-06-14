@@ -13,7 +13,7 @@
       owner = "llvm";
       repo = "llvm-project";
       # From circt submodule
-      rev = "b59c2315af2193b0f09038a6533867b14083af07";
+      rev = "b422dac240f1475999a2c1b5fc242a0ef2e08727";
       flake = false;
     };
     wake-src.url = "github:sifive/wake/v0.24.0";
