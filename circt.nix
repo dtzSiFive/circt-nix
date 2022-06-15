@@ -24,15 +24,6 @@ stdenv.mkDerivation {
   ];
   postPatch = ''
     substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir}/bin/mlir-tblgen"
-  '' +
-  # TODO: Fix upstream/investigate!
-  # For now, drop test cases triggering internal crashes in Calyx bits:
-  ''
-      rm test/Conversion/SCFToCalyx/cider_source_location.mlir
-      rm test/Conversion/SCFToCalyx/convert_controlflow.mlir
-      rm test/Conversion/SCFToCalyx/convert_memory.mlir
-      rm test/Conversion/SCFToCalyx/convert_simple.mlir
-      rm test/Conversion/StaticLogicToCalyx/convert_pipeline.mlir
   '';
 
   cmakeFlags = [
