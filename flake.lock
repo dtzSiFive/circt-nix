@@ -3,16 +3,15 @@
     "circt-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1658115044,
-        "narHash": "sha256-o4vTZENvOnG+8iUpKfkJMWQOA7DJtrsXld+aCHlRtK0=",
+        "lastModified": 1658273149,
+        "narHash": "sha256-SyJG60GnbEoBnWMFZhBajIzExlrl1QvKJb5FDqJb8kg=",
         "owner": "llvm",
         "repo": "circt",
-        "rev": "05770c624bc1bfe5a253a389c059e713df220e79",
+        "rev": "2aa389e959c43443b21d71de1b6da5c92a911e34",
         "type": "github"
       },
       "original": {
         "owner": "llvm",
-        "ref": "update/llvm-47.2",
         "repo": "circt",
         "type": "github"
       }
