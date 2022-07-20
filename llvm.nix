@@ -21,7 +21,8 @@ let
     '';
     mlir = (llvmPackages.mlir.override {
       inherit monorepoSrc libllvm version;
-    }).overrideAttrs (o: {
+    }).overrideAttrs (o: 
+      let bins = [ "mlir-pdll-lsp-server" "tblgen-lsp-server" ]; in {
       postPatch = ''
         # Patch around check for being built native (maybe because not built w/LLVM?)
         # TODO: Find a way to fix this check (instead of forcing it) for the standalone case
@@ -34,6 +35,15 @@ let
               --replace 'if(NOT TARGET ''${LLVM_NATIVE_ARCH})' 'if (0)'
         done
       '';
+
+      # Also build/install 'bins' (not included in base expression, they weren't in last release).
+      postBuild = ''
+        make ${lib.concatStringsSep " " bins} -j$NIX_BUILD_CORES -l$NIX_BUILD_CORES
+      '' + o.postBuild;
+
+      postInstall = ''
+        install -Dm755 -t $out/bin ${lib.concatMapStringsSep " " (x: "bin/${x}") bins}
+      '' + o.postInstall;
     });
     libclang = llvmPackages.libclang.override {
       inherit monorepoSrc libllvm version;
