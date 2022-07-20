@@ -7,7 +7,6 @@
 , ninja
 , doxygen
 , graphviz-nox
-, assertions ? true
 }:
 
 
@@ -34,7 +33,7 @@ stdenv.mkDerivation {
     "-DCapnProto_DIR=${capnproto}/lib/cmake/CapnProto"
     "-DLLVM_BUILD_MAIN_SRC_DIR=${llvmUtilsSrc}"
     "-DCIRCT_INCLUDE_DOCS=ON"
-    "-DLLVM_ENABLE_ASSERTIONS=${if assertions then "ON" else "OFF"}"
+    "-DLLVM_ENABLE_ASSERTIONS=ON"
   ];
 
   postBuild = "ninja doxygen-circt circt-doc";

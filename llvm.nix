@@ -8,7 +8,9 @@ let
   ];
   version = "git-${llvm-submodule-src.shortRev}";
   newPkgs = rec  {
-    libllvm-unpatched = llvmPackages.libllvm.override { inherit monorepoSrc version; };
+    libllvm-unpatched = (llvmPackages.libllvm.override { inherit monorepoSrc version; }).overrideAttrs(o: {
+      cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_ENABLE_ASSERTIONS=ON" ];
+    });
     libllvm = runCommand "llvm-cmake-patched" { outputs = [ "out" "lib" "dev" ]; } ''
       mkdir -p $dev/lib
       cp -r ${libllvm-unpatched.dev}/lib/cmake $dev/lib
@@ -44,6 +46,8 @@ let
       postInstall = ''
         install -Dm755 -t $out/bin ${lib.concatMapStringsSep " " (x: "bin/${x}") bins}
       '' + o.postInstall;
+
+      cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_ENABLE_ASSERTIONS=ON" ];
     });
     libclang = llvmPackages.libclang.override {
       inherit monorepoSrc libllvm version;
