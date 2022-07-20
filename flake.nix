@@ -46,6 +46,10 @@
             circt = pkgs.callPackage ./circt.nix {
               inherit circt-src;
               inherit (newLLVMPkgs) libllvm mlir llvmUtilsSrc;
+              # TODO: via overlay, so pycapnp uses it too?
+              capnproto = pkgs.capnproto.overrideAttrs(o: {
+                cmakeFlags = o.cmakeFlags or [] ++ [ "-DWITH_FIBERS=OFF" ];
+              });
             };
             polygeist = pkgs.callPackage ./polygeist.nix {
               inherit (newLLVMPkgs) mlir;
