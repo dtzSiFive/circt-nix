@@ -5,8 +5,8 @@
   inputs = {
     # Use Nixpkgs branch until MLIR at least is merged into nixpkgs proper
     nixpkgs.url = "github:dtzWill/nixpkgs/feature/flang";
-#    circt-src.url = "github:llvm/circt";
-    circt-src.url = "github:llvm/circt/update/llvm-47.2";
+    circt-src.url = "github:llvm/circt";
+    #circt-src.url = "github:llvm/circt/update/llvm-47.2";
     circt-src.flake = false;
     llvm-submodule-src = {
       type = "github";
