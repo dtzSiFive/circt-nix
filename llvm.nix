@@ -11,6 +11,8 @@ let
     libllvm-unpatched = (llvmPackages.libllvm.override { inherit monorepoSrc version; }).overrideAttrs(o: {
       cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_ENABLE_ASSERTIONS=ON" ];
     });
+    # Patch up installed cmake files: projects using LLVM cannot and should not have to install their binaries
+    # into the same prefix as LLVM was built with.
     libllvm = runCommand "llvm-cmake-patched" { outputs = [ "out" "lib" "dev" ]; } ''
       mkdir -p $dev/lib
       cp -r ${libllvm-unpatched.dev}/lib/cmake $dev/lib
