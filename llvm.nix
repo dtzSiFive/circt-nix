@@ -13,6 +13,7 @@ let
     });
     # Patch up installed cmake files: projects using LLVM cannot and should not have to install their binaries
     # into the same prefix as LLVM was built with.
+    # TODO: Fixed upstream?? 07b749800c5cd4105d49ab46be5f0a2079dd709a
     libllvm = runCommand "llvm-cmake-patched" { outputs = [ "out" "lib" "dev" ]; } ''
       mkdir -p $dev/lib
       cp -r ${libllvm-unpatched.dev}/lib/cmake $dev/lib
