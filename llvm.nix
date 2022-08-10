@@ -10,6 +10,13 @@ let
   newPkgs = rec  {
     libllvm-unpatched = (llvmPackages.libllvm.override { inherit monorepoSrc version; }).overrideAttrs(o: {
       cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_ENABLE_ASSERTIONS=ON" ];
+     patches = [
+       (fetchpatch {
+         # Upstream Nixpkgs PR bumping llvmPackages_git
+        url = "https://raw.githubusercontent.com/NixOS/nixpkgs/b3d7f203d07632146e1ef44b8c21136714c17545/pkgs/development/compilers/llvm/git/llvm/gnu-install-dirs.patch";
+        sha256 = "sha256-tIVHcW+3qcVEkB1xZrMWZmWH67psejifyS8U2QorCk8=";
+       })
+     ];
     });
     # Patch up installed cmake files: projects using LLVM cannot and should not have to install their binaries
     # into the same prefix as LLVM was built with.
