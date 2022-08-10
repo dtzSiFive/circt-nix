@@ -3,11 +3,11 @@
     "circt-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1659349668,
-        "narHash": "sha256-xUa0S14k5Lue72Oq8Evwamrx/wTg4Hv6lMT6uYaYr+A=",
+        "lastModified": 1660154995,
+        "narHash": "sha256-CgLYt1BuGMGdw+IV24ch2Lx5Ym0nm9mA5/+bhKdqDL8=",
         "owner": "llvm",
         "repo": "circt",
-        "rev": "d4dbdb1fd7e48e792ee5b06a10c8faa07ec585fb",
+        "rev": "81120cd7de1b0555959d15d994b9d722ee76acab",
         "type": "github"
       },
       "original": {
@@ -34,11 +34,11 @@
     },
     "flake-utils": {
       "locked": {
-        "lastModified": 1656928814,
-        "narHash": "sha256-RIFfgBuKz6Hp89yRr7+NR5tzIAbn52h8vT6vXkYjZoM=",
+        "lastModified": 1659877975,
+        "narHash": "sha256-zllb8aq3YO3h8B/U0/J1WBgAL8EX5yWf5pMj3G0NAmc=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "7e2a3b3dfd9af950a856d66b0a7d01e3c18aa249",
+        "rev": "c0e246b9b83f637f4681389ecabcb2681b4f3af0",
         "type": "github"
       },
       "original": {
@@ -50,17 +50,17 @@
     "llvm-submodule-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1659110574,
-        "narHash": "sha256-ZRkvaDQ8AUe3NXuzBy2pXuX+PUDoW4a10duhBEgPiPo=",
+        "lastModified": 1660100853,
+        "narHash": "sha256-Yje8jS8iTEiu6R0J6gS7z1wX+6uKYAef4GN5q87tdnQ=",
         "owner": "llvm",
         "repo": "llvm-project",
-        "rev": "b5a9361c90ca43c715780ab4f7422fbc9d3a067b",
+        "rev": "d44f8a50d50909e67f28f91511045404261dbcbf",
         "type": "github"
       },
       "original": {
         "owner": "llvm",
         "repo": "llvm-project",
-        "rev": "b5a9361c90ca43c715780ab4f7422fbc9d3a067b",
+        "rev": "d44f8a50d50909e67f28f91511045404261dbcbf",
         "type": "github"
       }
     },
