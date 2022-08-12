@@ -4,7 +4,7 @@
 
   inputs = {
     # Use Nixpkgs branch until MLIR at least is merged into nixpkgs proper
-    nixpkgs.url = "github:dtzWill/nixpkgs/feature/flang";
+    nixpkgs.url = "github:dtzWill/nixpkgs/mlir-git";
     circt-src.url = "github:llvm/circt";
     #circt-src.url = "github:llvm/circt/update/llvm-47.2";
     circt-src.flake = false;
