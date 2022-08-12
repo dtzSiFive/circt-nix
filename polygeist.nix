@@ -2,13 +2,13 @@
 
 stdenv.mkDerivation {
   pname = "polygeist";
-  version = "unstable-2022-06-25";
+  version = "unstable-2022-08-12";
 
   src = fetchFromGitHub {
     owner = "wsmoses";
     repo = "polygeist";
-    rev = "e703db13174c60d590885ecc4b1a47dcc370c282";
-    sha256 = "sha256-SDQ0SGfzXwQPyIeSRjmyjH1y6aWUupzAtUMci/prRwc=";
+    rev = "5a6e23b3c4a52f3a9a0294751c8e1f2be98a8b95";
+    sha256 = "sha256-4RKRKYeZZp0/hWAbyQozO6NewqZSUE9jUWpwSt0w6yY=";
   };
 
   nativeBuildInputs = [ cmake ];
@@ -34,12 +34,12 @@ stdenv.mkDerivation {
 
   postInstall = ''
     mkdir -p $out/bin
-    install -Dm755 bin/{mlir-clang,polygeist-opt} -t $out/bin
+    install -Dm755 bin/{cgeist,polygeist-opt} -t $out/bin
   '';
 
-  # 'mlir-clang' can't find headers, is at least a big cause of failures
+  # 'cgeist' can't find headers, is at least a big cause of failures
   doCheck = false;
 
   #checkTarget = "check-all";
-  checkTarget = "check-mlir-clang check-polygeist-opt";
+  checkTarget = "check-cgeist check-polygeist-opt";
 }
