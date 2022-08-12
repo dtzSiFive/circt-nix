@@ -3,11 +3,11 @@
     "circt-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1660327596,
-        "narHash": "sha256-NCwXboOV13AFr/SBHSeBK/yt6HrsTky8xvy3k15MLLM=",
+        "lastModified": 1660329789,
+        "narHash": "sha256-vuABQPlrRmY8NAjq1URge39R/CCmrCOrbB1PqxXTrLY=",
         "owner": "llvm",
         "repo": "circt",
-        "rev": "f31d6250d19beb416c02792709ad0b58e6d46d34",
+        "rev": "a80633af2caabfc823a92ce5c91c06432930ca93",
         "type": "github"
       },
       "original": {
@@ -66,11 +66,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1660328882,
-        "narHash": "sha256-Kh2UisDCxYVje1PCs1TknOrvDLxr0cwFt1uvCzEtOhk=",
+        "lastModified": 1660331132,
+        "narHash": "sha256-k0LgiUulbQco36hlo5iIwicooPMYXQyCTT8vu8Z0l1s=",
         "owner": "dtzWill",
         "repo": "nixpkgs",
-        "rev": "cca4caf56a143370e8b8b1bf414bf598b4d452c4",
+        "rev": "004a65ed83de4f0df75ff311c6aed4d61f5571cc",
         "type": "github"
       },
       "original": {
@@ -86,25 +86,7 @@
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "llvm-submodule-src": "llvm-submodule-src",
-        "nixpkgs": "nixpkgs",
-        "wake-src": "wake-src"
-      }
-    },
-    "wake-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1636753498,
-        "narHash": "sha256-p4/qrPB1KKXHpE5uOCuNRcISDthXhgsvRg1jiL/WbjQ=",
-        "owner": "sifive",
-        "repo": "wake",
-        "rev": "f5271d1dbd5ef8aa30de18dd475f0c789aed8e70",
-        "type": "github"
-      },
-      "original": {
-        "owner": "sifive",
-        "ref": "v0.24.0",
-        "repo": "wake",
-        "type": "github"
+        "nixpkgs": "nixpkgs"
       }
     }
   },
