@@ -16,8 +16,6 @@
       rev = "d44f8a50d50909e67f28f91511045404261dbcbf";
       flake = false;
     };
-    wake-src.url = "github:sifive/wake/v0.24.0";
-    wake-src.flake = false;
 
     flake-utils.url = "github:numtide/flake-utils";
     # From README.md: https://github.com/edolstra/flake-compat
@@ -31,7 +29,7 @@
     , nixpkgs
     , flake-compat, flake-utils
     , circt-src, llvm-submodule-src
-    , wake-src }: flake-utils.lib.eachDefaultSystem
+    }: flake-utils.lib.eachDefaultSystem
       (system:
         let pkgs = nixpkgs.legacyPackages.${system};
             newLLVMPkgs = pkgs.callPackage ./llvm.nix {
@@ -56,7 +54,6 @@
               llvm = newLLVMPkgs.libllvm;
               clang-unwrapped = newLLVMPkgs.libclang;
             };
-            wake = pkgs.callPackage ./wake.nix { inherit wake-src; };
           });
         }
       );
