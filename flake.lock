@@ -3,11 +3,11 @@
     "circt-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1660154995,
-        "narHash": "sha256-CgLYt1BuGMGdw+IV24ch2Lx5Ym0nm9mA5/+bhKdqDL8=",
+        "lastModified": 1660315869,
+        "narHash": "sha256-LCrGm89aY5BCN7trhlHNC+NylmN2K62n+KgXIVVYSzY=",
         "owner": "llvm",
         "repo": "circt",
-        "rev": "81120cd7de1b0555959d15d994b9d722ee76acab",
+        "rev": "c5beba5f589d7a392b87809cf4bef12c43eb6b61",
         "type": "github"
       },
       "original": {
@@ -66,16 +66,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1658276948,
-        "narHash": "sha256-6K6wU9f43cBWyVNDdBU3xIsEZC68rCrXXtY33ATzHHY=",
+        "lastModified": 1660318539,
+        "narHash": "sha256-gNsikizP4JBvIoWJzfD7cyisosSkqwmJnvbJuE8pG+8=",
         "owner": "dtzWill",
         "repo": "nixpkgs",
-        "rev": "84c7d131d96bfe5dea8d284c5a2423bf6ada6a4d",
+        "rev": "70c147485250f79a99136e79c389fffef36d5793",
         "type": "github"
       },
       "original": {
         "owner": "dtzWill",
-        "ref": "feature/flang",
+        "ref": "mlir-git",
         "repo": "nixpkgs",
         "type": "github"
       }
