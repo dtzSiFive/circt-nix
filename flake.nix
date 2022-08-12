@@ -36,7 +36,7 @@
         let pkgs = nixpkgs.legacyPackages.${system};
             newLLVMPkgs = pkgs.callPackage ./llvm.nix {
               inherit llvm-submodule-src;
-              llvmPackages = pkgs.llvmPackages_14;
+              llvmPackages = pkgs.llvmPackages_git;
             };
         in rec {
           #devShell = import ./shell.nix { inherit pkgs; };
