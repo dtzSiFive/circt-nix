@@ -25,7 +25,7 @@ stdenv.mkDerivation {
   patches = [ ./patches/polygeist-mlir-tblgen-path.patch ];
 
   postPatch = ''
-    substituteInPlace tools/mlir-clang/CMakeLists.txt \
+    substituteInPlace tools/cgeist/CMakeLists.txt \
       --replace '"''${LLVM_SOURCE_DIR}/../clang' \
                 '"${clang-unwrapped.src}/clang'
 
