@@ -21,11 +21,11 @@ but otherwise no installation required.
 
 ## Usage
 
-Either refer to this flake as `github:dtzSiFive/circt`,
+Either refer to this flake as `github:dtzSiFive/circt-nix`,
 or optionally add this to your flake registry for simpler invocations:
 
 ```
-$ nix registry add circt github:dtzSiFive/circt
+$ nix registry add circt github:dtzSiFive/circt-nix
 ```
 
 For brevity's sake, the remaining commands will assume this has been
@@ -69,19 +69,19 @@ such as with `nix-env`.
 
 Generally speaking, point the command at this repository usually with:
 ```
--f https://github.com/dtzSiFive/circt/archive/master.tar.gz
+-f https://github.com/dtzSiFive/circt-nix/archive/master.tar.gz
 ```
 
 #### Install to profile: nix-env
 
 ```
-$ nix-env -f https://github.com/dtzSiFive/circt/archive/master.tar.gz -iA circt
+$ nix-env -f https://github.com/dtzSiFive/circt-nix/archive/master.tar.gz -iA default
 ```
 
 #### nix-build
 
 ```
-$ nix-build -f https://github.com/dtzSiFive/circt/archive/master.tar.gz -A circt
+$ nix-build https://github.com/dtzSiFive/circt-nix/archive/master.tar.gz -A default
 ```
 
 ## Maintainer
