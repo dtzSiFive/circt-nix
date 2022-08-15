@@ -49,11 +49,6 @@
                 cmakeFlags = o.cmakeFlags or [] ++ [ "-DWITH_FIBERS=OFF" ];
               });
             };
-            polygeist = pkgs.callPackage ./polygeist.nix {
-              inherit (newLLVMPkgs) mlir;
-              llvm = newLLVMPkgs.libllvm;
-              clang-unwrapped = newLLVMPkgs.libclang;
-            };
           });
         }
       );
