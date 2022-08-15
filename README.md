@@ -1,12 +1,11 @@
 # circt-nix
 
-Package LLVM, MLIR, circt, and related projects using nix + flakes.
+Package LLVM, MLIR, and CIRCT using nix + flakes.
 
 Available packages:
 
 * circt - [CIRCT](https://circt.llvm.org)
 * mlir - MLIR (built using LLVM version pinned by CIRCT)
-* polygeist - [polygeist](https://polygeist.mit.edu/) (broken currently, needs older MLIR than tracked here for CIRCT)
 
 For a list of all outputs, see `nix flake show circt` (after adding to registry, see below).
 Only x86_64-linux has been tested.
