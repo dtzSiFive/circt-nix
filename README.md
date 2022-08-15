@@ -86,4 +86,4 @@ $ nix-build https://github.com/dtzSiFive/circt-nix/archive/master.tar.gz -A defa
 
 ## Maintainer
 
-(Will Dietz)[will.dietz@sifive.com]
+[Will Dietz](will.dietz@sifive.com)
