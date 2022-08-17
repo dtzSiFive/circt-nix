@@ -22,8 +22,11 @@ This requires `nix`, preferably with flake support.
 Flake support is assumed throughout,
 to use without flakes see [Without Flakes](#without-flakes).
 
-Clone repository locally if would like to make changes to it,
+Clone repository locally if you would like to make changes to it,
 but otherwise no installation required.
+
+Use the [dtz-circt cachix][cachix-cache] to use prebuilt paths
+when available.
 
 ## Usage
 
