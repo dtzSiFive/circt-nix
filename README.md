@@ -44,11 +44,14 @@ Registry entries can be pinned with `nix registry pin`.
 
 ### Build CIRCT
 
+```
 $ nix build circt
 $ ./result/bin/firtool --help
+```
 
-In the future, prebuilt versions may be available via cachix,
-but for now this will build LLVM, MLIR, and CIRCT.
+Prebuilt versions may be available via cachix,
+but if not (or not using it) this will
+build LLVM, MLIR, and CIRCT (separately).
 
 ### Install to profile
 
