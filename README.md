@@ -1,6 +1,10 @@
 # circt-nix
 
-  [![Build + Cachix](https://github.com/dtzSiFive/circt-nix/actions/workflows/cachix.yml/badge.svg)](https://github.com/dtzSiFive/circt-nix/actions/workflows/cachix.yml)
+[![Build](https://github.com/dtzSiFive/circt-nix/actions/workflows/cachix.yml/badge.svg)](https://github.com/dtzSiFive/circt-nix/actions/workflows/cachix.yml)
+[![Cachix Cache][cachix-cache-shield]][cachix-cache]
+
+[cachix-cache]: https://dtz-circt.cachix.org
+[cachix-cache-shield]: https://img.shields.io/badge/cachix-dtz-circt-blue.svg
 
 Package LLVM, MLIR, and CIRCT using nix + flakes.
 
