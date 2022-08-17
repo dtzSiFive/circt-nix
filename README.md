@@ -16,6 +16,8 @@ Available packages:
 For a list of all outputs, see `nix flake show circt` (after adding to registry, see below).
 Only x86_64-linux has been tested.
 
+Built with assertions enabled.
+
 ## Install
 
 This requires `nix`, preferably with flake support.
