@@ -1,4 +1,4 @@
-{ stdenv, cmake
+{ lib, stdenv, cmake
 , libllvm, mlir, lit
 , circt-src
 , capnproto, verilator
