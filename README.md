@@ -27,8 +27,13 @@ to use without flakes see [Without Flakes](#without-flakes).
 Clone repository locally if you would like to make changes to it,
 but otherwise no installation required.
 
+### Cachix (use prebuilt paths)
+
 Use the [dtz-circt cachix][cachix-cache] to use prebuilt paths
 when available.
+
+Follow the instructions at that link,
+or install cachix yourself and run `cachix use dtz-circt`.
 
 ## Usage
 
@@ -72,7 +77,25 @@ $ nix profile install circt
 
 #### nix-env
 
-See the next section.
+See [Without Flakes](#without-flakes).
+
+### Development shell for working on CIRCT
+
+This repo also provides a development shell for work on CIRCT.
+
+To use:
+
+```
+$ nix develop circt
+```
+
+Or with [nix-direnv](https://github.com/nix-community/nix-direnv):
+
+```
+$ echo "use flake circt" >> /path/to/circt-src/.envrc
+```
+
+So that the environment is automatically loaded/unloaded when cd'ing to that directory.
 
 
 ### Without Flakes
