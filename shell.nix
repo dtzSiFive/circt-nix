@@ -1,6 +1,10 @@
 { pkgs ? import <nixpkgs> {}}:
 #{ pkgs ? import (fetchTarball channel:nixos-21.11) {} }:
 
+# Use with direnv to automatically get dev env when cd to circt src:
+# $ ln -s $PWD/shell.nix /../circt-src/shell.nix
+# $ echo "use nix" >> /../circt-src/.envrc
+
 with pkgs;
 
 let
