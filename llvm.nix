@@ -1,12 +1,12 @@
-{ lib, fetchpatch, runCommand, llvmPackages, llvm-submodule-src }:
+{ lib, fetchpatch, applyPatches, runCommand, llvmPackages, llvm-submodule-src }:
 let
   # Apply specified patches to 'src', or if none specified just return src
   patchsrc = src: patches:
     if patches == [] then src
-    else runCommand "patched-src" {} (''
-    cp -r ${src} "$out"
-    chmod u+rw -R $out
-  '' + lib.concatMapStringsSep "\n" (p: "patch -p1 -i ${p} -d $out") patches);
+    else applyPatches {
+      inherit src patches;
+      name = "llvm-src-${version}-patched";
+   };
 
   # LLVM source to use:
   monorepoSrc = patchsrc llvm-submodule-src [
