@@ -12,7 +12,7 @@
 
 
 # TODO: or-tools, needs cmake bits maybe?
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   pname = "circt";
   version = "1.12.0-git-${circt-src.shortRev}";
   nativeBuildInputs = [ cmake python3 ninja doxygen graphviz-nox ];
@@ -24,6 +24,9 @@ stdenv.mkDerivation {
   ];
   postPatch = ''
     substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir}/bin/mlir-tblgen"
+    
+    substituteInPlace cmake/modules/GenVersionFile.cmake \
+      --replace '"unknown git version"' '"${version}"'
   '';
 
   cmakeFlags = [
