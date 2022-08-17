@@ -50,7 +50,7 @@ stdenv.mkDerivation {
   meta = with lib; {
     description = " Circuit IR Compilers and Tools";
     homepage = "https://circt.org";
-    license = with licenses; [ asl20 llvm-exception ];
+    license = with licenses; [ asl20 llvm-exception ]; # (ASL2.0 w/LLVM Exception)
     maintainers = with maintainers; [ dtzWill ];
   };
 }
