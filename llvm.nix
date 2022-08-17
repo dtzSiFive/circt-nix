@@ -1,4 +1,8 @@
-{ lib, fetchpatch, applyPatches, runCommand, llvmPackages, llvm-submodule-src }:
+{ lib, fetchpatch, applyPatches, runCommand
+, llvm-submodule-src 
+, llvmPackages
+, enableAssertions ? true
+}:
 let
   # Apply specified patches to 'src', or if none specified just return src
   patchsrc = src: patches:
@@ -14,24 +18,17 @@ let
   # Version string:
   version = "git-${llvm-submodule-src.shortRev}";
 
-in rec {
-  libllvm = (llvmPackages.libllvm.override { inherit monorepoSrc version; }).overrideAttrs(o: {
+  addAsserts = p: if !enableAssertions then p else p.overrideAttrs(o: {
     cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_ENABLE_ASSERTIONS=ON" ];
   });
+  overrideLLVMPkg = p: args: p.override ({ inherit monorepoSrc version; } // args);
+  overridePkg = p: overrideLLVMPkg (addAsserts p);
 
-  mlir = (llvmPackages.mlir.override {
-    inherit monorepoSrc libllvm version;
-  }).overrideAttrs (o: {
-    cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_ENABLE_ASSERTIONS=ON" ];
-  });
-  libclang = llvmPackages.libclang.override {
-    inherit monorepoSrc libllvm version;
-  };
-  #flang = llvmPackages.flang.override {
-  #  inherit monorepoSrc libclang libllvm mlir version;
-  #  # Hack to use our MLIR as build-tools (tblgen), since not doing cross here anyway
-  #  buildLlvmTools = { inherit mlir; };
-  #};
+in rec {
+  libllvm = overridePkg llvmPackages.libllvm { };
+  mlir = overridePkg llvmPackages.mlir { inherit libllvm; };
+  libclang = overridePkg llvmPackages.libclang { inherit libllvm; };
+
   llvmUtilsSrc = runCommand "llvm-src-for-unittests" {} ''
     mkdir -p "$out/utils"
     cp -r ${monorepoSrc}/llvm/utils/unittest -t "$out/utils"
