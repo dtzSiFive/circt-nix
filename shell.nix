@@ -1,9 +1,12 @@
 { pkgs ? import <nixpkgs> {}}:
 #{ pkgs ? import (fetchTarball channel:nixos-21.11) {} }:
 
-# Use with direnv to automatically get dev env when cd to circt src:
-# $ ln -s $PWD/shell.nix /../circt-src/shell.nix
-# $ echo "use nix" >> /../circt-src/.envrc
+# Use with (nix-)direnv to automatically get dev env when cd to circt src:
+# $ ln -s $PWD/shell.nix /path/to/circt-src/shell.nix
+# $ echo "use nix" >> /path/to/circt-src/.envrc
+#
+# Or with flakes (and circt in registry):
+# $ echo "use flake circt" >> /path/to/circt-src/.envrc
 
 with pkgs;
 
