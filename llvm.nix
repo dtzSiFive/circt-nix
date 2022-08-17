@@ -1,6 +1,8 @@
 { lib, fetchpatch, runCommand, llvmPackages, llvm-submodule-src }:
 let
-  patchsrc = src: patches: runCommand "patched-src" {} (''
+  patchsrc = src: patches:
+    if patches == [] then src
+    else runCommand "patched-src" {} (''
     cp -r ${src} "$out"
     chmod u+rw -R $out
   '' + lib.concatMapStringsSep "\n" (p: "patch -p1 -i ${p} -d $out") patches);
