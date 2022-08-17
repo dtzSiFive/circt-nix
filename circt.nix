@@ -46,4 +46,11 @@ stdenv.mkDerivation {
 
     patchShebangs bin/*.py
   '';
+
+  meta = with lib; {
+    description = " Circuit IR Compilers and Tools";
+    homepage = "https://circt.org";
+    license = with licenses; [ asl20 llvm-exception ];
+    maintainers = with maintainers; [ dtzWill ];
+  };
 }
