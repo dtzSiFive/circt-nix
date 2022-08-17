@@ -1,5 +1,7 @@
 # circt-nix
 
+  [![Build + Cachix](https://github.com/dtzSiFive/circt-nix/actions/workflows/cachix.yml/badge.svg)](https://github.com/dtzSiFive/circt-nix/actions/workflows/cachix.yml)
+
 Package LLVM, MLIR, and CIRCT using nix + flakes.
 
 Available packages:
