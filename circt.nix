@@ -31,6 +31,8 @@ in stdenv.mkDerivation {
       --replace '"unknown git version"' '"${version}"'
   '';
 
+  outputs = [ "out" "lib" "dev" ];
+
   cmakeFlags = [
     "-DLLVM_DIR=${libllvm}/lib/cmake/llvm"
     "-DLLVM_EXTERNAL_LIT=${lit}/bin/lit"
