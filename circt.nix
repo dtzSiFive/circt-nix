@@ -7,6 +7,7 @@
 , ninja
 , doxygen
 , graphviz-nox
+, enableDocs ? false
 , enableAssertions ? true
 }:
 
@@ -17,7 +18,8 @@ let
 in stdenv.mkDerivation {
   pname = "circt";
   inherit version;
-  nativeBuildInputs = [ cmake python3 ninja doxygen graphviz-nox ];
+  nativeBuildInputs = [ cmake python3 ninja ]
+    ++ lib.optionals enableDocs [ doxygen graphviz-nox ];
   buildInputs = [ mlir libllvm capnproto verilator ];
   src = circt-src;
 
@@ -39,10 +41,12 @@ in stdenv.mkDerivation {
     "-DLLVM_LIT_ARGS=-v"
     "-DCapnProto_DIR=${capnproto}/lib/cmake/CapnProto"
     "-DLLVM_BUILD_MAIN_SRC_DIR=${llvmUtilsSrc}"
-    "-DCIRCT_INCLUDE_DOCS=ON"
-  ] ++ lib.optional enableAssertions "-DLLVM_ENABLE_ASSERTIONS=ON";
+  ] ++ lib.optional enableDocs "-DCIRCT_INCLUDE_DOCS=ON"
+    ++ lib.optional enableAssertions "-DLLVM_ENABLE_ASSERTIONS=ON";
 
-  postBuild = "ninja doxygen-circt circt-doc";
+  postBuild = lib.optionalString enableDocs ''
+    ninja doxygen-circt circt-doc
+  '';
 
   doCheck = true;
   # No integration tests for now, bits aren't working
