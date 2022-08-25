@@ -19,6 +19,19 @@ jobs:
     - run: nix build -L
     - run: nix shell -c firtool --version
 
+  flake-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3.0.2
+    - uses: cachix/install-nix-action@v17
+      with:
+        nix_path: nixpkgs=channel:nixos-unstable
+    - uses: cachix/cachix-action@v10
+      with:
+        name: dtz-circt
+        authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+    - run: nix flake check
+
   devshell:
     runs-on: ubuntu-latest
     steps:
