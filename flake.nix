@@ -46,6 +46,8 @@
               inherit (newLLVMPkgs) libllvm mlir llvmUtilsSrc;
             };
           });
+          apps = pkgs.lib.genAttrs [ "firtool" "circt-lsp-server" ]
+          (name: flake-utils.lib.mkApp { drv = packages.circt; inherit name; });
         }
       );
 }
