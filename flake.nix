@@ -37,7 +37,7 @@
               llvmPackages = pkgs.llvmPackages_git;
             };
         in rec {
-          devShell = import ./shell.nix { inherit pkgs; };
+          devShells.default = import ./shell.nix { inherit pkgs; };
           packages = flake-utils.lib.flattenTree (newLLVMPkgs // rec {
             default = circt; # default for `nix build` etc.
 
