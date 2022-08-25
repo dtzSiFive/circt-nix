@@ -60,6 +60,7 @@ in stdenv.mkDerivation {
 
   meta = with lib; {
     description = " Circuit IR Compilers and Tools";
+    mainProgram = "firtool";
     homepage = "https://circt.org";
     license = with licenses; [ asl20 llvm-exception ]; # (ASL2.0 w/LLVM Exception)
     maintainers = with maintainers; [ dtzWill ];
