@@ -47,7 +47,7 @@
             };
           });
           apps = pkgs.lib.genAttrs [ "firtool" "circt-lsp-server" ]
-          (name: flake-utils.lib.mkApp { drv = packages.circt; inherit name; });
+            (name: flake-utils.lib.mkApp { drv = packages.circt; inherit name; });
         }
       );
 }
