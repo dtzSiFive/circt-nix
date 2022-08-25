@@ -28,7 +28,7 @@ in stdenv.mkDerivation {
   ];
   postPatch = ''
     substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir}/bin/mlir-tblgen"
-    
+
     substituteInPlace cmake/modules/GenVersionFile.cmake \
       --replace '"unknown git version"' '"${version}"'
   '';
