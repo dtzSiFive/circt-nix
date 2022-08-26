@@ -14,7 +14,7 @@
 
 # TODO: or-tools, needs cmake bits maybe?
 let
-  version = "1.13.0-git-${circt-src.shortRev}";
+  version = "1.14.0-git-${circt-src.shortRev}";
 in stdenv.mkDerivation {
   pname = "circt";
   inherit version;
