@@ -50,17 +50,17 @@
     "llvm-submodule-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1660926198,
-        "narHash": "sha256-b5SUxjxt3C1mf7LUvC2Cp41Z0Wdd6xEmIte2ZoAIs0k=",
+        "lastModified": 1661605003,
+        "narHash": "sha256-TMJ2JaTRQwfvFtBHutqJ9eaopKS23+x5EJB13v3+eh0=",
         "owner": "llvm",
         "repo": "llvm-project",
-        "rev": "fe0f72d5c55a9b95c5564089e946e8f08112e995",
+        "rev": "1bcf21ca7f3649387df9815e065be2a0435b5a39",
         "type": "github"
       },
       "original": {
         "owner": "llvm",
         "repo": "llvm-project",
-        "rev": "fe0f72d5c55a9b95c5564089e946e8f08112e995",
+        "rev": "1bcf21ca7f3649387df9815e065be2a0435b5a39",
         "type": "github"
       }
     },
