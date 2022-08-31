@@ -14,7 +14,11 @@
 
 # TODO: or-tools, needs cmake bits maybe?
 let
-  version = "1.14.0-git-${circt-src.shortRev}";
+  tag = "1.14.0";
+  date = builtins.substring 0 8 (circt-src.lastModifiedDate or circt-src.lastModified or "19700101");
+  versionSuffix = "g${date}_${circt-src.shortRev}";
+
+  version = "${tag}${versionSuffix}";
 in stdenv.mkDerivation {
   pname = "circt";
   inherit version;
