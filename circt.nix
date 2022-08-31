@@ -14,10 +14,15 @@
 
 # TODO: or-tools, needs cmake bits maybe?
 let
-  tag = "1.14.0";
-  date = builtins.substring 0 8 (circt-src.lastModifiedDate or circt-src.lastModified or "19700101");
-  versionSuffix = "g${date}_${circt-src.shortRev}";
+  mkVer = src:
+    let
+      date = builtins.substring 0 8 (src.lastModifiedDate or src.lastModified or "19700101");
+      rev = src.shortRev or "dirty";
+    in
+      "g${date}_${rev}";
 
+  tag = "1.14.0";
+  versionSuffix = mkVer circt-src;
   version = "${tag}${versionSuffix}";
 in stdenv.mkDerivation {
   pname = "circt";

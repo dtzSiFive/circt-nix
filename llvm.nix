@@ -12,11 +12,18 @@ let
       name = "llvm-src-${version}-patched";
    };
 
+
   # LLVM source to use:
   monorepoSrc = patchsrc llvm-submodule-src [
   ];
   # Version string:
-  version = "git-${llvm-submodule-src.shortRev}";
+  mkVer = src:
+    let
+      date = builtins.substring 0 8 (src.lastModifiedDate or src.lastModified or "19700101");
+      rev = src.shortRev or "dirty";
+    in
+      "g${date}_${rev}";
+  version = mkVer llvm-submodule-src;
 
   addAsserts = p: if !enableAssertions then p else p.overrideAttrs(o: {
     cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_ENABLE_ASSERTIONS=ON" ];
