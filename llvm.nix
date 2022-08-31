@@ -22,7 +22,7 @@ let
       date = builtins.substring 0 8 (src.lastModifiedDate or src.lastModified or "19700101");
       rev = src.shortRev or "dirty";
     in
-      "g${date}_${rev}";
+      "${date}_${rev}";
   version = mkVer llvm-submodule-src;
 
   addAsserts = p: if !enableAssertions then p else p.overrideAttrs(o: {
