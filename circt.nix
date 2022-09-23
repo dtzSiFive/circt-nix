@@ -45,7 +45,6 @@ in stdenv.mkDerivation {
   outputs = [ "out" "lib" "dev" ];
 
   cmakeFlags = [
-    "-DLLVM_DIR=${libllvm}/lib/cmake/llvm"
     "-DLLVM_EXTERNAL_LIT=${lit}/bin/lit"
     "-DLLVM_LIT_ARGS=-v"
     "-DCapnProto_DIR=${capnproto}/lib/cmake/CapnProto"
