@@ -47,7 +47,6 @@ in stdenv.mkDerivation {
   cmakeFlags = [
     "-DLLVM_EXTERNAL_LIT=${lit}/bin/lit"
     "-DLLVM_LIT_ARGS=-v"
-    "-DCapnProto_DIR=${capnproto}/lib/cmake/CapnProto"
     "-DLLVM_BUILD_MAIN_SRC_DIR=${llvmUtilsSrc}"
   ] ++ lib.optional enableDocs "-DCIRCT_INCLUDE_DOCS=ON"
     ++ lib.optional enableAssertions "-DLLVM_ENABLE_ASSERTIONS=ON";
