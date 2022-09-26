@@ -13,7 +13,7 @@
       owner = "llvm";
       repo = "llvm-project";
       # From circt submodule
-      rev = "025a5b22c848364be0009a630e7fb53f40515e68";
+      rev = "585010b4b0a3f986f611ac522275d8420c4dfc67";
       flake = false;
     };
 
