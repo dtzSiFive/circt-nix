@@ -16,7 +16,7 @@ let
   theStdenv = overrideCC llvmPkgs.stdenv (llvmPkgs.stdenv.cc.override {
     inherit (llvmPkgs) bintools;
   });
-  python = python3.withPackages (ps: [ ps.psutil ps.pycapnp /* ps.numpy */ /* for MLIR python bindings */ ]);
+  python = python3.withPackages (ps: [ ps.psutil ps.pycapnp ps.numpy ps.pybind11 ps.pyyaml ]);
 in
 (mkShell.override { stdenv = theStdenv; }) {
   nativeBuildInputs = [
