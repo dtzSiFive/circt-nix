@@ -1,4 +1,6 @@
-{ pkgs ? import <nixpkgs> {}}:
+{ pkgs ? import <nixpkgs> {}
+, llvmPkgs ? pkgs.llvmPackages_14
+}:
 #{ pkgs ? import (fetchTarball channel:nixos-21.11) {} }:
 
 # Use with (nix-)direnv to automatically get dev env when cd to circt src:
@@ -11,7 +13,6 @@
 with pkgs;
 
 let
-  llvmPkgs = llvmPackages_14;
   # (from firefox's nix expression, FWIW)
   theStdenv = overrideCC llvmPkgs.stdenv (llvmPkgs.stdenv.cc.override {
     inherit (llvmPkgs) bintools;
