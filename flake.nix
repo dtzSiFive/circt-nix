@@ -16,6 +16,8 @@
       rev = "c4ca3a2c4b00033c393f694c1d92d28ff55c69cd";
       flake = false;
     };
+    slang-src.url = "github:MikePopoloski/slang";
+    slang-src.flake = false;
 
     flake-utils.url = "github:numtide/flake-utils";
     # From README.md: https://github.com/edolstra/flake-compat
@@ -29,6 +31,7 @@
     , nixpkgs
     , flake-compat, flake-utils
     , circt-src, llvm-submodule-src
+    , slang-src
     }: flake-utils.lib.eachDefaultSystem
       (system:
         let pkgs = nixpkgs.legacyPackages.${system};
@@ -50,6 +53,9 @@
             circt = pkgs.callPackage ./circt.nix {
               inherit circt-src;
               inherit (newLLVMPkgs) libllvm mlir llvmUtilsSrc;
+            };
+            slang = pkgs.callPackage ./slang.nix {
+              inherit slang-src;
             };
           });
           apps = pkgs.lib.genAttrs [ "firtool" "circt-lsp-server" ]
