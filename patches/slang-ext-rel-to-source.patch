@@ -1,17 +1,17 @@
-From 9db0a68598465f1b025af25ce66d668c766c3414 Mon Sep 17 00:00:00 2001
+From 9d42e376aca95164e3ccd6284b60bf3fbb6e5fd8 Mon Sep 17 00:00:00 2001
 From: Will Dietz <will.dietz@sifive.com>
 Date: Wed, 5 Oct 2022 14:26:52 -0500
 Subject: [PATCH] external: paths relative to source
 
 ---
- external/CMakeLists.txt | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ external/CMakeLists.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
-index e7d40f25..43218c7d 100644
+index e7d40f25..2cacc7af 100644
 --- a/external/CMakeLists.txt
 +++ b/external/CMakeLists.txt
-@@ -25,11 +25,11 @@ add_subdirectory(external/unordered_dense)
+@@ -25,15 +25,15 @@ add_subdirectory(external/unordered_dense)
  
  if(SLANG_INCLUDE_INSTALL)
    install(
@@ -21,10 +21,15 @@ index e7d40f25..43218c7d 100644
      COMPONENT slang_Development)
    install(
 -    FILES ../external/flat_hash_map.hpp ../external/span.hpp
-+    FILES external/flat_hash_map.hpp ../external/span.hpp
++    FILES external/flat_hash_map.hpp external/span.hpp
      DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
      COMPONENT slang_Development)
    install(
+-    DIRECTORY ${unordered_dense_SOURCE_DIR}/include/ankerl
++    DIRECTORY external/unordered_dense/include/ankerl
+     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+     COMPONENT slang_Development)
+ 
 -- 
 2.37.3
 
