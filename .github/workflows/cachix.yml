@@ -46,7 +46,7 @@ jobs:
     - run: nix develop --profile dev-profile
     - run: nix develop .#git --profile dev-profile-git
 
-  devshells:
+  slang:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3.0.2
