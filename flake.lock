@@ -3,11 +3,11 @@
     "circt-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1664960469,
-        "narHash": "sha256-YpDI3Bj97lrkppKI5hxYfoq1NLFPem7Lwv6IhiMI/3Q=",
+        "lastModified": 1664986355,
+        "narHash": "sha256-qO5JAscwZ3zZ7ZKcPRCHkjj9WHII5t/rBxS4zTC9rr8=",
         "owner": "llvm",
         "repo": "circt",
-        "rev": "24a30306705bfba250427e0278558bb761d8fbd0",
+        "rev": "0ed016276cf70203d576d74044e35b7909c27ad2",
         "type": "github"
       },
       "original": {
@@ -86,7 +86,24 @@
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "llvm-submodule-src": "llvm-submodule-src",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "slang-src": "slang-src"
+      }
+    },
+    "slang-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1664895063,
+        "narHash": "sha256-EgLD9rlYRClGmZfDjxp58wSRDyKakh+J1FILPiZ9hKA=",
+        "owner": "MikePopoloski",
+        "repo": "slang",
+        "rev": "0f1eb8a6a370783b6afecc7d1b834753140bd288",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MikePopoloski",
+        "repo": "slang",
+        "type": "github"
       }
     }
   },
