@@ -56,7 +56,7 @@ in stdenv.mkDerivation {
 
     SLANG_VERSION_MAJOR = lib.versions.major tag;
     SLANG_VERSION_MINOR = lib.versions.minor tag;
-    SLANG_VERSION_PATCH = slang-src.revCount or 0;
+    SLANG_VERSION_PATCH = 0; # patch isn't safe if no patch level :(
     SLANG_VERSION_HASH = getRev slang-src;
 
   meta = with lib; {
