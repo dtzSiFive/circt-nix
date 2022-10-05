@@ -1,7 +1,8 @@
-{ lib, stdenv, slang-src
-, cmake, ninja
+{ lib, stdenv, slang-src, fetchFromGitHub
+, cmake
 , python3
-, fetchFromGitHub }:
+}:
+
 let
   getRev = src: src.shortRev or "dirty";
   mkVer = src:
@@ -33,7 +34,8 @@ let
 in stdenv.mkDerivation {
   pname = "slang";
   inherit version;
-  nativeBuildInputs = [ cmake python3 ninja ];
+  nativeBuildInputs = [ cmake python3 ];
+  buildInputs = [ python3 ];
   src = slang-src;
 
   patches = [
@@ -60,6 +62,8 @@ in stdenv.mkDerivation {
   SLANG_VERSION_MINOR = lib.versions.minor tag;
   SLANG_VERSION_PATCH = 0; # patch isn't safe if no patch level :(
   SLANG_VERSION_HASH = getRev slang-src;
+
+  # TODO: tests
 
   meta = with lib; {
     description = "SystemVerilog compiler and language services";
