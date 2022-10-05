@@ -3,12 +3,12 @@
 , python3
 , fetchFromGitHub }:
 let
+  getRev = src: src.shortRev or "dirty";
   mkVer = src:
     let
       date = builtins.substring 0 8 (src.lastModifiedDate or src.lastModified or "19700101");
-      rev = src.shortRev or "dirty";
     in
-      "g${date}_${rev}";
+      "g${date}_${getRev src}";
   tag = "1.0";
   version = "${tag}${mkVer slang-src}";
 
@@ -45,7 +45,19 @@ in stdenv.mkDerivation {
     ln -s ${fmt_src} external/fmt
     ln -s ${unordered_dense_src} external/unordered_dense
     ln -s ${catch2_src} external/catch2
+    
+    substituteInPlace source/util/Version.cpp.in \
+      --subst-var SLANG_VERSION_MAJOR \
+      --subst-var SLANG_VERSION_MINOR \
+      --subst-var SLANG_VERSION_PATCH \
+      --subst-var SLANG_VERSION_HASH
+    substituteInPlace CMakeLists.txt --replace "''${SLANG_VERSION_STRING}" "${tag}"
   '';
+
+    SLANG_VERSION_MAJOR = lib.versions.major tag;
+    SLANG_VERSION_MINOR = lib.versions.minor tag;
+    SLANG_VERSION_PATCH = slang-src.revCount or 0;
+    SLANG_VERSION_HASH = getRev slang-src;
 
   meta = with lib; {
     description = "SystemVerilog compiler and language services";
