@@ -40,7 +40,6 @@ in stdenv.mkDerivation {
 
   patches = [
     ./patches/slang-dont-fetch.patch
-    ./patches/slang-ext-rel-to-source.patch
   ];
 
   postPatch = ''
