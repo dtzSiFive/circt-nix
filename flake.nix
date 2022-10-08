@@ -6,7 +6,6 @@
     # Use Nixpkgs branch until MLIR at least is merged into nixpkgs proper
     nixpkgs.url = "github:dtzWill/nixpkgs/mlir-git";
     circt-src.url = "github:llvm/circt";
-    #circt-src.url = "github:llvm/circt/update/llvm-47.2";
     circt-src.flake = false;
     llvm-submodule-src = {
       type = "github";
@@ -62,4 +61,9 @@
             (name: flake-utils.lib.mkApp { drv = packages.circt; inherit name; });
         }
       );
+
+  nixConfig = {
+    extra-substituters = [ "https://dtz-circt.cachix.org" ];
+    extra-trusted-public-keys = [ "dtz-circt.cachix.org-1:PHe0okMASm5d9SD+UE0I0wptCy58IK8uNF9P3K7f+IU=" ];
+  };
 }
