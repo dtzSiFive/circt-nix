@@ -16,14 +16,14 @@ let
   fmt_src = fetchFromGitHub {
     owner = "fmtlib";
     repo = "fmt";
-    rev = "9.0.0";
-    sha256 = "nwlAzMkY1JdhLtes48VaNH9LS7GzqtPCwk2dZA/bGmQ=";
+    rev = "9.1.0";
+    sha256 = "rP6ymyRc7LnKxUXwPpzhHOQvpJkpnRFOt2ctvUNlYI0=";
   };
   unordered_dense_src = fetchFromGitHub {
     owner = "martinus";
     repo = "unordered_dense";
-    rev = "v1.3.2";
-    sha256 = "AT90sXousdes+zqixWy69gbrV9jqB7789/33ENm5/a4=";
+    rev = "v2.0.0";
+    sha256 = "w5ACS87BQgfZEpweMLr0SGvEnSKPcOHiNCsCHqynrd8=";
   };
   catch2_src = fetchFromGitHub {
     owner = "catchorg";
