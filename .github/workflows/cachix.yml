@@ -8,11 +8,11 @@ jobs:
   circt:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3.0.2
-    - uses: cachix/install-nix-action@v17
+    - uses: actions/checkout@v3.1.0
+    - uses: cachix/install-nix-action@v18
       with:
         nix_path: nixpkgs=channel:nixos-unstable
-    - uses: cachix/cachix-action@v10
+    - uses: cachix/cachix-action@v11
       with:
         name: dtz-circt
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
@@ -22,11 +22,11 @@ jobs:
   flake-check:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3.0.2
-    - uses: cachix/install-nix-action@v17
+    - uses: actions/checkout@v3.1.0
+    - uses: cachix/install-nix-action@v18
       with:
         nix_path: nixpkgs=channel:nixos-unstable
-    - uses: cachix/cachix-action@v10
+    - uses: cachix/cachix-action@v11
       with:
         name: dtz-circt
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
@@ -35,11 +35,11 @@ jobs:
   devshells:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3.0.2
-    - uses: cachix/install-nix-action@v17
+    - uses: actions/checkout@v3.1.0
+    - uses: cachix/install-nix-action@v18
       with:
         nix_path: nixpkgs=channel:nixos-unstable
-    - uses: cachix/cachix-action@v10
+    - uses: cachix/cachix-action@v11
       with:
         name: dtz-circt
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
@@ -49,11 +49,11 @@ jobs:
   slang:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3.0.2
-    - uses: cachix/install-nix-action@v17
+    - uses: actions/checkout@v3.1.0
+    - uses: cachix/install-nix-action@v18
       with:
         nix_path: nixpkgs=channel:nixos-unstable
-    - uses: cachix/cachix-action@v10
+    - uses: cachix/cachix-action@v11
       with:
         name: dtz-circt
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
