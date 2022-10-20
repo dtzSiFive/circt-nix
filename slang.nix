@@ -40,6 +40,7 @@ in stdenv.mkDerivation {
 
   patches = [
     ./patches/slang-dont-fetch.patch
+    ./patches/slang-pkgconfig.patch
   ];
 
   postPatch = ''
