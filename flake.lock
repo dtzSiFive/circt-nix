@@ -3,11 +3,11 @@
     "circt-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1666274150,
-        "narHash": "sha256-HCQNpV05y+QUANXWuQ0PL2AfuRpQzaD8yGmIVowps00=",
+        "lastModified": 1666286209,
+        "narHash": "sha256-njO4+Ve+RDrNC01URqNkz5XPXkn7BjymMXNvekr/k34=",
         "owner": "llvm",
         "repo": "circt",
-        "rev": "1390ef9874a619357a1ef3d69b29544c57c60985",
+        "rev": "ddddc3c3fc02bc71134ae7fb5cb270b5c91dab66",
         "type": "github"
       },
       "original": {
