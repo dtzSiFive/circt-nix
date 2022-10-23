@@ -15,6 +15,15 @@ let
 
   # LLVM source to use:
   monorepoSrc = patchsrc llvm-submodule-src [
+    # Fix broken CMakeLists.txt :(
+    (fetchpatch {
+       url = "https://github.com/llvm/llvm-project/commit/e78247112ac2599bd682e16429bfceada4ac803d.patch";
+       sha256 = "sha256-cbtsu8TXN9vKoPo3O2vxZq/qWsY3Jx2lxqbm8tCXSVY=";
+    })
+    (fetchpatch {
+       url = "https://github.com/llvm/llvm-project/commit/d8cb5d3c6e1883166d8d2a8dbb4b497a8fd37f4a.patch";
+       sha256 = "sha256-foVFlZI0dM+27yPQW0RQFovd0/7kUxhxd/iRHilaoys=";
+    })
   ];
   # Version string:
   mkVer = src:
