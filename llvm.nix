@@ -24,6 +24,7 @@ let
        url = "https://github.com/llvm/llvm-project/commit/d8cb5d3c6e1883166d8d2a8dbb4b497a8fd37f4a.patch";
        sha256 = "sha256-foVFlZI0dM+27yPQW0RQFovd0/7kUxhxd/iRHilaoys=";
     })
+    ./patches/mlir-add-include-to-path.patch
   ];
   # Version string:
   mkVer = src:

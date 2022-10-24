@@ -1,0 +1,25 @@
+From df1128f4af2da8bbdca8f9dd99486408aa5924c2 Mon Sep 17 00:00:00 2001
+From: Will Dietz <w@wdtz.org>
+Date: Sun, 23 Oct 2022 20:45:03 -0500
+Subject: [PATCH] mlir: headers go in include/
+
+---
+ mlir/lib/Dialect/SparseTensor/IR/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mlir/lib/Dialect/SparseTensor/IR/CMakeLists.txt b/mlir/lib/Dialect/SparseTensor/IR/CMakeLists.txt
+index fb1bc6e1561c..06c0b05439a9 100644
+--- a/mlir/lib/Dialect/SparseTensor/IR/CMakeLists.txt
++++ b/mlir/lib/Dialect/SparseTensor/IR/CMakeLists.txt
+@@ -30,7 +30,7 @@ add_library(MLIRSparseTensorEnums INTERFACE)
+ foreach(hdr ${MLIRSparseTensorEnums_hdrs})
+   target_sources(MLIRSparseTensorEnums INTERFACE
+     $<BUILD_INTERFACE:${MLIR_MAIN_INCLUDE_DIR}/${hdr}>
+-    $<INSTALL_INTERFACE:${hdr}>)
++    $<INSTALL_INTERFACE:include/${hdr}>)
+ endforeach()
+ # The `add_mlir_library_install` is required for other libraries to
+ # depend on this one, but the conditional itself and the phony target
+-- 
+2.37.3
+
