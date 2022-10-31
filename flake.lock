@@ -1,5 +1,22 @@
 {
   "nodes": {
+    "circt-pp-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1667231150,
+        "narHash": "sha256-Qno5Twjg2yHi9A9oCk5TOOXtvD1ToucuGpIz49APsEk=",
+        "owner": "llvm",
+        "repo": "circt",
+        "rev": "45776984f37e3e8ea7b6b0da60988c71cbcbdf32",
+        "type": "github"
+      },
+      "original": {
+        "owner": "llvm",
+        "ref": "dev/dtz/pp-verilog",
+        "repo": "circt",
+        "type": "github"
+      }
+    },
     "circt-src": {
       "flake": false,
       "locked": {
@@ -82,6 +99,7 @@
     },
     "root": {
       "inputs": {
+        "circt-pp-src": "circt-pp-src",
         "circt-src": "circt-src",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
