@@ -21,7 +21,7 @@ jobs:
       run: nix flake check
 
   targets:
-    name: Build targets and push to cachix.
+    name: ${{ matrix.attr }}: build and cache
     strategy:
       matrix:
         attr: [circt,circt-pp,slang]
