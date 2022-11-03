@@ -1,15 +1,15 @@
-From 04b31f454fd4118a346d26090878529f1e070afa Mon Sep 17 00:00:00 2001
+From a7a4eb810cdb0ad891449dc7e6179597ad0a5303 Mon Sep 17 00:00:00 2001
 From: Will Dietz <will.dietz@sifive.com>
 Date: Wed, 5 Oct 2022 14:10:22 -0500
 Subject: [PATCH] don't fetch
 
 ---
- external/CMakeLists.txt | 16 ++--------------
+ external/CMakeLists.txt | 18 +++---------------
  tests/CMakeLists.txt    |  8 +-------
- 2 files changed, 3 insertions(+), 21 deletions(-)
+ 2 files changed, 4 insertions(+), 22 deletions(-)
 
 diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
-index bc7a9bc6..36304401 100644
+index bc7a9bc6..3dcd4810 100644
 --- a/external/CMakeLists.txt
 +++ b/external/CMakeLists.txt
 @@ -8,19 +8,13 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24.0")
@@ -48,6 +48,15 @@ index bc7a9bc6..36304401 100644
  
  if(SLANG_INCLUDE_INSTALL)
    install(
+@@ -66,7 +54,7 @@ if(SLANG_INCLUDE_INSTALL)
+       PUBLIC_HEADER EXCLUDE_FROM_ALL
+       PRIVATE_HEADER EXCLUDE_FROM_ALL)
+     install(
+-      DIRECTORY ${fmt_SOURCE_DIR}/include/fmt
++      DIRECTORY external/fmt/include/fmt
+       DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+       COMPONENT slang_Development)
+   endif()
 diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
 index b9e9a1ad..abc14937 100644
 --- a/tests/CMakeLists.txt
