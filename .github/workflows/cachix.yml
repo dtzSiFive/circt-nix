@@ -23,6 +23,7 @@ jobs:
   targets:
     name: build and cache
     strategy:
+      fail-fast: false
       matrix:
         attr: [circt,circt-pp,slang]
     needs: flake-check
