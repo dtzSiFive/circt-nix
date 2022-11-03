@@ -1,18 +1,18 @@
-From 45f2aa2650f5c6875f3c9e9f6517e03975d58af4 Mon Sep 17 00:00:00 2001
+From 04b31f454fd4118a346d26090878529f1e070afa Mon Sep 17 00:00:00 2001
 From: Will Dietz <will.dietz@sifive.com>
 Date: Wed, 5 Oct 2022 14:10:22 -0500
 Subject: [PATCH] don't fetch
 
 ---
- external/CMakeLists.txt | 15 ++-------------
+ external/CMakeLists.txt | 16 ++--------------
  tests/CMakeLists.txt    |  8 +-------
- 2 files changed, 3 insertions(+), 20 deletions(-)
+ 2 files changed, 3 insertions(+), 21 deletions(-)
 
 diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
-index d4669424..e7d40f25 100644
+index bc7a9bc6..36304401 100644
 --- a/external/CMakeLists.txt
 +++ b/external/CMakeLists.txt
-@@ -8,31 +8,20 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24.0")
+@@ -8,19 +8,13 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24.0")
    set(find_pkg_args "FIND_PACKAGE_ARGS" "9.0.0")
  endif()
  
@@ -33,21 +33,23 @@ index d4669424..e7d40f25 100644
  set(BUILD_SHARED_LIBS ${saved_build_shared_libs})
  
  if((SLANG_INCLUDE_PYLIB OR BUILD_SHARED_LIBS) AND NOT fmt_FOUND)
-   set_target_properties(fmt PROPERTIES POSITION_INDEPENDENT_CODE ON)
+@@ -32,13 +26,7 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24.0")
+   set(find_pkg_args "FIND_PACKAGE_ARGS" "2.0.0")
  endif()
  
 -FetchContent_Declare(
 -  unordered_dense
 -  GIT_REPOSITORY https://github.com/martinus/unordered_dense.git
 -  GIT_TAG v2.0.0
--  GIT_SHALLOW ON)
+-  GIT_SHALLOW ON
+-  ${find_pkg_args})
 -FetchContent_MakeAvailable(unordered_dense)
 +add_subdirectory(external/unordered_dense)
  
  if(SLANG_INCLUDE_INSTALL)
    install(
 diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
-index 035159b2..69c76dd8 100644
+index b9e9a1ad..abc14937 100644
 --- a/tests/CMakeLists.txt
 +++ b/tests/CMakeLists.txt
 @@ -8,13 +8,7 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24.0")
@@ -66,5 +68,5 @@ index 035159b2..69c76dd8 100644
  add_executable(
    unittests
 -- 
-2.37.3
+2.38.0
 
