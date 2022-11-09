@@ -36,7 +36,8 @@ in
     libxml2 libffi ncurses zlib
     libedit
     capnproto verilator
-    or-tools cbc eigen glpk re2
     zstd
+  ] ++ lib.optionals (stdenv.hostPlatform.isLinux) [
+    or-tools cbc eigen glpk re2
   ];
 }

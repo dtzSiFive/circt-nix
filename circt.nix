@@ -10,6 +10,7 @@
 , graphviz-nox
 , enableDocs ? false
 , enableAssertions ? true
+, enableOrTools ? stdenv.hostPlatform.isLinux
 }:
 
 
@@ -30,8 +31,8 @@ in stdenv.mkDerivation {
   inherit version;
   nativeBuildInputs = [ cmake python3 ninja pkg-config ]
     ++ lib.optionals enableDocs [ doxygen graphviz-nox ];
-  buildInputs = [ mlir libllvm capnproto verilator ] ++
-    [ or-tools cbc eigen glpk re2 ];
+  buildInputs = [ mlir libllvm capnproto verilator ]
+    ++ lib.optionals enableOrTools [ or-tools cbc eigen glpk re2 ];
   src = circt-src;
 
   patches = [
