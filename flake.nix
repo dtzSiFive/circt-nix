@@ -5,8 +5,7 @@
   inputs = {
     # Use Nixpkgs branch until MLIR at least is merged into nixpkgs proper
     nixpkgs.url = "github:dtzWill/nixpkgs/mlir-git";
-    #circt-src.url = "github:llvm/circt";
-    circt-src.url = "github:youngar/circt/bump-llvm";
+    circt-src.url = "github:llvm/circt";
     circt-src.flake = false;
     circt-pp-src.url = "github:llvm/circt/dev/dtz/pp-verilog";
     circt-pp-src.flake = false;
