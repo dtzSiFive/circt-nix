@@ -24,6 +24,7 @@ in
     (clang-tools.override { llvmPackages = llvmPkgs; })
     theStdenv.cc.cc.python # git-clang-format
     cmakeCurses # cmake
+    pkg-config
     python
     which
     ninja
@@ -35,6 +36,7 @@ in
     libxml2 libffi ncurses zlib
     libedit
     capnproto verilator
+    or-tools cbc eigen glpk re2
     zstd
   ];
 }
