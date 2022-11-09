@@ -1,5 +1,6 @@
 { pkgs ? import <nixpkgs> {}
 , llvmPkgs ? pkgs.llvmPackages_14
+, withOrTools ? false # pkgs.stdenv.hostPlatform.isLinux
 }:
 #{ pkgs ? import (fetchTarball channel:nixos-21.11) {} }:
 
@@ -37,7 +38,7 @@ in
     libedit
     capnproto verilator
     zstd
-  ] ++ lib.optionals (stdenv.hostPlatform.isLinux) [
+  ] ++ lib.optionals (withOrTools) [
     or-tools bzip2 cbc eigen glpk re2
   ];
 }

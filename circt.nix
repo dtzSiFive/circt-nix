@@ -11,7 +11,7 @@
 , graphviz-nox
 , enableDocs ? false
 , enableAssertions ? true
-, enableOrTools ? stdenv.hostPlatform.isLinux
+, enableOrTools ? false # stdenv.hostPlatform.isLinux
 }:
 
 
