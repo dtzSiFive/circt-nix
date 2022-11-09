@@ -5,7 +5,8 @@
   inputs = {
     # Use Nixpkgs branch until MLIR at least is merged into nixpkgs proper
     nixpkgs.url = "github:dtzWill/nixpkgs/mlir-git";
-    circt-src.url = "github:llvm/circt";
+    #circt-src.url = "github:llvm/circt";
+    circt-src.url = "github:youngar/circt/bump-llvm";
     circt-src.flake = false;
     circt-pp-src.url = "github:llvm/circt/dev/dtz/pp-verilog";
     circt-pp-src.flake = false;
@@ -14,7 +15,7 @@
       owner = "llvm";
       repo = "llvm-project";
       # From circt submodule
-      rev = "53c251bd05704a3f76f660c3b715bf3f35e7d594";
+      rev = "d35fcf0e97e7bb02381506a71e61ec282b292c50";
       flake = false;
     };
     slang-src.url = "github:MikePopoloski/slang";
