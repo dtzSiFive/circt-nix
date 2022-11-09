@@ -2,7 +2,8 @@
 , libllvm, mlir, lit
 , circt-src
 , capnproto, verilator
-, or-tools, cbc, eigen, glpk, re2
+# TODO: Shouldn't need to specify these deps, fix in upstream nixpkgs!
+, or-tools, bzip2, cbc, eigen, glpk, re2
 , python3
 , llvmUtilsSrc
 , ninja
@@ -32,7 +33,7 @@ in stdenv.mkDerivation {
   nativeBuildInputs = [ cmake python3 ninja pkg-config ]
     ++ lib.optionals enableDocs [ doxygen graphviz-nox ];
   buildInputs = [ mlir libllvm capnproto verilator ]
-    ++ lib.optionals enableOrTools [ or-tools cbc eigen glpk re2 ];
+    ++ lib.optionals enableOrTools [ or-tools bzip2 cbc eigen glpk re2 ];
   src = circt-src;
 
   patches = [

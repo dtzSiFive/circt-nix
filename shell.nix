@@ -38,6 +38,6 @@ in
     capnproto verilator
     zstd
   ] ++ lib.optionals (stdenv.hostPlatform.isLinux) [
-    or-tools cbc eigen glpk re2
+    or-tools bzip2 cbc eigen glpk re2
   ];
 }
