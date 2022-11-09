@@ -1,7 +1,7 @@
 { lib, stdenv, cmake
 , libllvm, mlir, lit
 , circt-src
-, capnproto, or-tools, verilator
+, capnproto, or-tools, re2, verilator
 , python3
 , llvmUtilsSrc
 , ninja
@@ -29,7 +29,7 @@ in stdenv.mkDerivation {
   inherit version;
   nativeBuildInputs = [ cmake python3 ninja ]
     ++ lib.optionals enableDocs [ doxygen graphviz-nox ];
-  buildInputs = [ mlir libllvm capnproto or-tools verilator ];
+  buildInputs = [ mlir libllvm capnproto or-tools re2 verilator ];
   src = circt-src;
 
   patches = [
