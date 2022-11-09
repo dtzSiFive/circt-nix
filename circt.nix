@@ -1,7 +1,8 @@
-{ lib, stdenv, cmake
+{ lib, stdenv, cmake, pkg-config
 , libllvm, mlir, lit
 , circt-src
-, capnproto, or-tools, re2, verilator
+, capnproto, verilator
+, or-tools, cbc, eigen, glpk, re2
 , python3
 , llvmUtilsSrc
 , ninja
@@ -27,9 +28,10 @@ let
 in stdenv.mkDerivation {
   pname = "circt";
   inherit version;
-  nativeBuildInputs = [ cmake python3 ninja ]
+  nativeBuildInputs = [ cmake python3 ninja pkg-config ]
     ++ lib.optionals enableDocs [ doxygen graphviz-nox ];
-  buildInputs = [ mlir libllvm capnproto or-tools re2 verilator ];
+  buildInputs = [ mlir libllvm capnproto verilator ] ++
+    [ or-tools cbc eigen glpk re2 ];
   src = circt-src;
 
   patches = [
