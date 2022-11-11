@@ -37,8 +37,7 @@ in rec {
   libclang = overridePkg llvmPackages.libclang { inherit libllvm; };
 
   # Split out needed unittest bits, required by sub-projects.
-  llvmUtilsSrc = runCommand "llvm-src-for-unittests" {} ''
-    mkdir -p "$out/utils"
-    cp -r ${monorepoSrc}/llvm/utils/unittest -t "$out/utils"
+  llvm-third-party-src = runCommand "third-party-src" {} ''
+    cp -r ${monorepoSrc}/third-party $out
   '';
 }

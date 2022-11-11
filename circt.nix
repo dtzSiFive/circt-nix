@@ -5,7 +5,7 @@
 # TODO: Shouldn't need to specify these deps, fix in upstream nixpkgs!
 , or-tools, bzip2, cbc, eigen, glpk, re2
 , python3
-, llvmUtilsSrc
+, llvm-third-party-src
 , ninja
 , doxygen
 , graphviz-nox
@@ -51,7 +51,7 @@ in stdenv.mkDerivation {
   cmakeFlags = [
     "-DLLVM_EXTERNAL_LIT=${lit}/bin/lit"
     "-DLLVM_LIT_ARGS=-v"
-    "-DLLVM_BUILD_MAIN_SRC_DIR=${llvmUtilsSrc}"
+    "-DLLVM_THIRD_PARTY_DIR=${llvm-third-party-src}"
   ] ++ lib.optional enableDocs "-DCIRCT_INCLUDE_DOCS=ON"
     ++ lib.optional enableAssertions "-DLLVM_ENABLE_ASSERTIONS=ON";
 

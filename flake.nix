@@ -53,7 +53,7 @@
 
             circt = pkgs.callPackage ./circt.nix {
               inherit circt-src;
-              inherit (newLLVMPkgs) libllvm mlir llvmUtilsSrc;
+              inherit (newLLVMPkgs) libllvm mlir llvm-third-party-src;
             };
             circt-pp = circt.override { circt-src = circt-pp-src; };
             slang = pkgs.callPackage ./slang.nix {
