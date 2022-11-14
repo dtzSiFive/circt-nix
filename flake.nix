@@ -14,7 +14,7 @@
       owner = "llvm";
       repo = "llvm-project";
       # From circt submodule
-      rev = "d35fcf0e97e7bb02381506a71e61ec282b292c50";
+      rev = "81896f88cef4cfe1cf982250601a0c954344e1e8";
       flake = false;
     };
     slang-src.url = "github:MikePopoloski/slang";
@@ -53,7 +53,7 @@
 
             circt = pkgs.callPackage ./circt.nix {
               inherit circt-src;
-              inherit (newLLVMPkgs) libllvm mlir llvmUtilsSrc;
+              inherit (newLLVMPkgs) libllvm mlir llvm-third-party-src;
             };
             circt-pp = circt.override { circt-src = circt-pp-src; };
             slang = pkgs.callPackage ./slang.nix {
