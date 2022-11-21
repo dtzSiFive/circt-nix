@@ -1,30 +1,13 @@
 {
   "nodes": {
-    "circt-pp-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1668812107,
-        "narHash": "sha256-p9DkEMxtTujcUBmUWU5yiWK2UnWfvVkkJfcjhSth33w=",
-        "owner": "llvm",
-        "repo": "circt",
-        "rev": "d845d8b7f03d44fce95360bf3e314d02274baa18",
-        "type": "github"
-      },
-      "original": {
-        "owner": "llvm",
-        "ref": "dev/dtz/pp-verilog",
-        "repo": "circt",
-        "type": "github"
-      }
-    },
     "circt-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1669041558,
-        "narHash": "sha256-naD1Lu+VHl0BgaWahb0tSJT7oYh0RCQr2N4ayR15M7s=",
+        "lastModified": 1669044041,
+        "narHash": "sha256-CkFMGipZ+C11ZPAsPmcB6jDmMNuUBPCROTwJ37UXHWc=",
         "owner": "llvm",
         "repo": "circt",
-        "rev": "8264004fbd9022d0e19bdc19306ca773a4160165",
+        "rev": "dbed201e58e716f6f32d776d2f9be09021812fe3",
         "type": "github"
       },
       "original": {
@@ -99,7 +82,6 @@
     },
     "root": {
       "inputs": {
-        "circt-pp-src": "circt-pp-src",
         "circt-src": "circt-src",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
