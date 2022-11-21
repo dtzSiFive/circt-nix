@@ -7,8 +7,6 @@
     nixpkgs.url = "github:dtzWill/nixpkgs/mlir-git";
     circt-src.url = "github:llvm/circt";
     circt-src.flake = false;
-    circt-pp-src.url = "github:llvm/circt/dev/dtz/pp-verilog";
-    circt-pp-src.flake = false;
     llvm-submodule-src = {
       type = "github";
       owner = "llvm";
@@ -31,7 +29,7 @@
   outputs = { self
     , nixpkgs
     , flake-compat, flake-utils
-    , circt-src, circt-pp-src, llvm-submodule-src
+    , circt-src, llvm-submodule-src
     , slang-src
     }: flake-utils.lib.eachDefaultSystem
       (system:
@@ -55,7 +53,6 @@
               inherit circt-src;
               inherit (newLLVMPkgs) libllvm mlir llvm-third-party-src;
             };
-            circt-pp = circt.override { circt-src = circt-pp-src; };
             slang = pkgs.callPackage ./slang.nix {
               inherit slang-src;
             };
