@@ -1,5 +1,22 @@
 {
   "nodes": {
+    "circt-slang": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1668720954,
+        "narHash": "sha256-QrXGTa29DKY+K5TXV4FDk9pOvBDhgt3sgBhu7weF8xg=",
+        "owner": "fabianschuiki",
+        "repo": "circt",
+        "rev": "faded842278745bf176ce4b4c3a584ee35495f33",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fabianschuiki",
+        "ref": "slang-frontend",
+        "repo": "circt",
+        "type": "github"
+      }
+    },
     "circt-src": {
       "flake": false,
       "locked": {
@@ -82,6 +99,7 @@
     },
     "root": {
       "inputs": {
+        "circt-slang": "circt-slang",
         "circt-src": "circt-src",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
