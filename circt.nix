@@ -47,7 +47,13 @@ in stdenv.mkDerivation {
 
     substituteInPlace cmake/modules/GenVersionFile.cmake \
       --replace '"unknown git version"' '"${version}"'
+  ''
+  # slang library renamed to 'svlang'.
+  + lib.optionalString enableSlang ''
+    substituteInPlace lib/Conversion/ImportVerilog/CMakeLists.txt \
+      --replace slang::slang slang::svlang
   '';
+ 
 
   outputs = [ "out" "lib" "dev" ];
 
