@@ -58,6 +58,8 @@
             };
             circt-slang = circt.override {
               circt-src = circt-slang-src;
+              inherit slang;
+              enableSlang = true;
             };
             slang = pkgs.callPackage ./slang.nix {
               inherit slang-src;

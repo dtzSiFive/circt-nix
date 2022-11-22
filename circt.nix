@@ -12,6 +12,8 @@
 , enableDocs ? false
 , enableAssertions ? true
 , enableOrTools ? false # stdenv.hostPlatform.isLinux
+, slang
+, enableSlang ? false
 }:
 
 
@@ -33,7 +35,8 @@ in stdenv.mkDerivation {
   nativeBuildInputs = [ cmake python3 ninja pkg-config ]
     ++ lib.optionals enableDocs [ doxygen graphviz-nox ];
   buildInputs = [ mlir libllvm capnproto verilator ]
-    ++ lib.optionals enableOrTools [ or-tools bzip2 cbc eigen glpk re2 ];
+    ++ lib.optionals enableOrTools [ or-tools bzip2 cbc eigen glpk re2 ]
+    ++ lib.optional enableSlang [ slang ];
   src = circt-src;
 
   patches = [
@@ -53,7 +56,11 @@ in stdenv.mkDerivation {
     "-DLLVM_LIT_ARGS=-v"
     "-DLLVM_THIRD_PARTY_DIR=${llvm-third-party-src}"
   ] ++ lib.optional enableDocs "-DCIRCT_INCLUDE_DOCS=ON"
-    ++ lib.optional enableAssertions "-DLLVM_ENABLE_ASSERTIONS=ON";
+    ++ lib.optional enableAssertions "-DLLVM_ENABLE_ASSERTIONS=ON"
+    ++ lib.optionals enableSlang [
+    "-DCIRCT_SLANG_FRONTEND_ENABLED=ON"
+    "-DCIRCT_SLANG_BUILD_FROM_SOURCE=OFF"
+  ];
 
   postBuild = lib.optionalString enableDocs ''
     ninja doxygen-circt circt-doc

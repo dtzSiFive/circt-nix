@@ -1,6 +1,6 @@
 {
   "nodes": {
-    "circt-slang": {
+    "circt-slang-src": {
       "flake": false,
       "locked": {
         "lastModified": 1668720954,
@@ -99,7 +99,7 @@
     },
     "root": {
       "inputs": {
-        "circt-slang": "circt-slang",
+        "circt-slang-src": "circt-slang-src",
         "circt-src": "circt-src",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
