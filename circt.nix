@@ -1,4 +1,5 @@
-{ lib, stdenv, cmake, pkg-config
+{ lib, fetchpatch
+, stdenv, cmake, pkg-config
 , libllvm, mlir, lit
 , circt-src
 , capnproto, verilator
@@ -41,7 +42,12 @@ in stdenv.mkDerivation {
 
   patches = [
     ./patches/circt-mlir-tblgen-path.patch
-  ];
+  ] ++ lib.optional enableSlang [(fetchpatch {
+    name = "llvm-bump.patch";
+    url = "https://github.com/llvm/circt/commit/2f7ad73e385c4a0b646fca3d47912d768a26eadb.patch";
+    sha256 = "DqzSQAu1GCgf4C+nMszTjcE4BFhe7saR+KLJj8zIGdw=";
+    excludes = [ "llvm" ];
+  })];
   postPatch = ''
     substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir}/bin/mlir-tblgen"
 
