@@ -52,6 +52,9 @@ in stdenv.mkDerivation {
   + lib.optionalString enableSlang ''
     substituteInPlace lib/Conversion/ImportVerilog/CMakeLists.txt \
       --replace slang::slang slang::svlang
+
+    # Bad interaction with hardcoded flags + LLVM machinery for exceptions/etc.
+    substituteInPlace CMakeLists.txt --replace "-fno-exceptions -fno-rtti" ""
   '';
  
 
