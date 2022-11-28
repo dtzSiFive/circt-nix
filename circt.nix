@@ -53,6 +53,10 @@ in stdenv.mkDerivation {
 
     substituteInPlace cmake/modules/GenVersionFile.cmake \
       --replace '"unknown git version"' '"${version}"'
+    
+    substituteInPlace test/circt-reduce/test/annotation-remover.mlir \
+      --replace '--test /usr/bin/env --test-arg grep' \
+                '--test grep'
   ''
   # slang library renamed to 'svlang'.
   + lib.optionalString enableSlang ''
