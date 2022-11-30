@@ -43,12 +43,20 @@ in stdenv.mkDerivation {
 
   patches = [
     ./patches/circt-mlir-tblgen-path.patch
-  ] ++ lib.optional enableSlang [(fetchpatch {
-    name = "llvm-bump.patch";
-    url = "https://github.com/llvm/circt/commit/2f7ad73e385c4a0b646fca3d47912d768a26eadb.patch";
-    sha256 = "DqzSQAu1GCgf4C+nMszTjcE4BFhe7saR+KLJj8zIGdw=";
-    excludes = [ "llvm" ];
-  })];
+  ] ++ lib.optional enableSlang [
+    (fetchpatch {
+     name = "llvm-bump.patch";
+     url = "https://github.com/llvm/circt/commit/2f7ad73e385c4a0b646fca3d47912d768a26eadb.patch";
+     sha256 = "DqzSQAu1GCgf4C+nMszTjcE4BFhe7saR+KLJj8zIGdw=";
+     excludes = [ "llvm" ];
+     })
+    (fetchpatch {
+      name = "llvm-bump-4353.patch";
+      url = "https://github.com/llvm/circt/pull/4353.patch";
+      sha256 = "54dEx8wEzHJCP0uz0t3+h850kpU3iNToB7lgEMZB6h4=";
+      excludes = [ "llvm" ];
+    })
+  ];
   postPatch = ''
     substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir}/bin/mlir-tblgen"
 
