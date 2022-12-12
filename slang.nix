@@ -28,8 +28,8 @@ let
   catch2_src = fetchFromGitHub {
     owner = "catchorg";
     repo = "catch2";
-    rev = "v3.2.0";
-    sha256 = "duUafkOy0pxhRj84pm7nkfhJnLIygVnFmFAJIyx0JEY=";
+    rev = "v3.2.1";
+    sha256 = "e5S3K0kYCB6nVZDi/DVKzMvrVk6IgXC2g7217sr8xUo=";
   };
 in stdenv.mkDerivation {
   pname = "slang";
