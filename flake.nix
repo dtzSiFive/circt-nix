@@ -61,6 +61,7 @@
               inherit slang;
               enableSlang = true;
             };
+            espresso = pkgs.callPackage ./espresso.nix {};
             slang = pkgs.callPackage ./slang.nix {
               inherit slang-src;
             };
