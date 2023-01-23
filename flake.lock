@@ -1,5 +1,22 @@
 {
   "nodes": {
+    "circt-const-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1674502109,
+        "narHash": "sha256-mzI8KTDvCVr3LlrgTvOR9Z0Q2E/IY+8LG1PsGxlPgDA=",
+        "owner": "llvm",
+        "repo": "circt",
+        "rev": "d01e425dee359d40d2046eab0cc6eeac2604ad56",
+        "type": "github"
+      },
+      "original": {
+        "owner": "llvm",
+        "ref": "dev/trilorez/firrtl-const",
+        "repo": "circt",
+        "type": "github"
+      }
+    },
     "circt-slang-src": {
       "flake": false,
       "locked": {
@@ -99,6 +116,7 @@
     },
     "root": {
       "inputs": {
+        "circt-const-src": "circt-const-src",
         "circt-slang-src": "circt-slang-src",
         "circt-src": "circt-src",
         "flake-compat": "flake-compat",
