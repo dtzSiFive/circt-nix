@@ -7,6 +7,8 @@
     nixpkgs.url = "github:dtzWill/nixpkgs/mlir-git";
     circt-src.url = "github:llvm/circt";
     circt-src.flake = false;
+    circt-const-src.url = "github:llvm/circt/dev/trilorez/firrtl-const";
+    circt-const-src.flake = false;
     circt-slang-src.url = "github:fabianschuiki/circt/slang-frontend";
     circt-slang-src.flake = false;
     llvm-submodule-src = {
@@ -33,6 +35,7 @@
     , flake-compat, flake-utils
     , circt-src, llvm-submodule-src
     , circt-slang-src
+    , circt-const-src
     , slang-src
     }: flake-utils.lib.eachDefaultSystem
       (system:
@@ -56,6 +59,7 @@
               inherit circt-src;
               inherit (newLLVMPkgs) libllvm mlir llvm-third-party-src;
             };
+            circt-const = circt.override { circt-src = circt-const-src; };
             circt-slang = circt.override {
               circt-src = circt-slang-src;
               inherit slang;
