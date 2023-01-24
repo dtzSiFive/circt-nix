@@ -1,15 +1,16 @@
-From a7a4eb810cdb0ad891449dc7e6179597ad0a5303 Mon Sep 17 00:00:00 2001
+From 6a47aa7d507b502a5f46d57a5668039a9b874656 Mon Sep 17 00:00:00 2001
 From: Will Dietz <will.dietz@sifive.com>
 Date: Wed, 5 Oct 2022 14:10:22 -0500
-Subject: [PATCH] don't fetch
+Subject: [PATCH] don't fetch, use external catch2
 
 ---
- external/CMakeLists.txt | 18 +++---------------
- tests/CMakeLists.txt    |  8 +-------
- 2 files changed, 4 insertions(+), 22 deletions(-)
+ external/CMakeLists.txt         | 18 +++---------------
+ tests/CMakeLists.txt            |  8 +-------
+ tools/tidy/tests/CMakeLists.txt |  8 +-------
+ 3 files changed, 5 insertions(+), 29 deletions(-)
 
 diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
-index bc7a9bc6..3dcd4810 100644
+index 9585b93b..69a046ad 100644
 --- a/external/CMakeLists.txt
 +++ b/external/CMakeLists.txt
 @@ -8,19 +8,13 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24.0")
@@ -33,8 +34,8 @@ index bc7a9bc6..3dcd4810 100644
  set(BUILD_SHARED_LIBS ${saved_build_shared_libs})
  
  if((SLANG_INCLUDE_PYLIB OR BUILD_SHARED_LIBS) AND NOT fmt_FOUND)
-@@ -32,13 +26,7 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24.0")
-   set(find_pkg_args "FIND_PACKAGE_ARGS" "2.0.0")
+@@ -42,13 +36,7 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24.0")
+   set(find_pkg_args "FIND_PACKAGE_ARGS" "2.0.1")
  endif()
  
 -FetchContent_Declare(
@@ -48,7 +49,7 @@ index bc7a9bc6..3dcd4810 100644
  
  if(SLANG_INCLUDE_INSTALL)
    install(
-@@ -66,7 +54,7 @@ if(SLANG_INCLUDE_INSTALL)
+@@ -76,7 +64,7 @@ if(SLANG_INCLUDE_INSTALL)
        PUBLIC_HEADER EXCLUDE_FROM_ALL
        PRIVATE_HEADER EXCLUDE_FROM_ALL)
      install(
@@ -58,7 +59,7 @@ index bc7a9bc6..3dcd4810 100644
        COMPONENT slang_Development)
    endif()
 diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
-index b9e9a1ad..abc14937 100644
+index 581bc957..b78c6e78 100644
 --- a/tests/CMakeLists.txt
 +++ b/tests/CMakeLists.txt
 @@ -8,13 +8,7 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24.0")
@@ -72,10 +73,29 @@ index b9e9a1ad..abc14937 100644
 -  GIT_SHALLOW ON
 -  ${find_pkg_args})
 -FetchContent_MakeAvailable(Catch2)
-+add_subdirectory(${CMAKE_SOURCE_DIR}/external/catch2 ${CMAKE_BINARY_DIR}/external/catch2)
++find_package(Catch2 3.2.1 REQUIRED)
  
- add_executable(
-   unittests
+ if(Catch2_FOUND)
+   get_target_property(Catch2_INCLUDE_DIR Catch2::Catch2
+diff --git a/tools/tidy/tests/CMakeLists.txt b/tools/tidy/tests/CMakeLists.txt
+index 5b680dc7..343e09f7 100644
+--- a/tools/tidy/tests/CMakeLists.txt
++++ b/tools/tidy/tests/CMakeLists.txt
+@@ -7,13 +7,7 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24.0")
+   set(find_pkg_args "FIND_PACKAGE_ARGS" "3.0.0")
+ endif()
+ 
+-FetchContent_Declare(
+-  Catch2
+-  GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+-  GIT_TAG v3.2.1
+-  GIT_SHALLOW ON
+-  ${find_pkg_args})
+-FetchContent_MakeAvailable(Catch2)
++find_package(Catch2 3.2.1 REQUIRED)
+ 
+ if(Catch2_FOUND)
+   get_target_property(Catch2_INCLUDE_DIR Catch2::Catch2
 -- 
-2.38.0
+2.39.0
 

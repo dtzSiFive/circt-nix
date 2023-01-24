@@ -1,6 +1,7 @@
 { lib, stdenv, slang-src, fetchFromGitHub
 , cmake
 , python3
+, catch2_3
 }:
 
 let
@@ -25,28 +26,32 @@ let
     rev = "v2.0.0";
     sha256 = "w5ACS87BQgfZEpweMLr0SGvEnSKPcOHiNCsCHqynrd8=";
   };
-  catch2_src = fetchFromGitHub {
+  # Presently catch2_3 is the right version, but be sure.
+  # May break if expression has patches/etc not applicible.
+  catch2_pinned = catch2_3.overrideAttrs(o: {
+    version = "3.2.1";
+    src = fetchFromGitHub {
     owner = "catchorg";
     repo = "catch2";
     rev = "v3.2.1";
     sha256 = "e5S3K0kYCB6nVZDi/DVKzMvrVk6IgXC2g7217sr8xUo=";
-  };
+    };
+  });
 in stdenv.mkDerivation {
   pname = "slang";
   inherit version;
   nativeBuildInputs = [ cmake python3 ];
-  buildInputs = [ python3 ];
+  buildInputs = [ python3 catch2_3 ];
   src = slang-src;
 
   patches = [
-    ./patches/slang-dont-fetch.patch
+    ./patches/slang-dont-fetch-and-use-external-catch2.patch
     ./patches/slang-pkgconfig.patch
   ];
 
   postPatch = ''
     ln -s ${fmt_src} external/fmt
     ln -s ${unordered_dense_src} external/unordered_dense
-    ln -s ${catch2_src} external/catch2
     
     substituteInPlace source/util/Version.cpp.in \
       --subst-var SLANG_VERSION_MAJOR \
