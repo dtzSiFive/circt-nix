@@ -17,6 +17,23 @@
         "type": "github"
       }
     },
+    "circt-ref-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1677599530,
+        "narHash": "sha256-sA2S93i7BPCLhjQ6mt/aS32aijyUDvj28vn2EKL1fcY=",
+        "owner": "dtzSiFive",
+        "repo": "circt",
+        "rev": "428c4c28181200cf423df848306a948e0948a994",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dtzSiFive",
+        "ref": "feature/reftypes-firrtl",
+        "repo": "circt",
+        "type": "github"
+      }
+    },
     "circt-slang-src": {
       "flake": false,
       "locked": {
@@ -117,6 +134,7 @@
     "root": {
       "inputs": {
         "circt-const-src": "circt-const-src",
+        "circt-ref-src": "circt-ref-src",
         "circt-slang-src": "circt-slang-src",
         "circt-src": "circt-src",
         "flake-compat": "flake-compat",
