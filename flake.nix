@@ -7,7 +7,7 @@
     nixpkgs.url = "github:dtzWill/nixpkgs/mlir-git";
     circt-src.url = "github:llvm/circt";
     circt-src.flake = false;
-    circt-const-src.url = "github:llvm/circt/dev/trilorez/firrtl-const";
+    circt-const-src.url = "github:llvm/circt/dev/trilorez/firrtl-const-fir"; # integration branch currently
     circt-const-src.flake = false;
     circt-slang-src.url = "github:fabianschuiki/circt/slang-frontend";
     circt-slang-src.flake = false;
