@@ -9,6 +9,8 @@
     circt-src.flake = false;
     circt-const-src.url = "github:llvm/circt/dev/trilorez/firrtl-const-fir"; # integration branch currently
     circt-const-src.flake = false;
+    circt-ref-src.url = "github:dtzSiFive/circt/feature/reftypes-firrtl";
+    circt-ref-src.flake = false;
     circt-slang-src.url = "github:fabianschuiki/circt/slang-frontend";
     circt-slang-src.flake = false;
     llvm-submodule-src = {
@@ -36,6 +38,7 @@
     , circt-src, llvm-submodule-src
     , circt-slang-src
     , circt-const-src
+    , circt-ref-src
     , slang-src
     }: flake-utils.lib.eachDefaultSystem
       (system:
@@ -60,6 +63,7 @@
               inherit (newLLVMPkgs) libllvm mlir llvm-third-party-src;
             };
             circt-const = circt.override { circt-src = circt-const-src; };
+            circt-ref = circt.override { circt-src = circt-ref-src; };
             circt-slang = circt.override {
               circt-src = circt-slang-src;
               inherit slang;
