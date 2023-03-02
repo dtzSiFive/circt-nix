@@ -1,5 +1,5 @@
 { pkgs ? import <nixpkgs> {}
-, llvmPkgs ? pkgs.llvmPackages_14
+, llvmPkgs ? pkgs.llvmPackages_15
 , withOrTools ? false # pkgs.stdenv.hostPlatform.isLinux
 }:
 #{ pkgs ? import (fetchTarball channel:nixos-21.11) {} }:
