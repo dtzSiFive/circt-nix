@@ -109,7 +109,7 @@ in stdenv.mkDerivation {
     description = " Circuit IR Compilers and Tools";
     mainProgram = "firtool";
     homepage = "https://circt.org";
-    license = with licenses; [ asl20 llvm-exception ]; # (ASL2.0 w/LLVM Exception)
+    license = with licenses; [ asl20-llvm];
     maintainers = with maintainers; [ dtzWill ];
   };
 }
