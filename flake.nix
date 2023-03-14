@@ -9,7 +9,7 @@
     circt-src.flake = false;
     circt-const-src.url = "github:llvm/circt/dev/trilorez/firrtl-const-fir"; # integration branch currently
     circt-const-src.flake = false;
-    circt-ref-src.url = "github:dtzSiFive/circt/feature/reftypes-firrtl";
+    circt-ref-src.url = "github:dtzSiFive/circt/feature/ref-parse-basics-stack";
     circt-ref-src.flake = false;
     circt-slang-src.url = "github:fabianschuiki/circt/slang-frontend";
     circt-slang-src.flake = false;
