@@ -1,7 +1,7 @@
-From 8c48e61e9ff2bb732764e38e4d8af76d90155ba1 Mon Sep 17 00:00:00 2001
+From 3b30a4bbd40533ced2568bb78b5d39a11bfe9548 Mon Sep 17 00:00:00 2001
 From: Will Dietz <will.dietz@sifive.com>
 Date: Wed, 5 Oct 2022 14:10:22 -0500
-Subject: [PATCH] don't fetch, use external catch2
+Subject: [PATCH] don't fetch fmt, unordered_dense.
 
 ---
  external/CMakeLists.txt | 18 +++---------------

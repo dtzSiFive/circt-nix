@@ -26,17 +26,6 @@ let
     rev = "v3.1.1";
     sha256 = "7tx7s2j/UjsAjo47isQfqD+U2U6TAcMgG9VXJz4GDWQ=";
   };
-  # Presently catch2_3 is the right version, but be sure.
-  # May break if expression has patches/etc not applicible.
-  catch2_pinned = catch2_3.overrideAttrs(o: {
-    version = "3.2.1";
-    src = fetchFromGitHub {
-    owner = "catchorg";
-    repo = "catch2";
-    rev = "v3.2.1";
-    sha256 = "e5S3K0kYCB6nVZDi/DVKzMvrVk6IgXC2g7217sr8xUo=";
-    };
-  });
 in stdenv.mkDerivation {
   pname = "slang";
   inherit version;
@@ -45,7 +34,7 @@ in stdenv.mkDerivation {
   src = slang-src;
 
   patches = [
-    ./patches/slang-dont-fetch-and-use-external-catch2.patch
+    ./patches/slang-don-t-fetch-fmt-unordered_dense.patch
     ./patches/slang-pkgconfig.patch
   ];
 
