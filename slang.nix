@@ -23,8 +23,8 @@ let
   unordered_dense_src = fetchFromGitHub {
     owner = "martinus";
     repo = "unordered_dense";
-    rev = "v2.0.0";
-    sha256 = "w5ACS87BQgfZEpweMLr0SGvEnSKPcOHiNCsCHqynrd8=";
+    rev = "v3.1.1";
+    sha256 = "7tx7s2j/UjsAjo47isQfqD+U2U6TAcMgG9VXJz4GDWQ=";
   };
   # Presently catch2_3 is the right version, but be sure.
   # May break if expression has patches/etc not applicible.
