@@ -1,4 +1,4 @@
-From 41af402376c5746d0c8e2d1a6e8faaca9f78fbf7 Mon Sep 17 00:00:00 2001
+From 8c48e61e9ff2bb732764e38e4d8af76d90155ba1 Mon Sep 17 00:00:00 2001
 From: Will Dietz <will.dietz@sifive.com>
 Date: Wed, 5 Oct 2022 14:10:22 -0500
 Subject: [PATCH] don't fetch, use external catch2
@@ -8,7 +8,7 @@ Subject: [PATCH] don't fetch, use external catch2
  1 file changed, 3 insertions(+), 15 deletions(-)
 
 diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
-index 9585b93b..69a046ad 100644
+index 9c92b3c8..b0208651 100644
 --- a/external/CMakeLists.txt
 +++ b/external/CMakeLists.txt
 @@ -8,19 +8,13 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24.0")
@@ -33,13 +33,13 @@ index 9585b93b..69a046ad 100644
  
  if((SLANG_INCLUDE_PYLIB OR BUILD_SHARED_LIBS) AND NOT fmt_FOUND)
 @@ -42,13 +36,7 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24.0")
-   set(find_pkg_args "FIND_PACKAGE_ARGS" "2.0.1")
+   set(find_pkg_args "FIND_PACKAGE_ARGS" "3.0.0")
  endif()
  
 -FetchContent_Declare(
 -  unordered_dense
 -  GIT_REPOSITORY https://github.com/martinus/unordered_dense.git
--  GIT_TAG v2.0.0
+-  GIT_TAG v3.1.1
 -  GIT_SHALLOW ON
 -  ${find_pkg_args})
 -FetchContent_MakeAvailable(unordered_dense)
@@ -57,5 +57,5 @@ index 9585b93b..69a046ad 100644
        COMPONENT slang_Development)
    endif()
 -- 
-2.39.0
+2.39.2
 
