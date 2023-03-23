@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        attr: [circt, circt-ref, slang]
+        attr: [circt, slang]
     needs: flake-check
     runs-on: ubuntu-latest
     steps:
