@@ -11,7 +11,7 @@ let
       date = builtins.substring 0 8 (src.lastModifiedDate or src.lastModified or "19700101");
     in
       "g${date}_${getRev src}";
-  tag = "2.0";
+  tag = "3.0";
   version = "${tag}${mkVer slang-src}";
 
   fmt_src = fetchFromGitHub {
