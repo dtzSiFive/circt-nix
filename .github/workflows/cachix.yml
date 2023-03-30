@@ -18,7 +18,7 @@ jobs:
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
         cachixArgs: -j8 -c6
     - name: nix flake check
-      run: nix flake check
+      run: nix flake check --no-update-lock-file
 
   targets:
     name: build and cache
