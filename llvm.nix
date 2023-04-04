@@ -2,6 +2,7 @@
 , llvm-submodule-src 
 , llvmPackages
 , enableAssertions ? true
+, hostOnly ? true
 }:
 let
   # Apply specified patches to 'src', or if none specified just return src
@@ -28,8 +29,11 @@ let
   addAsserts = p: if !enableAssertions then p else p.overrideAttrs(o: {
     cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_ENABLE_ASSERTIONS=ON" ];
   });
+  setTargets = p: if !hostOnly then p else p.overrideAttrs(o: {
+    cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_TARGETS_TO_BUILD=host" ];
+  });
   overrideLLVMPkg = p: args: p.override ({ inherit monorepoSrc version; } // args);
-  overridePkg = p: overrideLLVMPkg (addAsserts p);
+  overridePkg = p: overrideLLVMPkg (setTargets (addAsserts p));
 
 in rec {
   libllvm = overridePkg llvmPackages.libllvm { };
