@@ -1,6 +1,7 @@
 { lib, fetchpatch
 , stdenv, cmake, pkg-config
 , gnugrep
+, coreutils
 , libllvm, mlir, lit
 , circt-src
 , capnproto, verilator
@@ -50,10 +51,8 @@ in stdenv.mkDerivation {
     substituteInPlace cmake/modules/GenVersionFile.cmake \
       --replace '"unknown git version"' '"${version}"'
     
-    # No /usr/bin/env in sandbox.  Just replace with full 'grep' utility path:
-    substituteInPlace test/circt-reduce/test/annotation-remover.mlir \
-      --replace '--test /usr/bin/env --test-arg grep' \
-                '--test "${lib.getBin gnugrep}/bin/grep"'
+    find test -type f -exec \
+      sed -i -e 's,--test /usr/bin/env,--test ${lib.getBin coreutils}/bin/env,' \{\} \;
   ''
   # slang library renamed to 'svlang'.
   + lib.optionalString enableSlang ''
