@@ -17,14 +17,8 @@ let
   fmt_src = fetchFromGitHub {
     owner = "fmtlib";
     repo = "fmt";
-    rev = "9.1.0";
-    sha256 = "rP6ymyRc7LnKxUXwPpzhHOQvpJkpnRFOt2ctvUNlYI0=";
-  };
-  unordered_dense_src = fetchFromGitHub {
-    owner = "martinus";
-    repo = "unordered_dense";
-    rev = "v3.1.1";
-    sha256 = "7tx7s2j/UjsAjo47isQfqD+U2U6TAcMgG9VXJz4GDWQ=";
+    rev = "10.0.0";
+    sha256 = "sVY2TVPS/Zx32p5XIYR6ghqN4kOZexzH7Cr+y8sZXK8=";
   };
 in stdenv.mkDerivation {
   pname = "slang";
@@ -34,13 +28,12 @@ in stdenv.mkDerivation {
   src = slang-src;
 
   patches = [
-    ./patches/slang-don-t-fetch-fmt-unordered_dense.patch
+    ./patches/slang-don-t-fetch-fmt.patch
     ./patches/slang-pkgconfig.patch
   ];
 
   postPatch = ''
     ln -s ${fmt_src} external/fmt
-    ln -s ${unordered_dense_src} external/unordered_dense
     
     substituteInPlace source/util/Version.cpp.in \
       --subst-var SLANG_VERSION_MAJOR \
