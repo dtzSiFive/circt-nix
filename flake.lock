@@ -20,11 +20,11 @@
     "circt-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1684285567,
-        "narHash": "sha256-w976pFBwX/fa+XJBgkng8nbRw5W7piuPGNj9oLXoy6E=",
+        "lastModified": 1684325776,
+        "narHash": "sha256-QF6AXFUYRZn60k+3xHALKU20iZ0i3af4cjTrxZa0kIw=",
         "owner": "llvm",
         "repo": "circt",
-        "rev": "00ddb3499aad4286c9d6ef759b24d0e0650947fc",
+        "rev": "151def430e225c858f65699a34e45c2deee82bd9",
         "type": "github"
       },
       "original": {
@@ -86,11 +86,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1684287765,
-        "narHash": "sha256-R5eIDiLqI5j52Qxf9mdRV19Y92MNPPw+nCl+e9q4L+c=",
+        "lastModified": 1684327885,
+        "narHash": "sha256-yr/OtspINpHA5+5/GhWNBHGwsEghMa1uvFNhez+i78w=",
         "owner": "dtzWill",
         "repo": "nixpkgs",
-        "rev": "bd90aa0ee357bf03b515eabc3239f8660dd33796",
+        "rev": "82b444e3825f6e81c641607bdb4a89338138ddbf",
         "type": "github"
       },
       "original": {
