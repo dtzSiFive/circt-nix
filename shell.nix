@@ -1,6 +1,7 @@
 { pkgs ? import <nixpkgs> {}
 , llvmPkgs ? pkgs.llvmPackages_15
 , withOrTools ? false # pkgs.stdenv.hostPlatform.isLinux
+, withZ3 ? true
 }:
 #{ pkgs ? import (fetchTarball channel:nixos-21.11) {} }:
 
@@ -40,5 +41,5 @@ in
     zstd
   ] ++ lib.optionals (withOrTools) [
     or-tools bzip2 cbc eigen glpk re2
-  ];
+  ] ++ lib.optional (withZ3) z3;
 }
