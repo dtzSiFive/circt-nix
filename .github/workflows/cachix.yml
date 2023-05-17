@@ -58,5 +58,3 @@ jobs:
         cachixArgs: -c16
     - name: Build "nix develop circt" profile"
       run: nix develop --profile dev-profile
-    - name: Build "nix develop circt#git profile"
-      run: nix develop .#git --profile dev-profile-git
