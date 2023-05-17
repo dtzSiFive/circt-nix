@@ -17,6 +17,7 @@
 , enableOrTools ? false # stdenv.hostPlatform.isLinux
 , slang
 , enableSlang ? false
+, z3
 }:
 
 
@@ -37,7 +38,7 @@ in stdenv.mkDerivation {
   inherit version;
   nativeBuildInputs = [ cmake python3 ninja pkg-config ]
     ++ lib.optionals enableDocs [ doxygen graphviz-nox ];
-  buildInputs = [ mlir libllvm capnproto verilator ]
+  buildInputs = [ mlir libllvm capnproto verilator z3 ]
     ++ lib.optionals enableOrTools [ or-tools bzip2 cbc eigen glpk re2 ]
     ++ lib.optional enableSlang [ slang ];
   src = circt-src;
