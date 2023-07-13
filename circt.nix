@@ -92,6 +92,15 @@ in stdenv.mkDerivation {
     patchShebangs bin/*.py
   '';
 
+  # Manually install bits that don't have install rules yet.
+  postInstall = ''
+    install -Dm755 -t $out/bin bin/arcilator-header-cpp.py
+
+    # Doesn't belong in $out/bin, but that's where it's expected for now.
+    # $out/share/arcilator/ ?
+    install -t $out/bin bin/arcilator-header.h
+  '';
+
   meta = with lib; {
     description = " Circuit IR Compilers and Tools";
     mainProgram = "firtool";
