@@ -87,8 +87,6 @@ in stdenv.mkDerivation {
   checkTarget = "check-circt"; # + " check-circt-integration";
 
   preCheck = ''
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH''${LD_LIBRARY_PATH:+:}$PWD/lib
-
     patchShebangs bin/*.py
   '';
 
