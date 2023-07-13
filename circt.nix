@@ -96,7 +96,7 @@ in stdenv.mkDerivation {
 
     # Doesn't belong in $out/bin, but that's where it's expected for now.
     # $out/share/arcilator/ ?
-    install -t $out/bin bin/arcilator-header.h
+    install -Dt $out/bin bin/arcilator-runtime.h
   '';
 
   meta = with lib; {
