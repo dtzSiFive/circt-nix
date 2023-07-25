@@ -37,7 +37,7 @@ in
   buildInputs = [
     libxml2 libffi ncurses zlib
     libedit
-    capnproto verilator
+    capnproto
     zstd
   ] ++ lib.optionals (withOrTools) [
     or-tools bzip2 cbc eigen glpk re2
