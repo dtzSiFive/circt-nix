@@ -20,6 +20,8 @@ let
     inherit (llvmPkgs) bintools;
   });
   python = python3.withPackages (ps: [ ps.psutil ps.pycapnp ps.numpy ps.pybind11 ps.pyyaml ]);
+
+  withVerilator = theStdenv.hostPlatform.isDarwin;
 in
 (mkShell.override { stdenv = theStdenv; }) {
   nativeBuildInputs = [
@@ -41,5 +43,6 @@ in
     zstd
   ] ++ lib.optionals (withOrTools) [
     or-tools bzip2 cbc eigen glpk re2
-  ] ++ lib.optional (withZ3) z3;
+  ] ++ lib.optional (withVerilator) verilator
+    ++ lib.optional (withZ3) z3;
 }

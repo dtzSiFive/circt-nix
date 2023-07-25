@@ -5,6 +5,7 @@
 , libllvm, mlir, lit
 , circt-src
 , capnproto
+, verilator
 # TODO: Shouldn't need to specify these deps, fix in upstream nixpkgs!
 , or-tools, bzip2, cbc, eigen, glpk, re2
 , python3
@@ -17,6 +18,7 @@
 , enableOrTools ? false # stdenv.hostPlatform.isLinux
 , slang
 , enableSlang ? false
+, withVerilator ? !stdenv.hostPlatform.isDarwin
 , z3
 }:
 
@@ -40,7 +42,8 @@ in stdenv.mkDerivation {
     ++ lib.optionals enableDocs [ doxygen graphviz-nox ];
   buildInputs = [ mlir libllvm capnproto z3 ]
     ++ lib.optionals enableOrTools [ or-tools bzip2 cbc eigen glpk re2 ]
-    ++ lib.optional enableSlang [ slang ];
+    ++ lib.optional enableSlang [ slang ]
+    ++ lib.optional withVerilator [ verilator ];
   src = circt-src;
 
   patches = [
