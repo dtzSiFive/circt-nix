@@ -2,6 +2,7 @@
 , llvmPkgs ? pkgs.llvmPackages_15
 , withOrTools ? false # pkgs.stdenv.hostPlatform.isLinux
 , withZ3 ? true
+, withVerilator ? pkgs.stdenv.hostPlatform.isDarwin
 }:
 #{ pkgs ? import (fetchTarball channel:nixos-21.11) {} }:
 
@@ -20,8 +21,6 @@ let
     inherit (llvmPkgs) bintools;
   });
   python = python3.withPackages (ps: [ ps.psutil ps.pycapnp ps.numpy ps.pybind11 ps.pyyaml ]);
-
-  withVerilator = theStdenv.hostPlatform.isDarwin;
 in
 (mkShell.override { stdenv = theStdenv; }) {
   nativeBuildInputs = [
