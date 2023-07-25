@@ -44,10 +44,10 @@
         in rec {
           devShells = {
             default = import ./shell.nix { inherit pkgs; };
-            git = import ./shell.nix {
-               inherit pkgs;
-               llvmPkgs = pkgs.llvmPackages_git; # NOT same as submodule.
-            };
+            # git = import ./shell.nix {
+            #    inherit pkgs;
+            #    llvmPkgs = pkgs.llvmPackages_git; # NOT same as submodule.
+            # };
           };
           packages = flake-utils.lib.flattenTree (newLLVMPkgs // rec {
             default = circt; # default for `nix build` etc.
