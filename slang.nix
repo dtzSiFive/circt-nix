@@ -2,7 +2,6 @@
 , cmake
 , python3
 , catch2_3
-, boost18x
 }:
 
 let
@@ -25,7 +24,7 @@ in stdenv.mkDerivation {
   pname = "slang";
   inherit version;
   nativeBuildInputs = [ cmake python3 ];
-  buildInputs = [ python3 catch2_3 boost18x ];
+  buildInputs = [ python3 catch2_3 ];
   src = slang-src;
 
   patches = [
