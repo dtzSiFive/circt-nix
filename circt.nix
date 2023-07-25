@@ -4,7 +4,7 @@
 , coreutils
 , libllvm, mlir, lit
 , circt-src
-, capnproto,
+, capnproto
 # TODO: Shouldn't need to specify these deps, fix in upstream nixpkgs!
 , or-tools, bzip2, cbc, eigen, glpk, re2
 , python3
