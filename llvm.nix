@@ -26,6 +26,9 @@ let
       "${date}_${rev}";
   version = mkVer llvm-submodule-src;
 
+  # Needed until upstream "git" matches.
+  release_version = "18.0.0";
+
   addAsserts = p: if !enableAssertions then p else p.overrideAttrs(o: {
     cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_ENABLE_ASSERTIONS=ON" ];
   });
@@ -36,7 +39,7 @@ let
   overridePkg = p: overrideLLVMPkg (setTargets (addAsserts p));
 
 in rec {
-  libllvm = overridePkg llvmPackages.libllvm { };
+  libllvm = overridePkg llvmPackages.libllvm { inherit release_version; };
   mlir = overridePkg llvmPackages.mlir { inherit libllvm; };
   libclang = overridePkg llvmPackages.libclang { inherit libllvm; };
 
