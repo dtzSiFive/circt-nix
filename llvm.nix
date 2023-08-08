@@ -35,16 +35,14 @@ let
   setTargets = p: if !hostOnly then p else p.overrideAttrs(o: {
     cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_TARGETS_TO_BUILD=host" ];
   });
+  installGTest = p: p.overrideAttrs(o: {
+    cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_INSTALL_GTEST=ON" ];
+  });
   overrideLLVMPkg = p: args: p.override ({ inherit monorepoSrc version; } // args);
-  overridePkg = p: overrideLLVMPkg (setTargets (addAsserts p));
+  overridePkg = p: overrideLLVMPkg (installGTest (setTargets (addAsserts p)));
 
 in rec {
   libllvm = overridePkg llvmPackages.libllvm { inherit release_version; };
   mlir = overridePkg llvmPackages.mlir { inherit libllvm; };
   libclang = overridePkg llvmPackages.libclang { inherit libllvm; };
-
-  # Split out needed unittest bits, required by sub-projects.
-  llvm-third-party-src = runCommand "third-party-src" {} ''
-    cp -r ${monorepoSrc}/third-party $out
-  '';
 }

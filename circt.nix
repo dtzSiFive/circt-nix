@@ -73,7 +73,6 @@ in stdenv.mkDerivation {
   cmakeFlags = [
     "-DLLVM_EXTERNAL_LIT=${lit}/bin/lit"
     "-DLLVM_LIT_ARGS=-v"
-    "-DLLVM_THIRD_PARTY_DIR=${llvm-third-party-src}"
   ] ++ lib.optional enableDocs "-DCIRCT_INCLUDE_DOCS=ON"
     ++ lib.optional enableAssertions "-DLLVM_ENABLE_ASSERTIONS=ON"
     ++ lib.optionals enableSlang [
