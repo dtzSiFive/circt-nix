@@ -48,11 +48,6 @@ in stdenv.mkDerivation {
 
   patches = [
     ./patches/circt-mlir-tblgen-path.patch
-    (fetchpatch {
-      url = "https://github.com/llvm/circt/pull/5804/commits/2ca2683bbc3ca1084fc99829c8fb54037698ad12.patch";
-      sha256 = "++k7uO3z08zskxVevn0ifEcNWF2EaCc28x07EKjIjKY=";
-      name = "use-installed-llvm-gtest.patch";
-    })
   ];
   postPatch = ''
     substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir}/bin/mlir-tblgen"
