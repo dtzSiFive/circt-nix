@@ -1,0 +1,20 @@
+diff --git a/mlir/tools/mlir-opt/mlir-opt.cpp b/mlir/tools/mlir-opt/mlir-opt.cpp
+index b47634476c62..5cd1b40ea6c9 100644
+--- a/mlir/tools/mlir-opt/mlir-opt.cpp
++++ b/mlir/tools/mlir-opt/mlir-opt.cpp
+@@ -276,7 +276,14 @@ int main(int argc, char **argv) {
+   DialectRegistry registry;
+   registerAllDialects(registry);
+   registerAllExtensions(registry);
+-  registerAllToLLVMIRTranslations(registry);
++
++  // TODO: Remove these when a more structured extension registration mechanism
++  // is added.
++  registerBuiltinDialectTranslation(registry);
++  registerGPUDialectTranslation(registry);
++  registerLLVMDialectTranslation(registry);
++  registerNVVMDialectTranslation(registry);
++  registerROCDLDialectTranslation(registry);
+ 
+ #ifdef MLIR_INCLUDE_TESTS
+   ::test::registerTestDialect(registry);
