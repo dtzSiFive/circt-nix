@@ -16,10 +16,6 @@ let
 
   # LLVM source to use:
   monorepoSrc = patchsrc llvm-submodule-src [
-    # https://reviews.llvm.org/D158607
-    ./patches/llvm-gtest-install-location.patch
-    # https://reviews.llvm.org/D158606
-    #./patches/mlir-D158606-proposed-fix.patch
   ];
   # Version string:
   mkVer = src:
