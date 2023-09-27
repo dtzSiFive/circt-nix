@@ -20,11 +20,11 @@
     "circt-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1695815379,
-        "narHash": "sha256-tAOyXo5t+JarOcSPBj2YbgKBa+AYFAg8NhFVEaAhzoI=",
+        "lastModified": 1695831303,
+        "narHash": "sha256-n2oCCBR0kQHrEVlP7dzrEeeKng2o67/ig6T7aHJM5t8=",
         "owner": "llvm",
         "repo": "circt",
-        "rev": "ee6c3ee6e65238ea2485ee38779c2e788806d6ee",
+        "rev": "d64d0cb8a0bbc87cced7cd3466472c16876357e0",
         "type": "github"
       },
       "original": {
@@ -70,17 +70,17 @@
     "llvm-submodule-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1694548742,
-        "narHash": "sha256-0jP6CVSAi5Ar5Q648RKYXWLx5SPG5JCCZt1an1UHv0o=",
+        "lastModified": 1695821726,
+        "narHash": "sha256-dWocyR4wpdYZuCGf9S8lBYeUYm7+mQVgadiMoCbzBEo=",
         "owner": "llvm",
         "repo": "llvm-project",
-        "rev": "688019851e696f13ce4701fc9a8ec3e116221288",
+        "rev": "6e46545b981437cc9316e6496c03756a19db6975",
         "type": "github"
       },
       "original": {
         "owner": "llvm",
         "repo": "llvm-project",
-        "rev": "688019851e696f13ce4701fc9a8ec3e116221288",
+        "rev": "6e46545b981437cc9316e6496c03756a19db6975",
         "type": "github"
       }
     },
