@@ -3,11 +3,11 @@
     "circt-slang-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1696542898,
-        "narHash": "sha256-PBwgLJXzEM8uU2c76GlTJuTul1/KyvXqXJ6yNTvh8mE=",
+        "lastModified": 1697073999,
+        "narHash": "sha256-M+8nYau9yhgXHZh3OWBVauqSkHRsxFJJoapIG+LBiv0=",
         "owner": "fabianschuiki",
         "repo": "circt",
-        "rev": "12e15e8f1eddf888766e60705707348d500c7b9d",
+        "rev": "c08e6dcb5cdb0c36b382e44458278bd6fe5c6ecc",
         "type": "github"
       },
       "original": {
@@ -20,11 +20,11 @@
     "circt-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1696620244,
-        "narHash": "sha256-aj+V81l4MBdDaV8j18MaZ3ihcrujz0gFnsWGfYxa4E4=",
+        "lastModified": 1697429957,
+        "narHash": "sha256-9iIYA+TqOlZsfvERG0gC34inQUS03tQPVelGBnew1cQ=",
         "owner": "llvm",
         "repo": "circt",
-        "rev": "15cc6fe9e1fcd640a658d9dc420c33187343adee",
+        "rev": "3734470f3783e2d952ae0f091d1ccb0fb5715837",
         "type": "github"
       },
       "original": {
@@ -70,17 +70,17 @@
     "llvm-submodule-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1696339287,
-        "narHash": "sha256-N7di78+h0kRlWUpvVrg6lHIEQ4EPc32rSC272Wf0O/0=",
+        "lastModified": 1697038739,
+        "narHash": "sha256-qXxshpEr3myLup+jtOTcNx3ypyiOxcl6fZ6xFAY7TgE=",
         "owner": "llvm",
         "repo": "llvm-project",
-        "rev": "1482106c9960300e729b1a58e5e25b6ac1c150ba",
+        "rev": "a12e747c4c6d333eb8739cd43f12acdeecd47d5c",
         "type": "github"
       },
       "original": {
         "owner": "llvm",
         "repo": "llvm-project",
-        "rev": "1482106c9960300e729b1a58e5e25b6ac1c150ba",
+        "rev": "a12e747c4c6d333eb8739cd43f12acdeecd47d5c",
         "type": "github"
       }
     },
@@ -114,11 +114,11 @@
     "slang-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1696336880,
-        "narHash": "sha256-XFmu+X0ggmbXxmKrAWerNj4jJDkvuruZo7RhYInlDA4=",
+        "lastModified": 1696897713,
+        "narHash": "sha256-o8InBo6GzXwUPqQFUVQiVxJS5Mg5340X9O9JGiYP9Vs=",
         "owner": "MikePopoloski",
         "repo": "slang",
-        "rev": "c5f6c7dcfe6b74f0e343d90b01b24d13853ed755",
+        "rev": "5ab05455af77f3212893a0b531c8cb4f80f737bc",
         "type": "github"
       },
       "original": {
