@@ -53,7 +53,7 @@ in stdenv.mkDerivation {
     substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir}/bin/mlir-tblgen"
 
     substituteInPlace cmake/modules/GenVersionFile.cmake \
-      --replace '"unknown git version"' '"${version}"'
+      --replace '"unknown git version"' '"firtool-${version}"'
     
     find test -type f -exec \
       sed -i -e 's,--test /usr/bin/env,--test ${lib.getBin coreutils}/bin/env,' \{\} \;
