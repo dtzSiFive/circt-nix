@@ -17,14 +17,23 @@ let
   fmt_src = fetchFromGitHub {
     owner = "fmtlib";
     repo = "fmt";
-    rev = "10.1.0";
-    sha256 = "t/Mcl3n2dj8UEnptQh4YgpvWrxSYN3iGPZ3LKwzlPAg=";
+    rev = "10.2.0";
+    sha256 = "EHM8OTb46FYWASW7uwf+qMxc9gPIh2vwAXSPL1gDqf0=";
   };
+  # Drop for "catch2_3" once bump nixpkgs.
+  catch2_3_pinned = catch2_3.overrideAttrs(o: {
+    src = fetchFromGitHub {
+      owner = "catchorg";
+      repo = "catch2";
+      rev = "v3.4.0";
+      sha256 = "DqGGfNjKPW9HFJrX9arFHyNYjB61uoL6NabZatTWrr0=";
+    };
+  });
 in stdenv.mkDerivation {
   pname = "slang";
   inherit version;
   nativeBuildInputs = [ cmake python3 ];
-  buildInputs = [ python3 catch2_3 ];
+  buildInputs = [ python3 catch2_3_pinned ];
   src = slang-src;
 
   patches = [
