@@ -42,7 +42,10 @@ let
   overridePkg = p: overrideLLVMPkg (installGTest (setTargets (addAsserts p)));
 
 in rec {
-  libllvm = overridePkg llvmPackages.libllvm { inherit release_version; };
+  libllvm = overridePkg llvmPackages.libllvm {
+    inherit release_version;
+    enablePolly = false; /* patch doesn't work on our rev */
+  };
   mlir = overridePkg llvmPackages.mlir { inherit libllvm; };
   libclang = overridePkg llvmPackages.libclang { inherit libllvm; };
 }
