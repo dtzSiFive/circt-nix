@@ -11,20 +11,30 @@ let
       date = builtins.substring 0 8 (src.lastModifiedDate or src.lastModified or "19700101");
     in
       "g${date}_${getRev src}";
-  tag = "4.0";
+  tag = "5.0";
   version = "${tag}${mkVer slang-src}";
 
   fmt_src = fetchFromGitHub {
     owner = "fmtlib";
     repo = "fmt";
-    rev = "10.1.0";
-    sha256 = "t/Mcl3n2dj8UEnptQh4YgpvWrxSYN3iGPZ3LKwzlPAg=";
+    rev = "10.2.1";
+    sha256 = "pEltGLAHLZ3xypD/Ur4dWPWJ9BGVXwqQyKcDWVmC3co=";
   };
+  # Drop for "catch2_3" once bump nixpkgs.
+  catch2_3_pinned = catch2_3.overrideAttrs(o: {
+    src = fetchFromGitHub {
+      owner = "catchorg";
+      repo = "catch2";
+      rev = "v3.5.1";
+      sha256 = "OyYNUfnu6h1+MfCF8O+awQ4Usad0qrdCtdZhYgOY+Vw=";
+    };
+    inherit version;
+  });
 in stdenv.mkDerivation {
   pname = "slang";
   inherit version;
   nativeBuildInputs = [ cmake python3 ];
-  buildInputs = [ python3 catch2_3 ];
+  buildInputs = [ python3 catch2_3_pinned ];
   src = slang-src;
 
   patches = [
