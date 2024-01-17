@@ -44,6 +44,7 @@
         in rec {
           devShells = {
             default = import ./shell.nix { inherit pkgs; };
+          } // pkgs.lib.optionalAttrs (!pkgs.stdenv.isDarwin /* libcxxabi git on Darwin is broken?*/) {
             git = import ./shell.nix {
                inherit pkgs;
                llvmPkgs = pkgs.llvmPackages_git; # NOT same as submodule.
