@@ -27,7 +27,7 @@ let
   version = mkVer llvm-submodule-src;
 
   # Needed until upstream "git" matches.
-  release_version = "18.0.0";
+  release_version = "19.0.0";
 
   addAsserts = p: if !enableAssertions then p else p.overrideAttrs(o: {
     cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_ENABLE_ASSERTIONS=ON" ];
