@@ -7,8 +7,6 @@
     nixpkgs.url = "github:dtzWill/nixpkgs/mlir-git";
     circt-src.url = "github:llvm/circt";
     circt-src.flake = false;
-    circt-slang-src.url = "github:fabianschuiki/circt/slang-frontend";
-    circt-slang-src.flake = false;
     llvm-submodule-src = {
       type = "github";
       owner = "llvm";
@@ -32,7 +30,6 @@
     , nixpkgs
     , flake-compat, flake-utils
     , circt-src, llvm-submodule-src
-    , circt-slang-src
     , slang-src
     }: flake-utils.lib.eachDefaultSystem
       (system:
@@ -56,11 +53,6 @@
             circt = pkgs.callPackage ./circt.nix {
               inherit circt-src;
               inherit (newLLVMPkgs) libllvm mlir llvm-third-party-src;
-            };
-            circt-slang = circt.override {
-              circt-src = circt-slang-src;
-              inherit slang;
-              enableSlang = true;
             };
             espresso = pkgs.callPackage ./espresso.nix {};
             slang = pkgs.callPackage ./slang.nix {
