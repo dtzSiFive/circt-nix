@@ -17,7 +17,7 @@
 , enableAssertions ? true
 , enableOrTools ? false # stdenv.hostPlatform.isLinux
 , slang
-, enableSlang ? false
+, enableSlang ? true
 , withVerilator ? !stdenv.hostPlatform.isDarwin
 , z3
 }:
@@ -57,14 +57,6 @@ in stdenv.mkDerivation {
     
     find test -type f -exec \
       sed -i -e 's,--test /usr/bin/env,--test ${lib.getBin coreutils}/bin/env,' \{\} \;
-  ''
-  # slang library renamed to 'svlang'.
-  + lib.optionalString enableSlang ''
-    substituteInPlace lib/Conversion/ImportVerilog/CMakeLists.txt \
-      --replace slang::slang slang::svlang
-
-    # Bad interaction with hardcoded flags + LLVM machinery for exceptions/etc.
-    substituteInPlace CMakeLists.txt --replace "-fno-exceptions -fno-rtti" ""
   '';
  
 
