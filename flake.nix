@@ -58,6 +58,7 @@
             slang = pkgs.callPackage ./slang.nix {
               inherit slang-src;
             };
+            slang_3 = pkgs.callPackage ./slang_3.nix {};
           });
           apps = pkgs.lib.genAttrs [ "firtool" "circt-lsp-server" ]
             (name: flake-utils.lib.mkApp { drv = packages.circt; inherit name; });

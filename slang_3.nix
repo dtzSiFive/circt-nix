@@ -1,49 +1,46 @@
-{ lib, stdenv, slang-src, fetchFromGitHub
+{ lib, stdenv, fetchFromGitHub
 , cmake
 , python3
 , catch2_3
 }:
 
 let
-  getRev = src: src.shortRev or "dirty";
-  mkVer = src:
-    let
-      date = builtins.substring 0 8 (src.lastModifiedDate or src.lastModified or "19700101");
-    in
-      "g${date}_${getRev src}";
-  tag = "5.0";
-  version = "${tag}${mkVer slang-src}";
+  tag = "3.0";
 
   fmt_src = fetchFromGitHub {
     owner = "fmtlib";
     repo = "fmt";
-    rev = "10.2.1";
-    sha256 = "pEltGLAHLZ3xypD/Ur4dWPWJ9BGVXwqQyKcDWVmC3co=";
+    rev = "9.1.0";
+    sha256 = "rP6ymyRc7LnKxUXwPpzhHOQvpJkpnRFOt2ctvUNlYI0=";
   };
-  # Drop for "catch2_3" once bump nixpkgs.
-  catch2_3_pinned = catch2_3.overrideAttrs(o: {
-    src = fetchFromGitHub {
-      owner = "catchorg";
-      repo = "catch2";
-      rev = "v3.5.1";
-      sha256 = "OyYNUfnu6h1+MfCF8O+awQ4Usad0qrdCtdZhYgOY+Vw=";
-    };
-    inherit version;
-  });
+  # 2.0.0 maybe, but this seems to work too.
+  unordered_dense_src = fetchFromGitHub {
+    owner = "martinus";
+    repo = "unordered_dense";
+    rev = "v3.1.1";
+    sha256 = "7tx7s2j/UjsAjo47isQfqD+U2U6TAcMgG9VXJz4GDWQ=";
+  };
 in stdenv.mkDerivation {
   pname = "slang";
-  inherit version;
+  version = "v${tag}";
   nativeBuildInputs = [ cmake python3 ];
-  buildInputs = [ python3 catch2_3_pinned ];
-  src = slang-src;
+  buildInputs = [ python3 catch2_3 ];
+  src = fetchFromGitHub {
+    owner = "MikePopoloski";
+    repo = "slang";
+    rev = "v${tag}";
+    sha256 = "v2sStvukLFMRXGeATxvizmnwEPDE4kwnS06n+37OrJA=";
+  };
 
   patches = [
-    ./patches/slang_git-don-t-fetch-fmt.patch
-    ./patches/slang_git-pkgconfig.patch
+    ./patches/slang_3-pkgconfig.patch
+    ./patches/slang-don-t-fetch-fmt-unordered_dense.patch
+    ./patches/slang_3-Drop-span.hpp-from-install-was-removed-in-f663d45cb9.patch
   ];
 
   postPatch = ''
     ln -s ${fmt_src} external/fmt
+    ln -s ${unordered_dense_src} external/unordered_dense
     
     substituteInPlace source/util/Version.cpp.in \
       --subst-var SLANG_VERSION_MAJOR \
@@ -58,10 +55,7 @@ in stdenv.mkDerivation {
   SLANG_VERSION_MAJOR = lib.versions.major tag;
   SLANG_VERSION_MINOR = lib.versions.minor tag;
   SLANG_VERSION_PATCH = 0; # patch isn't safe if no patch level :(
-  SLANG_VERSION_HASH = getRev slang-src;
-
-  # Disable mimalloc, adding as build input isn't enough (?).
-  cmakeFlags = [ "-DSLANG_USE_MIMALLOC=OFF" ];
+  SLANG_VERSION_HASH = "";
 
   # TODO: tests
 
