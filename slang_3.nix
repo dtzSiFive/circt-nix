@@ -34,7 +34,7 @@ in stdenv.mkDerivation {
 
   patches = [
     ./patches/slang_3-pkgconfig.patch
-    ./patches/slang-don-t-fetch-fmt-unordered_dense.patch
+    ./patches/slang_3-don-t-fetch-fmt-unordered_dense.patch
     ./patches/slang_3-Drop-span.hpp-from-install-was-removed-in-f663d45cb9.patch
   ];
 
