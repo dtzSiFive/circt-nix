@@ -57,6 +57,11 @@ in stdenv.mkDerivation {
     
     find test -type f -exec \
       sed -i -e 's,--test /usr/bin/env,--test ${lib.getBin coreutils}/bin/env,' \{\} \;
+  ''
+  # slang library renamed to 'svlang'.
+  + lib.optionalString enableSlang ''
+    substituteInPlace lib/Conversion/ImportVerilog/CMakeLists.txt \
+      --replace slang_slang slang::slang
   '';
  
 
