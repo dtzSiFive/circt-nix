@@ -21,11 +21,12 @@ let
     sha256 = "pEltGLAHLZ3xypD/Ur4dWPWJ9BGVXwqQyKcDWVmC3co=";
   };
   # Drop for "catch2_3" once bump nixpkgs.
-  catch2_3_pinned = catch2_3.overrideAttrs(o: {
+  catch2_3_pinned = catch2_3.overrideAttrs(o: 
+    let version = "3.5.1"; in {
     src = fetchFromGitHub {
       owner = "catchorg";
       repo = "catch2";
-      rev = "v3.5.1";
+      rev = "v${version}";
       sha256 = "OyYNUfnu6h1+MfCF8O+awQ4Usad0qrdCtdZhYgOY+Vw=";
     };
     inherit version;
