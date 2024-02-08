@@ -23,13 +23,13 @@ let
   # Drop for "catch2_3" once bump nixpkgs.
   catch2_3_pinned = catch2_3.overrideAttrs(o: 
     let version = "3.5.1"; in {
-    src = fetchFromGitHub {
-      owner = "catchorg";
-      repo = "catch2";
-      rev = "v${version}";
-      sha256 = "OyYNUfnu6h1+MfCF8O+awQ4Usad0qrdCtdZhYgOY+Vw=";
-    };
-    inherit version;
+      src = fetchFromGitHub {
+        owner = "catchorg";
+        repo = "catch2";
+        rev = "v${version}";
+        sha256 = "OyYNUfnu6h1+MfCF8O+awQ4Usad0qrdCtdZhYgOY+Vw=";
+      };
+      inherit version;
   });
 in stdenv.mkDerivation {
   pname = "slang";
