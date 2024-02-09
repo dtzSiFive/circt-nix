@@ -17,7 +17,7 @@
 , enableAssertions ? true
 , enableOrTools ? false # stdenv.hostPlatform.isLinux
 , slang
-, enableSlang ? true
+, enableSlang ? false
 , withVerilator ? !stdenv.hostPlatform.isDarwin
 , z3
 }:
