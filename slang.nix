@@ -46,7 +46,7 @@ in stdenv.mkDerivation {
   postPatch = ''
     ln -s ${fmt_src} external/fmt
     
-    substituteInPlace source/util/Version.cpp.in \
+    substituteInPlace source/util/VersionInfo.cpp.in \
       --subst-var SLANG_VERSION_MAJOR \
       --subst-var SLANG_VERSION_MINOR \
       --subst-var SLANG_VERSION_PATCH \
