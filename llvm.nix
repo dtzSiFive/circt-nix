@@ -46,7 +46,6 @@ in rec {
   libllvm = overridePkg llvmPackages.libllvm {
     inherit release_version;
     enablePolly = false; /* patch doesn't work on our rev */
-    enableGoldPlugin = false; # Workaround `ld --help` crash on Darwin in lit.cfg.py.
   };
   mlir = overridePkg llvmPackages.mlir { inherit libllvm; };
   libclang = overridePkg llvmPackages.libclang { inherit libllvm; };
