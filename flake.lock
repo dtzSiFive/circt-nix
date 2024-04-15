@@ -96,11 +96,11 @@
     "slang-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1712670316,
-        "narHash": "sha256-WHgabOejOxNifXwm6CsRC4tvQfJkeOacRx2bnJbEqYE=",
+        "lastModified": 1713009159,
+        "narHash": "sha256-V0OYFas2qtFltXjTus8G9ifilCetlTfFy54ORaW97C8=",
         "owner": "MikePopoloski",
         "repo": "slang",
-        "rev": "304ec04d0b5f20a939163b68dd82f21595920e44",
+        "rev": "29058a9273dea75ce84dc09d6cebfca4d061cec1",
         "type": "github"
       },
       "original": {
