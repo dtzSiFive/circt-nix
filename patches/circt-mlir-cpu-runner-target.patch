@@ -1,0 +1,33 @@
+From 0aca77173e13a37a5b0f1d520630f28276deb7e9 Mon Sep 17 00:00:00 2001
+From: Will Dietz <will.dietz@sifive.com>
+Date: Sat, 20 Apr 2024 12:43:02 -0500
+Subject: [PATCH] Only add mlir-cpu-runner is valid target.
+
+Really we shouldn't use this, MLIR doesn't export this
+as a target even if it's installed.
+
+Similar to mlir-opt it would be easy to roll our own,
+but for now just avoid adding a target that doesn't exist.
+
+Tests using this expect it installed/available if MLIR was built
+with execution engine support.
+---
+ integration_test/CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/integration_test/CMakeLists.txt b/integration_test/CMakeLists.txt
+index 720434c83..a7dd61edf 100644
+--- a/integration_test/CMakeLists.txt
++++ b/integration_test/CMakeLists.txt
+@@ -13,7 +13,7 @@ set(CIRCT_INTEGRATION_TEST_DEPENDS
+   handshake-runner
+   )
+ 
+-if (MLIR_ENABLE_EXECUTION_ENGINE)
++if (MLIR_ENABLE_EXECUTION_ENGINE AND TARGET mlir-cpu-runner)
+   list(APPEND CIRCT_INTEGRATION_TEST_DEPENDS mlir-cpu-runner)
+ endif()
+ 
+-- 
+2.43.2
+
