@@ -32,7 +32,7 @@ let
     in
       "g${date}_${rev}";
 
-  tag = "1.73.0";
+  tag = "1.74.0";
   versionSuffix = mkVer circt-src;
   version = "${tag}${versionSuffix}";
 in stdenv.mkDerivation {
