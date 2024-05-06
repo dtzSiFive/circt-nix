@@ -22,12 +22,12 @@ let
   };
   # Drop for "catch2_3" once bump nixpkgs.
   catch2_3_pinned = catch2_3.overrideAttrs(o: 
-    let version = "3.5.1"; in {
+    let version = "3.5.4"; in {
       src = fetchFromGitHub {
         owner = "catchorg";
         repo = "catch2";
         rev = "v${version}";
-        sha256 = "OyYNUfnu6h1+MfCF8O+awQ4Usad0qrdCtdZhYgOY+Vw=";
+        sha256 = "3z4/kBEW2zQQJkcdkXhN6NK9+wryXVfEm3MK1wZ3SCE=";
       };
       inherit version;
   });
