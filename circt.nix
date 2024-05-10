@@ -72,6 +72,8 @@ in stdenv.mkDerivation {
     "-DLLVM_EXTERNAL_LIT=${lit}/bin/.lit-wrapped" # eep
     "-DLLVM_LIT_ARGS=-v"
     "-DLLVM_THIRD_PARTY_DIR=${llvm-third-party-src}"
+    "-DCIRCT_INSTALL_PACKAGE_DIR==${placeholder "dev"}/lib/cmake/circt"
+    "-DCIRCT_TOOLS_INSTALL_DIR=${placeholder "out"}/bin"
   ] ++ lib.optional enableDocs "-DCIRCT_INCLUDE_DOCS=ON"
     ++ lib.optional enableAssertions "-DLLVM_ENABLE_ASSERTIONS=ON"
     ++ lib.optionals enableSlang [
