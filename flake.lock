@@ -3,11 +3,11 @@
     "circt-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1715278893,
-        "narHash": "sha256-JLxgwqZU3MJbxaohiR7rzrHOPot5nT1ySJ8knNgzRLc=",
+        "lastModified": 1715295140,
+        "narHash": "sha256-qbUeLs01uL8IW5lIOXrNnjjkDJK5w3tnjuv5yLYtyg4=",
         "owner": "llvm",
         "repo": "circt",
-        "rev": "719bbfde797c41a5e8c1ad0481d63915bae4d8b4",
+        "rev": "6a2b628129189acf1696825c6711d8885dc760f2",
         "type": "github"
       },
       "original": {
@@ -69,16 +69,15 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1713627769,
-        "narHash": "sha256-rfXBpLfN6gGMXlLOfnKIVkxalbxUOS6sXfnzhqvGx/4=",
-        "owner": "dtzWill",
+        "lastModified": 1715344270,
+        "narHash": "sha256-hZdvMFSA+8w4dlQaBzqtSnsFyKKSMYDrmNgLsDFw5yI=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "2b848dd0fd09930323e5ce044207a8f8329094de",
+        "rev": "90e835951a8cb6d4b003bacd1ed3284c3a0b9182",
         "type": "github"
       },
       "original": {
-        "owner": "dtzWill",
-        "ref": "mlir-git",
+        "owner": "NixOS",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -96,11 +95,11 @@
     "slang-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1715258080,
-        "narHash": "sha256-9rJbYpRhNj+LOIdiYLWQKW0q4JiZlornZsee8wyMcvM=",
+        "lastModified": 1715304247,
+        "narHash": "sha256-QRirzCFifrss9fAXKQy9/RMjiJw8+6otP/C5aPGH2H4=",
         "owner": "MikePopoloski",
         "repo": "slang",
-        "rev": "ef642b7fabfbc387521c5e3d3443be7fbc4b08af",
+        "rev": "e038cd3e20c2723c71a1cabf13c1ec3bab7e962d",
         "type": "github"
       },
       "original": {
