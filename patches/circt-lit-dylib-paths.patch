@@ -1,18 +1,18 @@
-From b80b840151de9a6fc3e9d7ec883c1d759f916331 Mon Sep 17 00:00:00 2001
+From be96ffaae1e9cdbc53151ba1797bf6dc111c5dae Mon Sep 17 00:00:00 2001
 From: Will Dietz <will.dietz@sifive.com>
 Date: Fri, 10 May 2024 12:43:46 -0500
 Subject: [PATCH] dylib-lit-paths
 
 lit.cfg.py only, leave Unit as-is for now.
 ---
- test/lit.cfg.py | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ test/lit.cfg.py | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
 diff --git a/test/lit.cfg.py b/test/lit.cfg.py
-index 009a561a5..829c88caf 100644
+index 009a561a5..abbf72a60 100644
 --- a/test/lit.cfg.py
 +++ b/test/lit.cfg.py
-@@ -90,3 +90,32 @@ if config.slang_frontend_enabled:
+@@ -90,3 +90,31 @@ if config.slang_frontend_enabled:
    tools.append('circt-verilog')
  
  llvm_config.add_tool_substitutions(tools, tool_dirs)
@@ -35,7 +35,6 @@ index 009a561a5..829c88caf 100644
 +    shlibpath = os.path.pathsep.join(
 +        (
 +            config.circt_shlib_dir,
-+            config.llvm_libs_dir,
 +            config.environment.get(shlibpath_var, ""),
 +        )
 +    )
