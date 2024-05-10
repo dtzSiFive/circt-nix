@@ -69,7 +69,7 @@ in stdenv.mkDerivation {
   outputs = [ "out" "lib" "dev" ];
 
   cmakeFlags = [
-    "-DLLVM_EXTERNAL_LIT=${lit}/bin/lit"
+    "-DLLVM_EXTERNAL_LIT=${lit}/bin/.lit-wrapped" # eep
     "-DLLVM_LIT_ARGS=-v"
     "-DLLVM_THIRD_PARTY_DIR=${llvm-third-party-src}"
   ] ++ lib.optional enableDocs "-DCIRCT_INCLUDE_DOCS=ON"
