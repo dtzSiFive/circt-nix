@@ -4,7 +4,7 @@
 
   inputs = {
     # Use Nixpkgs branch until MLIR at least is merged into nixpkgs proper
-    nixpkgs.url = "github:NixOS/nixpkgs";
+    nixpkgs.url = "github:dtzWill/nixpkgs/mlir-master";
     circt-src.url = "github:llvm/circt";
     circt-src.flake = false;
     llvm-submodule-src = {
