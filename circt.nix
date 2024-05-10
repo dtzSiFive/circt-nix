@@ -67,7 +67,7 @@ in stdenv.mkDerivation {
   '';
  
 
-  outputs = [ "out" "dev" ];
+  outputs = [ "out" "lib" "dev" ];
 
   cmakeFlags = [
     "-DLLVM_EXTERNAL_LIT=${lit}/bin/.lit-wrapped" # eep
@@ -75,6 +75,7 @@ in stdenv.mkDerivation {
     "-DLLVM_THIRD_PARTY_DIR=${llvm-third-party-src}"
     "-DCIRCT_INSTALL_PACKAGE_DIR==${placeholder "dev"}/lib/cmake/circt"
     "-DCIRCT_TOOLS_INSTALL_DIR=${placeholder "out"}/bin"
+    "-DCIRCT_LIBRARY_DIR=${placeholder "lib"}/lib"
     "-DCIRCT_LLHD_SIM_ENABLED=${if enableLLHD then "ON" else "OFF"}"
   ] ++ lib.optional enableDocs "-DCIRCT_INCLUDE_DOCS=ON"
     ++ lib.optional enableAssertions "-DLLVM_ENABLE_ASSERTIONS=ON"
