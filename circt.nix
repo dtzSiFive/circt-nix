@@ -18,6 +18,7 @@
 , enableOrTools ? false # stdenv.hostPlatform.isLinux
 , slang
 , enableSlang ? false
+, enableLLHD ? !stdenv.hostPlatform.isDarwin
 , withVerilator ? !stdenv.hostPlatform.isDarwin
 , z3
 }:
@@ -74,6 +75,7 @@ in stdenv.mkDerivation {
     "-DLLVM_THIRD_PARTY_DIR=${llvm-third-party-src}"
     "-DCIRCT_INSTALL_PACKAGE_DIR==${placeholder "dev"}/lib/cmake/circt"
     "-DCIRCT_TOOLS_INSTALL_DIR=${placeholder "out"}/bin"
+    "-DCIRCT_LLHD_SIM_ENABLED=${if enableLLHD then "ON" else "OFF"}"
   ] ++ lib.optional enableDocs "-DCIRCT_INCLUDE_DOCS=ON"
     ++ lib.optional enableAssertions "-DLLVM_ENABLE_ASSERTIONS=ON"
     ++ lib.optionals enableSlang [
