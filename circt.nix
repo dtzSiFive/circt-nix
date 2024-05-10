@@ -66,7 +66,7 @@ in stdenv.mkDerivation {
   '';
  
 
-  outputs = [ "out" "lib" "dev" ];
+  outputs = [ "out" "dev" ];
 
   cmakeFlags = [
     "-DLLVM_EXTERNAL_LIT=${lit}/bin/.lit-wrapped" # eep
