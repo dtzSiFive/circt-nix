@@ -1,34 +1,30 @@
-From d9455d596d1a23d818f9e76dbbb266d41180dcbd Mon Sep 17 00:00:00 2001
+From 339fe4ed521109eb8a853ae8178cf8ae5943cb99 Mon Sep 17 00:00:00 2001
 From: Will Dietz <will.dietz@sifive.com>
 Date: Fri, 10 May 2024 12:25:20 -0500
-Subject: [PATCH] cmake: INSTALL_FULL_LIBDIR
+Subject: [PATCH] cmake: install libdir
 
 ---
- CMakeLists.txt               | 2 ++
- cmake/modules/AddCIRCT.cmake | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ cmake/modules/AddCIRCT.cmake | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index a1cad4188..cd3269868 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -1,4 +1,6 @@
- ##===- CMakeLists.txt - CIRCT cmake root ----------------------*- cmake -*-===//
-+
-+
- ##
- ## Configure the CIRCT build.
- ##
 diff --git a/cmake/modules/AddCIRCT.cmake b/cmake/modules/AddCIRCT.cmake
-index 93379caa8..c66fcc5cc 100644
+index 93379caa8..ac70a00fc 100644
 --- a/cmake/modules/AddCIRCT.cmake
 +++ b/cmake/modules/AddCIRCT.cmake
-@@ -84,7 +84,7 @@ function(add_circt_library_install name)
+@@ -78,13 +78,13 @@ function(add_circt_library_install name)
+   install(TARGETS ${name}
+     COMPONENT ${name}
+     ${export_to_circttargets}
+-    LIBRARY DESTINATION lib${LLVM_LIBDIR_SUFFIX}
+-    ARCHIVE DESTINATION lib${LLVM_LIBDIR_SUFFIX}
++    LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}${LLVM_LIBDIR_SUFFIX}"
++    ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}${LLVM_LIBDIR_SUFFIX}"
+     RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
      # Note that CMake will create a directory like:
      #   objects-${CMAKE_BUILD_TYPE}/obj.LibName
      # and put object files there.
 -    OBJECTS DESTINATION lib${LLVM_LIBDIR_SUFFIX}
-+    OBJECTS DESTINATION ${CMAKE_INSTALL_FULL_LIBDIR}/lib${LLVM_LIBDIR_SUFFIX}
++    OBJECTS DESTINATION "${CMAKE_INSTALL_LIBDIR}${LLVM_LIBDIR_SUFFIX}"
    )
  
    if (NOT LLVM_ENABLE_IDE)
