@@ -1,0 +1,86 @@
+From aef7ce3153d31b0952033e1b9bda9ec70f85cff0 Mon Sep 17 00:00:00 2001
+From: Will Dietz <will.dietz@sifive.com>
+Date: Fri, 10 May 2024 12:43:46 -0500
+Subject: [PATCH] dylib-lit-paths
+
+---
+ test/Unit/lit.cfg.py | 28 ++++++++++++++++++++++++++++
+ test/lit.cfg.py      | 29 +++++++++++++++++++++++++++++
+ 2 files changed, 57 insertions(+)
+
+diff --git a/test/Unit/lit.cfg.py b/test/Unit/lit.cfg.py
+index c6ba6945b..3fe33f8c2 100644
+--- a/test/Unit/lit.cfg.py
++++ b/test/Unit/lit.cfg.py
+@@ -37,3 +37,31 @@ if 'HOME' in os.environ:
+ for symbolizer in ['ASAN_SYMBOLIZER_PATH', 'MSAN_SYMBOLIZER_PATH']:
+   if symbolizer in os.environ:
+     config.environment[symbolizer] = os.environ[symbolizer]
++
++def find_shlibpath_var():
++    if platform.system() in ["Linux", "FreeBSD", "NetBSD", "OpenBSD", "SunOS"]:
++        yield "LD_LIBRARY_PATH"
++    elif platform.system() == "Darwin":
++        yield "DYLD_LIBRARY_PATH"
++    elif platform.system() == "Windows":
++        yield "PATH"
++    elif platform.system() == "AIX":
++        yield "LIBPATH"
++
++
++for shlibpath_var in find_shlibpath_var():
++    # in stand-alone builds, shlibdir is clang's build tree
++    # while llvm_libs_dir is installed LLVM (and possibly older clang)
++    shlibpath = os.path.pathsep.join(
++        (
++            config.shlibdir,
++            config.llvm_libs_dir,
++            config.environment.get(shlibpath_var, ""),
++        )
++    )
++    config.environment[shlibpath_var] = shlibpath
++    break
++else:
++    lit_config.warning(
++        "unable to inject shared library path on '{}'".format(platform.system())
++    )
+diff --git a/test/lit.cfg.py b/test/lit.cfg.py
+index 009a561a5..9356dce07 100644
+--- a/test/lit.cfg.py
++++ b/test/lit.cfg.py
+@@ -90,3 +90,32 @@ if config.slang_frontend_enabled:
+   tools.append('circt-verilog')
+ 
+ llvm_config.add_tool_substitutions(tools, tool_dirs)
++
++
++def find_shlibpath_var():
++    if platform.system() in ["Linux", "FreeBSD", "NetBSD", "OpenBSD", "SunOS"]:
++        yield "LD_LIBRARY_PATH"
++    elif platform.system() == "Darwin":
++        yield "DYLD_LIBRARY_PATH"
++    elif platform.system() == "Windows":
++        yield "PATH"
++    elif platform.system() == "AIX":
++        yield "LIBPATH"
++
++
++for shlibpath_var in find_shlibpath_var():
++    # in stand-alone builds, shlibdir is clang's build tree
++    # while llvm_libs_dir is installed LLVM (and possibly older clang)
++    shlibpath = os.path.pathsep.join(
++        (
++            config.shlibdir,
++            config.llvm_libs_dir,
++            config.environment.get(shlibpath_var, ""),
++        )
++    )
++    config.environment[shlibpath_var] = shlibpath
++    break
++else:
++    lit_config.warning(
++        "unable to inject shared library path on '{}'".format(platform.system())
++    )
+-- 
+2.39.3 (Apple Git-146)
+
