@@ -51,6 +51,7 @@ in stdenv.mkDerivation {
     ./patches/circt-mlir-tblgen-path.patch
     ./patches/circt-mlir-cpu-runner-target.patch
     ./patches/circt-install-dir.patch
+    ./patches/circt-install-dir-capi.patch
   ];
   postPatch = ''
     substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir}/bin/mlir-tblgen"
