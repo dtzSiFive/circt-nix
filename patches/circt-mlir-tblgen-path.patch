@@ -1,26 +1,36 @@
-From 9b3e58084c6c9c5e586452316bb251e4ddc047f9 Mon Sep 17 00:00:00 2001
-From: Will Dietz <w@wdtz.org>
-Date: Sat, 12 Mar 2022 17:06:17 -0600
-Subject: [PATCH] mlir-tblgen
+From 777ff1d9c026d4ede222f1551f4405f25ade6289 Mon Sep 17 00:00:00 2001
+From: Will Dietz <will.dietz@sifive.com>
+Date: Mon, 13 May 2024 14:26:37 -0500
+Subject: [PATCH] mlir-tblgen: fix
 
 ---
- CMakeLists.txt | 3 +++
- 1 file changed, 3 insertions(+)
+ CMakeLists.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 6eca9a4a..9ab70e37 100644
+index a1cad4188..302df463b 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -114,6 +114,9 @@ endif ()
-     set(CIRCT_GTEST_AVAILABLE 0)
-   endif()
+@@ -82,6 +82,11 @@ if( CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR )
+   set(CIRCT_BUILT_STANDALONE 1)
+   set(BACKEND_PACKAGE_STRING "LLVM ${LLVM_PACKAGE_VERSION}")
  
-+  find_program(MLIR_TABLEGEN_EXE "mlir-tblgen" ${LLVM_TOOLS_BINARY_DIR}
++  # MLIR doesn't export this target, nor any variable specifying its binary dir.
++  # Look through LLVM's binary directory as a hint.
++  find_program(MLIR_TABLEGEN_EXE "mlir-tblgen" HINTS ${LLVM_TOOLS_BINARY_DIR}
 +    NO_DEFAULT_PATH)
-+  set(MLIR_TABLEGEN_EXE @MLIR_TABLEGEN_EXE@)
- else()
-   # CMake library generation settings.
-   set(BUILD_SHARED_LIBS OFF CACHE BOOL "Default to building a static mondo-lib")
++
+   # Handle unittests when building out-of-tree against an installed version of
+   # LLVM/MLIR (not a build tree). Adapted from `llvm/flang/CMakeLists.txt`.
+   set(CIRCT_GTEST_AVAILABLE 0)
+@@ -141,7 +146,6 @@ else()
+   set(MLIR_MAIN_SRC_DIR ${LLVM_MAIN_SRC_DIR}/../mlir ) # --src-root
+   set(MLIR_INCLUDE_DIR ${MLIR_MAIN_SRC_DIR}/include ) # --includedir
+   set(MLIR_TABLEGEN_OUTPUT_DIR ${LLVM_BINARY_DIR}/tools/mlir/include)
+-  set(MLIR_TABLEGEN_EXE $<TARGET_FILE:mlir-tblgen>)
+   include_directories(SYSTEM ${MLIR_INCLUDE_DIR})
+   include_directories(SYSTEM ${MLIR_TABLEGEN_OUTPUT_DIR})
+ 
 -- 
-2.35.1
+2.43.2
 

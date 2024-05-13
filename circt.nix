@@ -54,8 +54,6 @@ in stdenv.mkDerivation {
     ./patches/circt-install-dir-capi.patch
   ];
   postPatch = ''
-    substituteInPlace CMakeLists.txt --replace @MLIR_TABLEGEN_EXE@ "${mlir}/bin/mlir-tblgen"
-
     substituteInPlace cmake/modules/GenVersionFile.cmake \
       --replace '"unknown git version"' '"firtool-${version}"'
     
@@ -79,6 +77,7 @@ in stdenv.mkDerivation {
     "-DCIRCT_TOOLS_INSTALL_DIR=${placeholder "out"}/bin"
     "-DCIRCT_LIBRARY_DIR=${placeholder "lib"}/lib"
     "-DCIRCT_LLHD_SIM_ENABLED=${if enableLLHD then "ON" else "OFF"}"
+    "-DMLIR_TABLEGEN_EXE=${lib.getOutput "bin" mlir}/bin/mlir-tblgen" # assumes not-cross for now
   ] ++ lib.optional enableDocs "-DCIRCT_INCLUDE_DOCS=ON"
     ++ lib.optional enableAssertions "-DLLVM_ENABLE_ASSERTIONS=ON"
     ++ lib.optionals enableSlang [
