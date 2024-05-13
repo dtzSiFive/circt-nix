@@ -21,8 +21,6 @@ let
   theStdenv = if pkgs.stdenv.hostPlatform.isDarwin then llvmPkgs.stdenv else overrideCC llvmPkgs.stdenv (llvmPkgs.stdenv.cc.override {
     inherit (llvmPkgs) bintools;
   });
-  # theStdenv = stdenv;
-  # theStdenv = llvmPkgs.stdenv;
   python = python3.withPackages (ps: [ ps.psutil /* ps.pycapnp */ /* BROKEN re:capnp 1.0 */ ps.numpy ps.pybind11 ps.pyyaml ]);
 in
 (mkShell.override { stdenv = theStdenv; }) {
