@@ -96,6 +96,9 @@ in stdenv.mkDerivation {
 
   preCheck = ''
     patchShebangs bin/*.py
+
+    # llhd-sim link-dep on this, but expect in install dir.
+    ninja install-circt-llhd-signals-runtime-wrappers
   '';
 
   # Manually install bits that don't have install rules yet.
