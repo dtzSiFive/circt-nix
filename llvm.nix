@@ -16,7 +16,6 @@ let
 
   # LLVM source to use:
   monorepoSrc = patchsrc llvm-submodule-src [
-    ./patches/llvm-ppc-git-exception.patch
   ];
   # Version string:
   mkVer = src:
