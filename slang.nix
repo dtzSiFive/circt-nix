@@ -52,8 +52,8 @@ in stdenv.mkDerivation {
       --subst-var SLANG_VERSION_PATCH \
       --subst-var SLANG_VERSION_HASH
     substituteInPlace CMakeLists.txt \
-      --replace 'VERSION ''${SLANG_VERSION_STRING}' \
-                'VERSION "${tag}"'
+      --replace-fail 'VERSION ''${SLANG_VERSION_STRING}' \
+                     'VERSION "${tag}"'
   '';
 
   SLANG_VERSION_MAJOR = lib.versions.major tag;

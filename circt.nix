@@ -54,7 +54,7 @@ in stdenv.mkDerivation {
   ];
   postPatch = ''
     substituteInPlace cmake/modules/GenVersionFile.cmake \
-      --replace '"unknown git version"' '"firtool-${version}"'
+      --replace-fail '"unknown git version"' '"firtool-${version}"'
     
     find test -type f -exec \
       sed -i -e 's,--test /usr/bin/env,--test ${lib.getBin coreutils}/bin/env,' \{\} \;
@@ -62,7 +62,7 @@ in stdenv.mkDerivation {
   # slang library renamed to 'svlang'.
   + lib.optionalString enableSlang ''
     substituteInPlace lib/Conversion/ImportVerilog/CMakeLists.txt \
-      --replace slang_slang slang::slang
+      --replace-fail slang_slang slang::slang
   '';
  
 
