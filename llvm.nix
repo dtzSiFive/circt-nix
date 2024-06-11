@@ -3,6 +3,7 @@
 , llvmPackages
 , enableAssertions ? true
 , hostOnly ? true
+, enableSharedLibraries ? false
 }:
 let
   # Apply specified patches to 'src', or if none specified just return src
@@ -43,6 +44,7 @@ in rec {
     inherit release_version;
     enablePolly = false; /* patch doesn't work on our rev */
     doCheck = false; # Temporary hack for Darwin AArch64Test cl::opt badness :(
+    inherit enableSharedLibraries;
   };
   mlir = overridePkg llvmPackages.mlir { inherit libllvm; };
   libclang = overridePkg llvmPackages.libclang { inherit libllvm; };
