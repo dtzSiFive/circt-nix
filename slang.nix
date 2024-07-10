@@ -17,8 +17,8 @@ let
   fmt_src = fetchFromGitHub {
     owner = "fmtlib";
     repo = "fmt";
-    rev = "10.2.1";
-    sha256 = "pEltGLAHLZ3xypD/Ur4dWPWJ9BGVXwqQyKcDWVmC3co=";
+    rev = "11.0.1";
+    sha256 = "EPidbZxCvysrL64AzbpJDowiNxqy4ii+qwSWAFwf/Ps=";
   };
   # Drop for "catch2_3" once bump nixpkgs.
   catch2_3_pinned = catch2_3.overrideAttrs(o: 
