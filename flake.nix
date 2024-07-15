@@ -12,7 +12,7 @@
       owner = "llvm";
       repo = "llvm-project";
       # From circt submodule
-      rev = "2ee2b6aa7a3d9ba6ba13f6881b25e26d7d12c823";
+      rev = "0870afaaaccde5b4bae37abfc982207ffafb8332";
       flake = false;
     };
     slang-src.url = "github:MikePopoloski/slang";
