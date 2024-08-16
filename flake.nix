@@ -53,6 +53,7 @@
             circt = pkgs.callPackage ./circt.nix {
               inherit circt-src;
               inherit (newLLVMPkgs) libllvm mlir llvm-third-party-src;
+              inherit lit;
               slang = slang_3;
             };
             espresso = pkgs.callPackage ./espresso.nix {};
@@ -60,6 +61,13 @@
               inherit slang-src;
             };
             slang_3 = pkgs.callPackage ./slang_3.nix {};
+
+            # Patch for dyld library path setting in runner.
+            lit = pkgs.lit.overrideAttrs (o: {
+              patches = o.patches or [] ++ [
+                ./patches/lit-shell-script-runner-set-dyld-library-path.patch
+              ];
+            });
           });
           apps = pkgs.lib.genAttrs [ "firtool" "circt-lsp-server" ]
             (name: flake-utils.lib.mkApp { drv = packages.circt; inherit name; });
