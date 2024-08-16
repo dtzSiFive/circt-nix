@@ -51,6 +51,7 @@ in stdenv.mkDerivation {
     ./patches/circt-mlir-tblgen-path.patch
     ./patches/circt-mlir-cpu-runner-target.patch
     ./patches/circt-install-dir.patch
+    ./patches/circt-lit-dylib-paths.patch
   ];
   postPatch = ''
     substituteInPlace cmake/modules/GenVersionFile.cmake \
