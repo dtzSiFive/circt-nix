@@ -62,7 +62,7 @@ in stdenv.mkDerivation {
   SLANG_VERSION_PATCH = 0; # patch isn't safe if no patch level :(
   SLANG_VERSION_HASH = getRev slang-src;
 
-  # TODO: tests
+  doCheck = true;
 
   meta = with lib; {
     description = "SystemVerilog compiler and language services";
