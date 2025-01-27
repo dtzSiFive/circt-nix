@@ -16,7 +16,7 @@ jobs:
       with:
         name: dtz-circt
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-        cachixArgs: -c16
+        cachixArgs: --compression-level 16
     - name: nix flake check
       run: nix flake check --no-update-lock-file
 
@@ -37,7 +37,7 @@ jobs:
       with:
         name: dtz-circt
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-        cachixArgs: -c16
+        cachixArgs: --compression-level 16
     - name: Build ${{ matrix.attr }}
       run: nix build -L .#${{ matrix.attr }}
     - name: Run and print version
@@ -55,6 +55,6 @@ jobs:
       with:
         name: dtz-circt
         authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-        cachixArgs: -c16
+        cachixArgs: --compression-level 16
     - name: Build "nix develop circt" profile"
       run: nix develop --profile dev-profile
