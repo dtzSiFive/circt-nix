@@ -36,6 +36,9 @@ let
   setTargets = p: if !hostOnly then p else p.overrideAttrs(o: {
     cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_TARGETS_TO_BUILD=host" ];
   });
+  buildUtils = p: p.overrideAttrs(o: {
+    cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_BUILD_UTILS=ON" ];
+  });
   overrideLLVMPkg = p: args: p.override ({ inherit monorepoSrc version; } // args);
   overridePkg = p: overrideLLVMPkg (setTargets (addAsserts p));
 
@@ -46,7 +49,7 @@ in rec {
     doCheck = false; # Temporary hack for Darwin AArch64Test cl::opt badness :(
     inherit enableSharedLibraries;
   };
-  mlir = overridePkg llvmPackages.mlir { inherit libllvm; };
+  mlir = overrideLLVMPkg (buildUtils (setTargets (addAsserts llvmPackages.mlir))) { inherit libllvm; };
   libclang = overridePkg llvmPackages.libclang { inherit libllvm; };
 
   # Split out needed unittest bits, required by sub-projects.
