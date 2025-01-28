@@ -25,7 +25,7 @@ let
 in
 (mkShell.override { stdenv = theStdenv; }) {
   nativeBuildInputs = [
-    (clang-tools.override { llvmPackages = llvmPkgs; })
+    llvmPkgs.clang-tools
     theStdenv.cc.cc.python # git-clang-format
     cmakeCurses # cmake
     pkg-config
