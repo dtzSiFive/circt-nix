@@ -4,7 +4,7 @@
 , withZ3 ? true
 , withVerilator ? !pkgs.stdenv.hostPlatform.isDarwin
 }:
-#{ pkgs ? import (fetchTarball channel:nixos-21.11) {} }:
+#{ pkgs ? import (fetchTarball channel:nixos-24.11) {} }:
 
 # Use with (nix-)direnv to automatically get dev env when cd to circt src:
 # $ ln -s $PWD/shell.nix /path/to/circt-src/shell.nix
