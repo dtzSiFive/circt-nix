@@ -1,7 +1,7 @@
 From 0aca77173e13a37a5b0f1d520630f28276deb7e9 Mon Sep 17 00:00:00 2001
 From: Will Dietz <will.dietz@sifive.com>
 Date: Sat, 20 Apr 2024 12:43:02 -0500
-Subject: [PATCH] Only add mlir-cpu-runner is valid target.
+Subject: [PATCH] Only add mlir-runner is valid target.
 
 Really we shouldn't use this, MLIR doesn't export this
 as a target even if it's installed.
@@ -24,8 +24,8 @@ index 720434c83..a7dd61edf 100644
    )
  
 -if (MLIR_ENABLE_EXECUTION_ENGINE)
-+if (MLIR_ENABLE_EXECUTION_ENGINE AND TARGET mlir-cpu-runner)
-   list(APPEND CIRCT_INTEGRATION_TEST_DEPENDS mlir-cpu-runner)
++if (MLIR_ENABLE_EXECUTION_ENGINE AND TARGET mlir-runner)
+   list(APPEND CIRCT_INTEGRATION_TEST_DEPENDS mlir-runner)
  endif()
  
 -- 
