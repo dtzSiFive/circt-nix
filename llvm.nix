@@ -16,8 +16,14 @@ let
 
 
   # LLVM source to use:
-  monorepoSrc = patchsrc llvm-submodule-src [
-  ];
+  monorepoSrc = (patchsrc llvm-submodule-src [
+  ]) // {
+    passthru = {
+     owner = "llvm";
+     repo = "llvm-project";
+     inherit (llvm-submodule-src) rev;
+    };
+  };
   # Version string:
   mkVer = src:
     let
