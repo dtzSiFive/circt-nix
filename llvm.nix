@@ -39,6 +39,9 @@ let
   buildUtils = p: p.overrideAttrs(o: {
     cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_BUILD_UTILS=ON" ];
   });
+  mlirNoAggObjs = p: p.overrideAttrs(o: {
+    cmakeFlags = o.cmakeFlags or [] ++ [ "-DMLIR_INSTALL_AGGREGATE_OBJECTS=OFF" ];
+  });
   overrideLLVMPkg = p: args: p.override ({ inherit monorepoSrc version; } // args);
   overridePkg = p: overrideLLVMPkg (setTargets (addAsserts p));
 
@@ -49,7 +52,7 @@ in rec {
     doCheck = false; # Temporary hack for Darwin AArch64Test cl::opt badness :(
     inherit enableSharedLibraries;
   };
-  mlir = overrideLLVMPkg (buildUtils (setTargets (addAsserts llvmPackages.mlir))) { inherit libllvm; };
+  mlir = overrideLLVMPkg (mlirNoAggObjs (buildUtils (setTargets (addAsserts llvmPackages.mlir)))) { inherit libllvm; };
   libclang = overridePkg llvmPackages.libclang { inherit libllvm; };
 
   # Split out needed unittest bits, required by sub-projects.
