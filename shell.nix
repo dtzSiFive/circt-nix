@@ -1,5 +1,5 @@
 { pkgs ? import <nixpkgs> {}
-, llvmPkgs ? pkgs.llvmPackages_18
+, llvmPkgs ? pkgs.llvmPackages_20
 , withOrTools ? false # pkgs.stdenv.hostPlatform.isLinux
 , withZ3 ? true
 , withVerilator ? !pkgs.stdenv.hostPlatform.isDarwin
