@@ -47,9 +47,6 @@ let
   mlirNoAggObjs = p: p.overrideAttrs(o: {
     cmakeFlags = o.cmakeFlags or [] ++ [ "-DMLIR_INSTALL_AGGREGATE_OBJECTS=OFF" ];
   });
-  overrideLLVMPkg = p: args: p.override ({ inherit monorepoSrc version; } // args);
-  overridePkg = p: overrideLLVMPkg (setTargets (addAsserts p));
-
 
   # New LLVM package set using the pinned source.
   buildLLVMPkgs = llvmPackages.override {
@@ -68,7 +65,7 @@ let
 
   # Optionally tweak the build for libllvm and mlir packages.
   tools = baseLLVMPkgs.tools.extend (self: super: {
-    libllvm = setTargets (addAsserts super.libllvm);
+    libllvm = (setTargets (addAsserts super.libllvm)).override { inherit enableSharedLibraries; };
     mlir = (mlirNoAggObjs (buildUtils (setTargets (addAsserts super.mlir)))).override { inherit (self) libllvm; };
   });
   inherit (baseLLVMPkgs) libraries;
