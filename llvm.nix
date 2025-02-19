@@ -51,8 +51,9 @@ let
   overridePkg = p: overrideLLVMPkg (setTargets (addAsserts p));
 
 
-  baseLLVMPkgs = llvmPackages.override {
-    inherit monorepoSrc release_version version;
+  # New LLVM package set using the pinned source.
+  buildLLVMPkgs = llvmPackages.override {
+    inherit monorepoSrc;
     officialRelease = null;
     gitRelease = {
       rev = llvm-submodule-src.rev or "dirty";
@@ -61,6 +62,11 @@ let
     };
   };
 
+  # Hack to use tblgen from this LLVM.
+  # Really should come from buildPackages so this works with cross.
+  baseLLVMPkgs = buildLLVMPkgs.override { buildLlvmTools = buildLLVMPkgs.tools; };
+
+  # Optionally tweak the build for libllvm and mlir packages.
   tools = baseLLVMPkgs.tools.extend (self: super: {
     libllvm = setTargets (addAsserts super.libllvm);
     mlir = mlirNoAggObjs (buildUtils (setTargets (addAsserts super.mlir)));
