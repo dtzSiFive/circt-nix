@@ -32,11 +32,31 @@
     , slang-src
     }: flake-utils.lib.eachDefaultSystem
       (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-            newLLVMPkgs = pkgs.callPackage ./llvm.nix {
-              inherit llvm-submodule-src;
-              llvmPackages = pkgs.llvmPackages_git;
-            };
+        let
+          overlay = self: super:
+            let circtFlakePkgs = rec {
+              llvmPackages_circt = super.callPackage ./llvm.nix {
+                inherit llvm-submodule-src;
+                llvmPackages = self.llvmPackages_git;
+              };
+              circt = super.callPackage ./circt.nix {
+                inherit circt-src;
+                inherit (llvmPackages_circt) libllvm mlir llvm-third-party-src;
+                slang = slang_3;
+              };
+
+              espresso = super.callPackage ./espresso.nix {};
+              slang = super.callPackage ./slang.nix {
+                inherit slang-src;
+              };
+              slang_3 = super.callPackage ./slang_3.nix {};
+              lit = super.lit.overrideAttrs (o: {
+                patches = o.patches or [] ++ [
+                  ./patches/lit-shell-script-runner-set-dyld-library-path.patch
+                ];
+              });
+          }; in { inherit circtFlakePkgs; } // circtFlakePkgs;
+          pkgs = import nixpkgs { inherit system; overlays = [ overlay ]; };
         in rec {
           devShells = {
             default = import ./shell.nix { inherit pkgs; };
@@ -46,27 +66,8 @@
                llvmPkgs = pkgs.llvmPackages_git; # NOT same as submodule.
             };
           };
-          packages = flake-utils.lib.flattenTree (newLLVMPkgs // rec {
-            default = circt; # default for `nix build` etc.
-
-            circt = pkgs.callPackage ./circt.nix {
-              inherit circt-src;
-              inherit (newLLVMPkgs) libllvm mlir llvm-third-party-src;
-              inherit lit;
-              slang = slang_3;
-            };
-            espresso = pkgs.callPackage ./espresso.nix {};
-            slang = pkgs.callPackage ./slang.nix {
-              inherit slang-src;
-            };
-            slang_3 = pkgs.callPackage ./slang_3.nix {};
-
-            # Patch for dyld library path setting in runner.
-            lit = pkgs.lit.overrideAttrs (o: {
-              patches = o.patches or [] ++ [
-                ./patches/lit-shell-script-runner-set-dyld-library-path.patch
-              ];
-            });
+          packages = flake-utils.lib.flattenTree (pkgs.circtFlakePkgs // {
+            default = pkgs.circt; # default for `nix build` etc.
           });
           apps = pkgs.lib.genAttrs [ "firtool" "circt-lsp-server" ]
             (name: flake-utils.lib.mkApp { drv = packages.circt; inherit name; });

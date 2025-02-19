@@ -69,11 +69,13 @@ let
   # Optionally tweak the build for libllvm and mlir packages.
   tools = baseLLVMPkgs.tools.extend (self: super: {
     libllvm = setTargets (addAsserts super.libllvm);
-    mlir = mlirNoAggObjs (buildUtils (setTargets (addAsserts super.mlir)));
+    mlir = (mlirNoAggObjs (buildUtils (setTargets (addAsserts super.mlir)))).override { inherit (self) libllvm; };
   });
+  inherit (baseLLVMPkgs) libraries;
+
 in {
-  inherit (tools) libllvm mlir libclang;
+  inherit tools libraries;
   llvm-third-party-src = runCommand "third-party-src" {} ''
     cp -r ${monorepoSrc}/third-party $out
   '';
-}
+} // tools // libraries
