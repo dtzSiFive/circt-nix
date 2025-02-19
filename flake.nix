@@ -35,10 +35,10 @@
         let
           overlay = self: super:
             let circtFlakePkgs = rec {
-              llvmPackages_circt = super.callPackage ./llvm.nix {
+              llvmPackages_circt = super.lib.recurseIntoAttrs (super.callPackages ./llvm.nix {
                 inherit llvm-submodule-src;
                 llvmPackages = self.llvmPackages_git;
-              };
+              });
               circt = super.callPackage ./circt.nix {
                 inherit circt-src;
                 inherit (llvmPackages_circt) libllvm mlir llvm-third-party-src;
