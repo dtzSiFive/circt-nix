@@ -65,7 +65,10 @@ let
 
   # Optionally tweak the build for libllvm and mlir packages.
   tools = baseLLVMPkgs.tools.extend (self: super: {
-    libllvm = (setTargets (addAsserts super.libllvm)).override { inherit enableSharedLibraries; };
+    libllvm = (setTargets (addAsserts super.libllvm)).override {
+      doCheck = false; # Need patched lit on Darwin.
+      inherit enableSharedLibraries;
+    };
     mlir = (mlirNoAggObjs (buildUtils (setTargets (addAsserts super.mlir)))).override { inherit (self) libllvm; };
   });
   inherit (baseLLVMPkgs) libraries;
