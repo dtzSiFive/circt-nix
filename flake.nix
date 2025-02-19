@@ -54,7 +54,7 @@
                 patches = o.patches or [] ++ [
                   ./patches/lit-shell-script-runner-set-dyld-library-path.patch
                 ];
-              });
+            });
           }; in { inherit circtFlakePkgs; } // circtFlakePkgs;
           pkgs = import nixpkgs { inherit system; overlays = [ overlay ]; };
         in rec {
@@ -66,9 +66,12 @@
                llvmPkgs = pkgs.llvmPackages_git; # NOT same as submodule.
             };
           };
-          packages = flake-utils.lib.flattenTree (pkgs.circtFlakePkgs // {
+          packages = (pkgs.lib.removeAttrs pkgs.circtFlakePkgs ["llvmPackages_circt"]) // {
             default = pkgs.circt; # default for `nix build` etc.
-          });
+            # selectively expose packages from llvmPackages_circt.
+            # clang/etc are not tested and patches/builds may break.
+            inherit (pkgs.circtFlakePkgs.llvmPackages_circt) libllvm mlir;
+          };
           apps = pkgs.lib.genAttrs [ "firtool" "circt-lsp-server" ]
             (name: flake-utils.lib.mkApp { drv = packages.circt; inherit name; });
         }
