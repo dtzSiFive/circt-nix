@@ -30,33 +30,34 @@
     , flake-compat, flake-utils
     , circt-src, llvm-submodule-src
     , slang-src
-    }: flake-utils.lib.eachDefaultSystem
-      (system:
-        let
-          overlay = self: super:
-            let circtFlakePkgs = rec {
-              llvmPackages_circt = super.lib.recurseIntoAttrs (super.callPackages ./llvm.nix {
-                inherit llvm-submodule-src;
-                llvmPackages = self.llvmPackages_git;
-              });
-              circt = super.callPackage ./circt.nix {
-                inherit circt-src;
-                inherit (llvmPackages_circt) libllvm mlir llvm-third-party-src;
-                slang = slang_3;
-              };
-
-              espresso = super.callPackage ./espresso.nix {};
-              slang = super.callPackage ./slang.nix {
-                inherit slang-src;
-              };
-              slang_3 = super.callPackage ./slang_3.nix {};
-              lit = super.lit.overrideAttrs (o: {
-                patches = o.patches or [] ++ [
-                  ./patches/lit-shell-script-runner-set-dyld-library-path.patch
-                ];
+    }: 
+      let
+        overlay = final: prev:
+          let circtFlakePkgs = rec {
+            llvmPackages_circt = prev.lib.recurseIntoAttrs (prev.callPackages ./llvm.nix {
+              inherit llvm-submodule-src;
+              llvmPackages = final.llvmPackages_git;
             });
-          }; in { inherit circtFlakePkgs; } // circtFlakePkgs;
-          pkgs = import nixpkgs { inherit system; overlays = [ overlay ]; };
+            circt = prev.callPackage ./circt.nix {
+              inherit circt-src;
+              inherit (llvmPackages_circt) libllvm mlir llvm-third-party-src;
+              slang = slang_3;
+            };
+
+            espresso = prev.callPackage ./espresso.nix {};
+            slang = prev.callPackage ./slang.nix {
+              inherit slang-src;
+            };
+            slang_3 = prev.callPackage ./slang_3.nix {};
+            lit = prev.lit.overrideAttrs (o: {
+              patches = o.patches or [] ++ [
+                ./patches/lit-shell-script-runner-set-dyld-library-path.patch
+              ];
+            });
+          };
+          in { inherit circtFlakePkgs; } // circtFlakePkgs;
+      in flake-utils.lib.eachDefaultSystem (system:
+        let pkgs = import nixpkgs { inherit system; overlays = [ overlay ]; };
         in rec {
           devShells = {
             default = import ./shell.nix { inherit pkgs; };
@@ -74,9 +75,8 @@
           };
           apps = pkgs.lib.genAttrs [ "firtool" "circt-lsp-server" ]
             (name: flake-utils.lib.mkApp { drv = packages.circt; inherit name; });
-          overlays.default = overlay;
         }
-      );
+      ) // { overlays.default = overlay; };
 
   nixConfig = {
     extra-substituters = [ "https://dtz-circt.cachix.org" ];
