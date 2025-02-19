@@ -33,7 +33,6 @@ let
       "${date}_${rev}";
   version = mkVer llvm-submodule-src;
 
-  # Needed until upstream "git" matches.
   release_version = "21.0.0";
 
   addAsserts = p: if !enableAssertions then p else p.overrideAttrs(o: {
@@ -51,17 +50,23 @@ let
   overrideLLVMPkg = p: args: p.override ({ inherit monorepoSrc version; } // args);
   overridePkg = p: overrideLLVMPkg (setTargets (addAsserts p));
 
-in rec {
-  libllvm = overridePkg llvmPackages.libllvm {
-    inherit release_version;
-    enablePolly = false; /* patch doesn't work on our rev */
-    doCheck = false; # Temporary hack for Darwin AArch64Test cl::opt badness :(
-    inherit enableSharedLibraries;
-  };
-  mlir = overrideLLVMPkg (mlirNoAggObjs (buildUtils (setTargets (addAsserts llvmPackages.mlir)))) { inherit libllvm; };
-  libclang = overridePkg llvmPackages.libclang { inherit libllvm; };
 
-  # Split out needed unittest bits, required by sub-projects.
+  baseLLVMPkgs = llvmPackages.override {
+    inherit monorepoSrc release_version version;
+    officialRelease = null;
+    gitRelease = {
+      rev = llvm-submodule-src.rev or "dirty";
+      rev-version = "${release_version}-${version}";
+      inherit (llvm-submodule-src) sha256;
+    };
+  };
+
+  tools = baseLLVMPkgs.tools.extend (self: super: {
+    libllvm = setTargets (addAsserts super.libllvm);
+    mlir = mlirNoAggObjs (buildUtils (setTargets (addAsserts super.mlir)));
+  });
+in {
+  inherit (tools) libllvm mlir libclang;
   llvm-third-party-src = runCommand "third-party-src" {} ''
     cp -r ${monorepoSrc}/third-party $out
   '';
