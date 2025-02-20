@@ -43,6 +43,11 @@
               inherit circt-src;
               inherit (llvmPackages_circt) libllvm mlir llvm-third-party-src;
               slang = slang_3;
+              lit = prev.lit.overrideAttrs (o: {
+                patches = o.patches or [] ++ [
+                  ./patches/lit-shell-script-runner-set-dyld-library-path.patch
+                ];
+              });
             };
 
             espresso = prev.callPackage ./espresso.nix {};
@@ -50,11 +55,6 @@
               inherit slang-src;
             };
             slang_3 = prev.callPackage ./slang_3.nix {};
-            lit = prev.lit.overrideAttrs (o: {
-              patches = o.patches or [] ++ [
-                ./patches/lit-shell-script-runner-set-dyld-library-path.patch
-              ];
-            });
           };
           in { inherit circtFlakePkgs; } // circtFlakePkgs;
       in flake-utils.lib.eachDefaultSystem (system:
