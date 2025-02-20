@@ -37,6 +37,7 @@
             llvmPackages_circt = prev.lib.recurseIntoAttrs (prev.callPackages ./llvm.nix {
               inherit llvm-submodule-src;
               llvmPackages = final.llvmPackages_git;
+              buildLLVMPackages_circt = final.buildPackages.llvmPackages_circt;
             });
             circt = prev.callPackage ./circt.nix {
               inherit circt-src;

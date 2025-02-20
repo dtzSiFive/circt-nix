@@ -4,6 +4,7 @@
 , enableAssertions ? true
 , hostOnly ? true
 , enableSharedLibraries ? false
+, buildLLVMPackages_circt
 }:
 let
   # Apply specified patches to 'src', or if none specified just return src
@@ -49,7 +50,7 @@ let
   });
 
   # New LLVM package set using the pinned source.
-  buildLLVMPkgs = llvmPackages.override {
+  baseLLVMPkgs = llvmPackages.override {
     inherit monorepoSrc;
     officialRelease = null;
     gitRelease = {
@@ -57,11 +58,8 @@ let
       rev-version = "${release_version}-${version}";
       inherit (llvm-submodule-src) sha256;
     };
+    buildLlvmTools = buildLLVMPackages_circt.tools;
   };
-
-  # Hack to use tblgen from this LLVM.
-  # Really should come from buildPackages so this works with cross.
-  baseLLVMPkgs = buildLLVMPkgs.override { buildLlvmTools = buildLLVMPkgs.tools; };
 
   # Optionally tweak the build for libllvm and mlir packages.
   tools = baseLLVMPkgs.tools.extend (self: super: {
