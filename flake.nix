@@ -76,6 +76,14 @@
           };
           apps = pkgs.lib.genAttrs [ "firtool" "circt-lsp-server" ]
             (name: flake-utils.lib.mkApp { drv = packages.circt; inherit name; });
+
+          # Expose nixpkgs with overlay applied under legacyPackages.
+          # Can be used for, e.g., cross-compilation.
+          legacyPackages = import nixpkgs {
+            inherit system;
+            overlays = [ overlay ];
+            crossOverlays = [ overlay ];
+          };
         }
       ) // { overlays.default = overlay; };
 
