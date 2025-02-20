@@ -19,7 +19,7 @@
 , slang
 , enableSlang ? true
 , enableLLHD ? false # Drops llhd-sim -> lib output dep.
-, withVerilator ? !stdenv.hostPlatform.isDarwin
+, withVerilator ? !stdenv.hostPlatform.isDarwin && stdenv.buildPlatform == stdenv.hostPlatform
 , z3
 }:
 
