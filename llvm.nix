@@ -63,6 +63,10 @@ let
 
   # Optionally tweak the build for libllvm and mlir packages.
   tools = baseLLVMPkgs.tools.extend (final: prev: {
+    # Build mlir-linalg-ods-yaml-gen with tablegen's.
+    tblgen = prev.tblgen.overrideAttrs(o: {
+      ninjaFlags = o.ninjaFlags ++ [ "mlir-linalg-ods-yaml-gen" ];
+    });
     libllvm = (setTargets (addAsserts prev.libllvm)).override {
       doCheck = false; # Need patched lit on Darwin.
       inherit enableSharedLibraries;
