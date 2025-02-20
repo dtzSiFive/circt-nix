@@ -71,7 +71,9 @@ let
       doCheck = false; # Need patched lit on Darwin.
       inherit enableSharedLibraries;
     };
-    mlir = (mlirNoAggObjs (buildUtils (setTargets (addAsserts prev.mlir)))).override { inherit (final) libllvm; };
+    mlir = ((mlirNoAggObjs (buildUtils (setTargets (addAsserts prev.mlir)))).overrideAttrs(o: {
+     cmakeFlags = o.cmakeFlags or [] ++ [ "-DMLIR_LINALG_ODS_YAML_GEN_EXE=${buildLLVMPackages_circt.tools.tblgen}/bin/mlir-linalg-ods-yaml-gen" ]; 
+    })).override { inherit (final) libllvm; };
   });
   inherit (baseLLVMPkgs) libraries;
 
