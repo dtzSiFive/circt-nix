@@ -74,7 +74,7 @@
             # clang/etc are not tested and patches/builds may break.
             inherit (pkgs.circtFlakePkgs.llvmPackages_circt) libllvm mlir;
           };
-          apps = pkgs.lib.genAttrs [ "firtool" "circt-lsp-server" ]
+          apps = pkgs.lib.genAttrs [ "firtool" "circt-lsp-server" "circt-verilog-lsp-server" ]
             (name: flake-utils.lib.mkApp { drv = packages.circt; inherit name; });
 
           # Expose nixpkgs with overlay applied under legacyPackages.
