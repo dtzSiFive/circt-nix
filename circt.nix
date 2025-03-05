@@ -64,6 +64,8 @@ in stdenv.mkDerivation {
   + lib.optionalString enableSlang ''
     substituteInPlace lib/Conversion/ImportVerilog/CMakeLists.txt \
       --replace-fail slang_slang slang::slang
+    substituteInPlace lib/Tools/circt-verilog-lsp-server/VerilogServerImpl/CMakeLists.txt \
+      --replace-fail slang_slang slang::slang
   '';
  
 
