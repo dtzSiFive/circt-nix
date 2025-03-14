@@ -3,6 +3,7 @@
 , python3
 , catch2_3
 , mimalloc
+, enableMimalloc ? false
 }:
 
 let
@@ -35,14 +36,17 @@ let
 in stdenv.mkDerivation {
   pname = "slang";
   inherit version;
-  nativeBuildInputs = [ cmake python3 ];
-  buildInputs = [ python3 catch2_3_pinned mimalloc ];
+  nativeBuildInputs = [ cmake python3 ] ++ lib.optional enableMimalloc mimalloc;
+  buildInputs = [ python3 catch2_3_pinned ];
   src = slang-src;
 
   patches = [
     ./patches/slang_git-don-t-fetch-fmt.patch
     ./patches/slang_git-pkgconfig.patch
   ];
+
+  # Builds w/mimalloc if have right version, disable for now.
+  cmakeFlags = [ "-DSLANG_USE_MIMALLOC=${if enableMimalloc then "ON" else "OFF"}" ];
 
   postPatch = ''
     ln -s ${fmt_src} external/fmt
