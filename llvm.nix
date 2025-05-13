@@ -48,6 +48,9 @@ let
   mlirNoAggObjs = p: p.overrideAttrs(o: {
     cmakeFlags = o.cmakeFlags or [] ++ [ "-DMLIR_INSTALL_AGGREGATE_OBJECTS=OFF" ];
   });
+  noCheck = p: p.overrideAttrs(o: {
+    doCheck = false;
+  });
 
   # New LLVM package set using the pinned source.
   baseLLVMPkgs = llvmPackages.override {
@@ -63,8 +66,7 @@ let
 
   # Optionally tweak the build for libllvm and mlir packages.
   tools = baseLLVMPkgs.tools.extend (final: prev: {
-    libllvm = (setTargets (addAsserts prev.libllvm)).override {
-      doCheck = false; # Need patched lit on Darwin.
+    libllvm = (noCheck (setTargets (addAsserts prev.libllvm))).override {
       inherit enableSharedLibraries;
     };
     mlir = (mlirNoAggObjs (buildUtils (setTargets (addAsserts prev.mlir)))).override { inherit (final) libllvm; };
