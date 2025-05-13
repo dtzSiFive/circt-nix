@@ -3,7 +3,7 @@
 
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/1934d292c26503930af2f667d656c5d1cbc20c12";
+    nixpkgs.url = "github:NixOS/nixpkgs/6b52e860bcadea016fc56dd8b089c604a7a6d746";
     circt-src.url = "github:llvm/circt";
     circt-src.flake = false;
     llvm-submodule-src = {
