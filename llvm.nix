@@ -36,18 +36,12 @@ let
 
   release_version = "21.0.0";
 
-  addAsserts = p: if !enableAssertions then p else p.overrideAttrs(o: {
-    cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_ENABLE_ASSERTIONS=ON" ];
-  });
-  setTargets = p: if !hostOnly then p else p.overrideAttrs(o: {
-    cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_TARGETS_TO_BUILD=host" ];
-  });
-  buildUtils = p: p.overrideAttrs(o: {
-    cmakeFlags = o.cmakeFlags or [] ++ [ "-DLLVM_BUILD_UTILS=ON" ];
-  });
-  mlirNoAggObjs = p: p.overrideAttrs(o: {
-    cmakeFlags = o.cmakeFlags or [] ++ [ "-DMLIR_INSTALL_AGGREGATE_OBJECTS=OFF" ];
-  });
+  commonExtraCMakeFlags = [
+    (lib.cmakeBool "LLVM_BUILD_UTILS" true)
+    (lib.cmakeBool "LLVM_LINK_LLVM_DYLIB" enableSharedLibraries) # For MLIR, lacks enableSharedLibraries
+  ] ++ lib.optional enableAssertions (lib.cmakeBool "LLVM_ENABLE_ASSERTIONS" true)
+    ++ lib.optional hostOnly "-DLLVM_TARGETS_TO_BUILD=host";
+
   noCheck = p: p.overrideAttrs(o: {
     doCheck = false;
   });
@@ -66,10 +60,16 @@ let
 
   # Optionally tweak the build for libllvm and mlir packages.
   tools = baseLLVMPkgs.tools.extend (final: prev: {
-    libllvm = (noCheck (setTargets (addAsserts prev.libllvm))).override {
+    libllvm = (noCheck prev.libllvm).override {
       inherit enableSharedLibraries;
+      devExtraCmakeFlags = commonExtraCMakeFlags;
     };
-    mlir = (mlirNoAggObjs (buildUtils (setTargets (addAsserts prev.mlir)))).override { inherit (final) libllvm; };
+    mlir = prev.mlir.override {
+      inherit (final) libllvm;
+      devExtraCmakeFlags = commonExtraCMakeFlags ++ [
+        "-DMLIR_INSTALL_AGGREGATE_OBJECTS=OFF"
+      ];
+    };
   });
   inherit (baseLLVMPkgs) libraries;
 
