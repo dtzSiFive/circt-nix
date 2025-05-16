@@ -38,7 +38,10 @@ let
 
   commonExtraCMakeFlags = [
     (lib.cmakeBool "LLVM_BUILD_UTILS" true)
-    (lib.cmakeBool "LLVM_LINK_LLVM_DYLIB" enableSharedLibraries) # For MLIR, lacks enableSharedLibraries
+    # For MLIR: Should just have to specify LLVM_LINK_LLVM_DYLIB,
+    # set both to avoid attempting linking against libLLVM*.so if not built.
+    (lib.cmakeBool "LLVM_BUILD_LLVM_DYLIB" enableSharedLibraries)
+    (lib.cmakeBool "LLVM_LINK_LLVM_DYLIB" enableSharedLibraries)
   ] ++ lib.optional enableAssertions (lib.cmakeBool "LLVM_ENABLE_ASSERTIONS" true)
     ++ lib.optional hostOnly "-DLLVM_TARGETS_TO_BUILD=host";
 
