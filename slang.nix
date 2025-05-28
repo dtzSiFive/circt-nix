@@ -13,14 +13,14 @@ let
       date = builtins.substring 0 8 (src.lastModifiedDate or src.lastModified or "19700101");
     in
       "g${date}_${getRev src}";
-  tag = "8.0";
+  tag = "8.1";
   version = "${tag}${mkVer slang-src}";
 
   fmt_src = fetchFromGitHub {
     owner = "fmtlib";
     repo = "fmt";
-    rev = "11.1.4";
-    hash = "sha256-sUbxlYi/Aupaox3JjWFqXIjcaQa0LFjclQAOleT+FRA=";
+    rev = "11.2.0";
+    hash = "sha256-sAlU5L/olxQUYcv8euVYWTTB8TrVeQgXLHtXy8IMEnU=";
   };
   # Drop for "catch2_3" once bump nixpkgs.
   catch2_3_pinned = catch2_3.overrideAttrs(o: 
