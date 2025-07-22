@@ -34,7 +34,7 @@ let
       "${date}_${rev}";
   version = mkVer llvm-submodule-src;
 
-  release_version = "21.0.0";
+  release_version = "22.0.0";
 
   commonExtraCMakeFlags = [
     (lib.cmakeBool "LLVM_BUILD_UTILS" true)
