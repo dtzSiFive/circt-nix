@@ -13,7 +13,7 @@ let
       date = builtins.substring 0 8 (src.lastModifiedDate or src.lastModified or "19700101");
     in
       "g${date}_${getRev src}";
-  tag = "8.1";
+  tag = "9.0";
   version = "${tag}${mkVer slang-src}";
 
   fmt_src = fetchFromGitHub {
@@ -24,12 +24,12 @@ let
   };
   # Drop for "catch2_3" once bump nixpkgs.
   catch2_3_pinned = catch2_3.overrideAttrs(o: 
-    let version = "3.8.0"; in {
+    let version = "3.9.0"; in {
       src = fetchFromGitHub {
         owner = "catchorg";
         repo = "catch2";
         rev = "v${version}";
-        sha256 = "2gK+CUpml6AaHcwNoq0tHLr2NwqtMPx+jP80/LLFFr4=";
+        hash = "sha256-3jdgpHk2nxCK27DffoiG/D7oDdnm7jxlcejauDgshDA=";
       };
       inherit version;
   });
