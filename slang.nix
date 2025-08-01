@@ -1,4 +1,5 @@
-{ lib, stdenv, slang-src, fetchFromGitHub
+{ lib, stdenv, slang-src
+, fetchFromGitHub, fetchpatch
 , cmake
 , python3
 , catch2_3
@@ -32,6 +33,13 @@ let
         hash = "sha256-3jdgpHk2nxCK27DffoiG/D7oDdnm7jxlcejauDgshDA=";
       };
       inherit version;
+      patches = o.patches or [] ++ [
+        (fetchpatch {
+           url = "https://github.com/catchorg/Catch2/commit/3839e27f056cd975e5be2faa9adb5a8cf1f5dcf4.patch";
+           hash = "sha256-C0A5VoDzf/TsIZId6u54FHcCtdTONe2PLQr0eBjXDmI=";
+           revert = true;
+        })
+      ];
   });
 in stdenv.mkDerivation {
   pname = "slang";
