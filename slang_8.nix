@@ -1,4 +1,5 @@
 { lib, stdenv, fetchFromGitHub
+, boost182
 , cmake
 , python3
 , catch2_3
@@ -31,6 +32,7 @@ in stdenv.mkDerivation {
   version = "v${tag}";
   nativeBuildInputs = [ cmake python3 ] ++ lib.optional enableMimalloc mimalloc;
   buildInputs = [ python3 catch2_3_pinned ];
+  propagatedBuildInputs = [ boost182 ];
   src = fetchFromGitHub {
     owner = "MikePopoloski";
     repo = "slang";
