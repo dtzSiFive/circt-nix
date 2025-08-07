@@ -54,7 +54,6 @@
             slang = prev.callPackage ./slang.nix {
               inherit slang-src;
             };
-            slang_3 = prev.callPackage ./slang_3.nix {};
             slang_8 = prev.callPackage ./slang_8.nix {};
           };
           in { inherit circtFlakePkgs; } // circtFlakePkgs;
