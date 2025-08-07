@@ -1,5 +1,4 @@
 { lib, stdenv, fetchFromGitHub
-, boost182
 , cmake
 , python3
 , catch2_3
@@ -32,7 +31,7 @@ in stdenv.mkDerivation {
   version = "v${tag}";
   nativeBuildInputs = [ cmake python3 ] ++ lib.optional enableMimalloc mimalloc;
   buildInputs = [ python3 catch2_3_pinned ];
-  propagatedBuildInputs = [ boost182 ];
+
   src = fetchFromGitHub {
     owner = "MikePopoloski";
     repo = "slang";
@@ -43,6 +42,7 @@ in stdenv.mkDerivation {
   patches = [
     ./patches/slang_8-don-t-fetch-fmt.patch
     ./patches/slang_8-pkgconfig.patch
+    ./patches/slang_8-single-header-boost.patch
   ];
 
   # Builds w/mimalloc if have right version, disable for now.
