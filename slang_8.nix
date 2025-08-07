@@ -7,7 +7,8 @@
 }:
 
 let
-  tag = "8.1";
+  version = "8.1";
+  tag = "v${version}";
 
   fmt_src = fetchFromGitHub {
     owner = "fmtlib";
@@ -28,14 +29,14 @@ let
   });
 in stdenv.mkDerivation {
   pname = "slang";
-  version = "v${tag}";
+  inherit version;
   nativeBuildInputs = [ cmake python3 ] ++ lib.optional enableMimalloc mimalloc;
   buildInputs = [ python3 catch2_3_pinned ];
 
   src = fetchFromGitHub {
     owner = "MikePopoloski";
     repo = "slang";
-    rev = "v${tag}";
+    rev = tag;
     hash = "sha256-bAYrpNIGKO1ms5ULwbizcMja8M5bIAcjfLoMcpB8iig=";
   };
 
@@ -58,11 +59,11 @@ in stdenv.mkDerivation {
       --subst-var SLANG_VERSION_HASH
     substituteInPlace CMakeLists.txt \
       --replace-fail 'VERSION ''${SLANG_VERSION_STRING}' \
-                     'VERSION "${tag}"'
+                     'VERSION "${version}"'
   '';
 
-  SLANG_VERSION_MAJOR = lib.versions.major tag;
-  SLANG_VERSION_MINOR = lib.versions.minor tag;
+  SLANG_VERSION_MAJOR = lib.versions.major version;
+  SLANG_VERSION_MINOR = lib.versions.minor version;
   SLANG_VERSION_PATCH = 0; # patch isn't safe if no patch level :(
   SLANG_VERSION_HASH = "";
 
