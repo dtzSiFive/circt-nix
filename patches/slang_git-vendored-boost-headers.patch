@@ -1,0 +1,49 @@
+From aa744c9572d86f8e0e3696988fd0116f3d6d8c1b Mon Sep 17 00:00:00 2001
+From: Will Dietz <w@wdtz.org>
+Date: Thu, 7 Aug 2025 12:53:50 -0500
+Subject: [PATCH] *Map.h: always use single-header boost_unordered/concurrent
+
+---
+ include/slang/util/ConcurrentMap.h | 7 +------
+ include/slang/util/FlatMap.h       | 7 +------
+ 2 files changed, 2 insertions(+), 12 deletions(-)
+
+diff --git a/include/slang/util/ConcurrentMap.h b/include/slang/util/ConcurrentMap.h
+index 98e33eec6..8997fe92a 100644
+--- a/include/slang/util/ConcurrentMap.h
++++ b/include/slang/util/ConcurrentMap.h
+@@ -10,12 +10,7 @@
+ #include "slang/util/Hash.h"
+ 
+ #define BOOST_UNORDERED_DISABLE_PARALLEL_ALGORITHMS
+-#ifdef SLANG_BOOST_SINGLE_HEADER
+-#    include <boost_concurrent.hpp>
+-#else
+-#    include <boost/unordered/concurrent_flat_map.hpp>
+-#    include <boost/unordered/concurrent_flat_set.hpp>
+-#endif
++#include <boost_concurrent.hpp>
+ 
+ namespace slang {
+ 
+diff --git a/include/slang/util/FlatMap.h b/include/slang/util/FlatMap.h
+index 9bfe650a8..a0c375abb 100644
+--- a/include/slang/util/FlatMap.h
++++ b/include/slang/util/FlatMap.h
+@@ -9,12 +9,7 @@
+ 
+ #include "slang/util/Hash.h"
+ 
+-#ifdef SLANG_BOOST_SINGLE_HEADER
+-#    include <boost_unordered.hpp>
+-#else
+-#    include <boost/unordered/unordered_flat_map.hpp>
+-#    include <boost/unordered/unordered_flat_set.hpp>
+-#endif
++#include <boost_unordered.hpp>
+ 
+ namespace slang {
+ 
+-- 
+2.44.1
+

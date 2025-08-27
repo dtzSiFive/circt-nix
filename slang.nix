@@ -51,6 +51,7 @@ in stdenv.mkDerivation {
   patches = [
     ./patches/slang_git-don-t-fetch-fmt.patch
     ./patches/slang_git-pkgconfig.patch
+    ./patches/slang_git-vendored-boost-headers.patch
   ];
 
   # Builds w/mimalloc if have right version, disable for now.
