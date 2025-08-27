@@ -14,7 +14,7 @@
       rev = "681ecae9133b0e54441529d1eb68fb3604333a93";
       flake = false;
     };
-    slang-src.url = "github:MikePopoloski/slang";
+    slang-src.url = "github:MikePopoloski/slang/dd16a7947e0586d0541477f1b4b60eda7c986e35"; # pinned in CIRCT.  Split out!
     slang-src.flake = false;
 
     flake-utils.url = "github:numtide/flake-utils";

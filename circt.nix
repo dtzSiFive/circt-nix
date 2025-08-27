@@ -52,6 +52,10 @@ in stdenv.mkDerivation {
     ./patches/circt-mlir-runner-target.patch
     ./patches/circt-install-dir.patch
     ./patches/circt-lit-dylib-paths.patch
+    (fetchpatch {
+       url = "https://github.com/llvm/circt/pull/8887.patch";
+       hash = "sha256-dzvnV6aqnFTu/u0o+A8L0r229QQkJMHSbfg3Q8tVEEs=";
+     })
   ];
   postPatch = ''
     substituteInPlace cmake/modules/GenVersionFile.cmake \
