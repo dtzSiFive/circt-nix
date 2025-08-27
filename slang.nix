@@ -20,26 +20,23 @@ let
   fmt_src = fetchFromGitHub {
     owner = "fmtlib";
     repo = "fmt";
-    rev = "11.2.0";
+    tag = "11.2.0";
     hash = "sha256-sAlU5L/olxQUYcv8euVYWTTB8TrVeQgXLHtXy8IMEnU=";
   };
   # Drop for "catch2_3" once bump nixpkgs.
   catch2_3_pinned = catch2_3.overrideAttrs(o: 
-    let version = "3.9.0"; in {
+    let version = "3.10.0"; in {
       src = fetchFromGitHub {
         owner = "catchorg";
         repo = "catch2";
-        rev = "v${version}";
-        hash = "sha256-3jdgpHk2nxCK27DffoiG/D7oDdnm7jxlcejauDgshDA=";
+        tag = "v${version}";
+        hash = "sha256-eeqqzHMeXLRiXzbY+ay8gJ/YDuxDj3f6+d6eXA1uZHE=";
       };
       inherit version;
-      patches = o.patches or [] ++ [
-        (fetchpatch {
-           url = "https://github.com/catchorg/Catch2/commit/3839e27f056cd975e5be2faa9adb5a8cf1f5dcf4.patch";
-           hash = "sha256-C0A5VoDzf/TsIZId6u54FHcCtdTONe2PLQr0eBjXDmI=";
-           revert = true;
-        })
-      ];
+      postPatch = o.postPatch or "" + ''
+        substituteInPlace CMake/*.pc.in \
+          --replace-fail "\''${prefix}/" ""
+      '';
   });
 in stdenv.mkDerivation {
   pname = "slang";

@@ -42,7 +42,6 @@
             circt = prev.callPackage ./circt.nix {
               inherit circt-src;
               inherit (llvmPackages_circt) libllvm mlir llvm-third-party-src;
-              slang = slang_8;
               lit = prev.lit.overrideAttrs (o: {
                 patches = o.patches or [] ++ [
                   ./patches/lit-shell-script-runner-set-dyld-library-path.patch
@@ -54,7 +53,6 @@
             slang = prev.callPackage ./slang.nix {
               inherit slang-src;
             };
-            slang_8 = prev.callPackage ./slang_8.nix {};
           };
           in { inherit circtFlakePkgs; } // circtFlakePkgs;
       in flake-utils.lib.eachDefaultSystem (system:
