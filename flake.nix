@@ -11,7 +11,7 @@
       owner = "llvm";
       repo = "llvm-project";
       # From circt submodule
-      rev = "681ecae9133b0e54441529d1eb68fb3604333a93";
+      rev = "4913aee483b69d1cc81ee77e6a155af6aac45daf";
       flake = false;
     };
     slang-src.url = "github:MikePopoloski/slang/dd16a7947e0586d0541477f1b4b60eda7c986e35"; # pinned in CIRCT.  Split out!
