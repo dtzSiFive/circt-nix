@@ -47,6 +47,7 @@
                   ./patches/lit-shell-script-runner-set-dyld-library-path.patch
                 ];
               });
+              slang = slang_9;
             };
 
             espresso = prev.callPackage ./espresso.nix {};
