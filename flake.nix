@@ -53,6 +53,7 @@
             slang = prev.callPackage ./slang.nix {
               inherit slang-src;
             };
+            slang_9 = prev.callPackage ./slang_9.nix {};
           };
           in { inherit circtFlakePkgs; } // circtFlakePkgs;
       in flake-utils.lib.eachDefaultSystem (system:
