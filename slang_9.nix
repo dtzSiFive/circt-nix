@@ -16,26 +16,11 @@ let
     tag = "11.2.0";
     hash = "sha256-sAlU5L/olxQUYcv8euVYWTTB8TrVeQgXLHtXy8IMEnU=";
   };
-  # Drop for "catch2_3" once bump nixpkgs.
-  catch2_3_pinned = catch2_3.overrideAttrs(o: 
-    let version = "3.10.0"; in {
-      src = fetchFromGitHub {
-        owner = "catchorg";
-        repo = "catch2";
-        tag = "v${version}";
-        hash = "sha256-eeqqzHMeXLRiXzbY+ay8gJ/YDuxDj3f6+d6eXA1uZHE=";
-      };
-      inherit version;
-      postPatch = o.postPatch or "" + ''
-        substituteInPlace CMake/*.pc.in \
-          --replace-fail "\''${prefix}/" ""
-      '';
-  });
 in stdenv.mkDerivation {
   pname = "slang";
   inherit version;
   nativeBuildInputs = [ cmake python3 ] ++ lib.optional enableMimalloc mimalloc;
-  buildInputs = [ python3 catch2_3_pinned ];
+  buildInputs = [ python3 catch2_3 ];
 
   src = fetchFromGitHub {
     owner = "MikePopoloski";
