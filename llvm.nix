@@ -58,27 +58,27 @@ let
       rev-version = "${release_version}-${version}";
       inherit (llvm-submodule-src) sha256;
     };
-    buildLlvmTools = buildLLVMPackages_circt.tools;
+    buildLlvmPackages = buildLLVMPackages_circt;
   };
 
   # Optionally tweak the build for libllvm and mlir packages.
-  tools = baseLLVMPkgs.tools.extend (final: prev: {
-    libllvm = (noCheck prev.libllvm).override {
+  llvmPkgs = baseLLVMPkgs.overrideScope (selfLLVM: superLLVM: {
+    libllvm = (noCheck superLLVM.libllvm).override {
       inherit enableSharedLibraries;
       devExtraCmakeFlags = commonExtraCMakeFlags;
+      buildLlvmPackages = buildLLVMPackages_circt;
     };
-    mlir = prev.mlir.override {
-      inherit (final) libllvm;
+    mlir = superLLVM.mlir.override {
+      inherit (selfLLVM) libllvm;
       devExtraCmakeFlags = commonExtraCMakeFlags ++ [
         "-DMLIR_INSTALL_AGGREGATE_OBJECTS=OFF"
       ];
+      buildLlvmPackages = buildLLVMPackages_circt;
     };
   });
-  inherit (baseLLVMPkgs) libraries;
-
 in {
-  inherit tools libraries;
+  inherit llvmPkgs;
   llvm-third-party-src = runCommand "third-party-src" {} ''
     cp -r ${monorepoSrc}/third-party $out
   '';
-} // tools // libraries
+} // llvmPkgs # // tools // libraries
