@@ -14,20 +14,30 @@ let
       date = builtins.substring 0 8 (src.lastModifiedDate or src.lastModified or "19700101");
     in
       "g${date}_${getRev src}";
-  tag = "9.0";
+  tag = "9.1";
   version = "${tag}${mkVer slang-src}";
 
   fmt_src = fetchFromGitHub {
     owner = "fmtlib";
     repo = "fmt";
-    tag = "11.2.0";
-    hash = "sha256-sAlU5L/olxQUYcv8euVYWTTB8TrVeQgXLHtXy8IMEnU=";
+    tag = "12.1.0";
+    hash = "sha256-ZmI1Dv0ZabPlxa02OpERI47jp7zFfjpeWCy1WyuPYZ0=";
   };
+  catch2_3_pinned = catch2_3.overrideAttrs(o:
+    let version = "3.11.0"; in {
+      src = fetchFromGitHub {
+        owner = "catchorg";
+        repo = "catch2";
+        tag = "v${version}";
+        hash = "sha256-7Dx7PhtRwkbo8vHF57sAns2fQZ442D3cMyCt25RvzJc=";
+      };
+      inherit version;
+  });
 in stdenv.mkDerivation {
   pname = "slang";
   inherit version;
   nativeBuildInputs = [ cmake python3 ] ++ lib.optional enableMimalloc mimalloc;
-  buildInputs = [ python3 catch2_3 ];
+  buildInputs = [ python3 catch2_3_pinned ];
   src = slang-src;
 
   patches = [
