@@ -16,8 +16,10 @@
       rev = "52dfcab327fe959074563603b6ebaaed314e9677";
       flake = false;
     };
-    slang-src.url = "github:MikePopoloski/slang";
-    slang-src.flake = false;
+    slang-src = {
+      url = "github:MikePopoloski/slang/v10.0";
+      flake = false;
+    };
 
     flake-utils.url = "github:numtide/flake-utils";
     # From README.md: https://github.com/edolstra/flake-compat
@@ -50,7 +52,7 @@
                   ./patches/lit-shell-script-runner-set-dyld-library-path.patch
                 ];
               });
-              slang = slang_9;
+              slang = slang;
               tag = "1.142.0";
             };
 
@@ -58,12 +60,12 @@
             slang = prev.callPackage ./slang.nix {
               inherit slang-src;
             };
-            slang_9 = prev.callPackage ./slang_9.nix {};
           };
           in { inherit circtFlakePkgs; } // circtFlakePkgs;
       in flake-utils.lib.eachDefaultSystem (system:
         let pkgs = import nixpkgs { inherit system; overlays = [ overlay ]; };
         in rec {
+          formatter = pkgs.nixfmt;
           devShells = {
             default = import ./shell.nix { inherit pkgs; };
           } // pkgs.lib.optionalAttrs (!pkgs.stdenv.isDarwin /* libcxxabi git on Darwin is broken?*/) {

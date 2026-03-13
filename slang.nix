@@ -14,7 +14,7 @@ let
       date = builtins.substring 0 8 (src.lastModifiedDate or src.lastModified or "19700101");
     in
       "g${date}_${getRev src}";
-  tag = "9.1";
+  tag = "10.0";
   version = "${tag}${mkVer slang-src}";
 
   fmt_src = fetchFromGitHub {
@@ -41,9 +41,9 @@ in stdenv.mkDerivation {
   src = slang-src;
 
   patches = [
-    ./patches/slang_git-don-t-fetch-fmt.patch
-    ./patches/slang_git-pkgconfig.patch
-    ./patches/slang_git-vendored-boost-headers.patch
+    ./patches/slang-don-t-fetch-fmt.patch
+    ./patches/slang-pkgconfig.patch
+    ./patches/slang-vendored-boost-headers.patch
   ];
 
   # Builds w/mimalloc if have right version, disable for now.
@@ -51,7 +51,7 @@ in stdenv.mkDerivation {
 
   postPatch = ''
     ln -s ${fmt_src} external/fmt
-    
+
     substituteInPlace source/util/VersionInfo.cpp.in \
       --subst-var SLANG_VERSION_MAJOR \
       --subst-var SLANG_VERSION_MINOR \

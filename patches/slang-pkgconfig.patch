@@ -1,0 +1,13 @@
+diff --git a/scripts/sv-lang.pc.in b/scripts/sv-lang.pc.in
+index eabfbc9..fdfacce 100644
+--- a/scripts/sv-lang.pc.in
++++ b/scripts/sv-lang.pc.in
+@@ -1,6 +1,6 @@
+ prefix=@CMAKE_INSTALL_PREFIX@
+-includedir="${prefix}/@CMAKE_INSTALL_INCLUDEDIR@"
+-libdir="${prefix}/@CMAKE_INSTALL_LIBDIR@"
++includedir="@CMAKE_INSTALL_FULL_INCLUDEDIR@"
++libdir="@CMAKE_INSTALL_FULL_LIBDIR@"
+ 
+ Name: @PROJECT_NAME@
+ Description: @PROJECT_DESCRIPTION@
