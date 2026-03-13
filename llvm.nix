@@ -4,6 +4,7 @@
 , enableAssertions ? true
 , hostOnly ? true
 , enableSharedLibraries ? false
+, buildSharedLibs ? false
 , buildLLVMPackages_circt
 }:
 let
@@ -42,6 +43,7 @@ let
     # set both to avoid attempting linking against libLLVM*.so if not built.
     (lib.cmakeBool "LLVM_BUILD_LLVM_DYLIB" enableSharedLibraries)
     (lib.cmakeBool "LLVM_LINK_LLVM_DYLIB" enableSharedLibraries)
+    (lib.cmakeBool "BUILD_SHARED_LIBS" buildSharedLibs)
   ] ++ lib.optional enableAssertions (lib.cmakeBool "LLVM_ENABLE_ASSERTIONS" true)
     ++ lib.optional hostOnly "-DLLVM_TARGETS_TO_BUILD=host";
 
@@ -63,18 +65,26 @@ let
 
   # Optionally tweak the build for libllvm and mlir packages.
   llvmPkgs = baseLLVMPkgs.overrideScope (selfLLVM: superLLVM: {
-    libllvm = (noCheck superLLVM.libllvm).override {
+    libllvm = ((noCheck superLLVM.libllvm).override {
       inherit enableSharedLibraries;
       devExtraCmakeFlags = commonExtraCMakeFlags;
       buildLlvmPackages = buildLLVMPackages_circt;
-    };
-    mlir = superLLVM.mlir.override {
+    }).overrideAttrs (old: {
+      passthru = (old.passthru or {}) // {
+        inherit buildSharedLibs;
+      };
+    });
+    mlir = (superLLVM.mlir.override {
       inherit (selfLLVM) libllvm;
       devExtraCmakeFlags = commonExtraCMakeFlags ++ [
         "-DMLIR_INSTALL_AGGREGATE_OBJECTS=OFF"
       ];
       buildLlvmPackages = buildLLVMPackages_circt;
-    };
+    }).overrideAttrs (old: {
+      passthru = (old.passthru or {}) // {
+        inherit buildSharedLibs;
+      };
+    });
   });
 in {
   inherit llvmPkgs;
