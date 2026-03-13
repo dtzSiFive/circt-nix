@@ -1,38 +1,47 @@
-{ lib, fetchpatch, applyPatches, runCommand
-, llvm-submodule-src 
-, llvmPackages
-, enableAssertions ? true
-, hostOnly ? true
-, enableSharedLibraries ? false
-, buildSharedLibs ? false
-, buildLLVMPackages_circt
+{
+  lib,
+  fetchpatch,
+  applyPatches,
+  runCommand,
+  llvm-submodule-src,
+  llvmPackages,
+  enableAssertions ? true,
+  hostOnly ? true,
+  enableSharedLibraries ? false,
+  buildSharedLibs ? false,
+  buildLLVMPackages_circt,
 }:
 let
   # Apply specified patches to 'src', or if none specified just return src
-  patchsrc = src: patches:
-    if patches == [] then src
-    else applyPatches {
-      inherit src patches;
-      name = "llvm-src-${version}-patched";
-   };
-
+  patchsrc =
+    src: patches:
+    if patches == [ ] then
+      src
+    else
+      applyPatches {
+        inherit src patches;
+        name = "llvm-src-${version}-patched";
+      };
 
   # LLVM source to use:
-  monorepoSrc = (patchsrc llvm-submodule-src [
-  ]) // {
-    passthru = {
-     owner = "llvm";
-     repo = "llvm-project";
-     inherit (llvm-submodule-src) rev;
+  monorepoSrc =
+    (patchsrc llvm-submodule-src [
+    ])
+    // {
+      passthru = {
+        owner = "llvm";
+        repo = "llvm-project";
+        inherit (llvm-submodule-src) rev;
+      };
     };
-  };
   # Version string:
-  mkVer = src:
+  mkVer =
+    src:
     let
       date = builtins.substring 0 8 (src.lastModifiedDate or src.lastModified or "19700101");
       rev = src.shortRev or "dirty";
     in
-      "${date}_${rev}";
+    "${date}_${rev}";
   version = mkVer llvm-submodule-src;
 
   release_version = "23.0.0";
@@ -44,12 +53,15 @@ let
     (lib.cmakeBool "LLVM_BUILD_LLVM_DYLIB" enableSharedLibraries)
     (lib.cmakeBool "LLVM_LINK_LLVM_DYLIB" enableSharedLibraries)
     (lib.cmakeBool "BUILD_SHARED_LIBS" buildSharedLibs)
-  ] ++ lib.optional enableAssertions (lib.cmakeBool "LLVM_ENABLE_ASSERTIONS" true)
-    ++ lib.optional hostOnly "-DLLVM_TARGETS_TO_BUILD=host";
+  ]
+  ++ lib.optional enableAssertions (lib.cmakeBool "LLVM_ENABLE_ASSERTIONS" true)
+  ++ lib.optional hostOnly "-DLLVM_TARGETS_TO_BUILD=host";
 
-  noCheck = p: p.overrideAttrs(o: {
-    doCheck = false;
-  });
+  noCheck =
+    p:
+    p.overrideAttrs (o: {
+      doCheck = false;
+    });
 
   # New LLVM package set using the pinned source.
   baseLLVMPkgs = llvmPackages.override {
@@ -64,31 +76,39 @@ let
   };
 
   # Optionally tweak the build for libllvm and mlir packages.
-  llvmPkgs = baseLLVMPkgs.overrideScope (selfLLVM: superLLVM: {
-    libllvm = ((noCheck superLLVM.libllvm).override {
-      inherit enableSharedLibraries;
-      devExtraCmakeFlags = commonExtraCMakeFlags;
-      buildLlvmPackages = buildLLVMPackages_circt;
-    }).overrideAttrs (old: {
-      passthru = (old.passthru or {}) // {
-        inherit buildSharedLibs;
-      };
-    });
-    mlir = (superLLVM.mlir.override {
-      inherit (selfLLVM) libllvm;
-      devExtraCmakeFlags = commonExtraCMakeFlags ++ [
-        "-DMLIR_INSTALL_AGGREGATE_OBJECTS=OFF"
-      ];
-      buildLlvmPackages = buildLLVMPackages_circt;
-    }).overrideAttrs (old: {
-      passthru = (old.passthru or {}) // {
-        inherit buildSharedLibs;
-      };
-    });
-  });
-in {
+  llvmPkgs = baseLLVMPkgs.overrideScope (
+    selfLLVM: superLLVM: {
+      libllvm =
+        ((noCheck superLLVM.libllvm).override {
+          inherit enableSharedLibraries;
+          devExtraCmakeFlags = commonExtraCMakeFlags;
+          buildLlvmPackages = buildLLVMPackages_circt;
+        }).overrideAttrs
+          (old: {
+            passthru = (old.passthru or { }) // {
+              inherit buildSharedLibs;
+            };
+          });
+      mlir =
+        (superLLVM.mlir.override {
+          inherit (selfLLVM) libllvm;
+          devExtraCmakeFlags = commonExtraCMakeFlags ++ [
+            "-DMLIR_INSTALL_AGGREGATE_OBJECTS=OFF"
+          ];
+          buildLlvmPackages = buildLLVMPackages_circt;
+        }).overrideAttrs
+          (old: {
+            passthru = (old.passthru or { }) // {
+              inherit buildSharedLibs;
+            };
+          });
+    }
+  );
+in
+{
   inherit llvmPkgs;
-  llvm-third-party-src = runCommand "third-party-src" {} ''
+  llvm-third-party-src = runCommand "third-party-src" { } ''
     cp -r ${monorepoSrc}/third-party $out
   '';
-} // llvmPkgs # // tools // libraries
+}
+// llvmPkgs # // tools // libraries

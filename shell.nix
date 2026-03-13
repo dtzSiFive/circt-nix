@@ -1,8 +1,9 @@
-{ pkgs ? import <nixpkgs> {}
-, llvmPkgs ? pkgs.llvmPackages_21
-, withOrTools ? false # pkgs.stdenv.hostPlatform.isLinux
-, withZ3 ? true
-, withVerilator ? !pkgs.stdenv.hostPlatform.isDarwin
+{
+  pkgs ? import <nixpkgs> { },
+  llvmPkgs ? pkgs.llvmPackages_21,
+  withOrTools ? false, # pkgs.stdenv.hostPlatform.isLinux
+  withZ3 ? true,
+  withVerilator ? !pkgs.stdenv.hostPlatform.isDarwin,
 }:
 #{ pkgs ? import (fetchTarball channel:nixos-24.11) {} }:
 
@@ -18,10 +19,21 @@ with pkgs;
 let
   # (combined with stdenv from firefox's nix expression, FWIW, don't override on Darwin.)
   # TODO: Investigate best way to do this now.
-  theStdenv = if pkgs.stdenv.hostPlatform.isDarwin then llvmPkgs.stdenv else overrideCC llvmPkgs.stdenv (llvmPkgs.stdenv.cc.override {
-    inherit (llvmPkgs) bintools;
-  });
-  python = python3.withPackages (ps: [ ps.psutil ps.numpy ps.pybind11 ps.pyyaml ]);
+  theStdenv =
+    if pkgs.stdenv.hostPlatform.isDarwin then
+      llvmPkgs.stdenv
+    else
+      overrideCC llvmPkgs.stdenv (
+        llvmPkgs.stdenv.cc.override {
+          inherit (llvmPkgs) bintools;
+        }
+      );
+  python = python3.withPackages (ps: [
+    ps.psutil
+    ps.numpy
+    ps.pybind11
+    ps.pyyaml
+  ]);
 in
 (mkShell.override { stdenv = theStdenv; }) {
   nativeBuildInputs = [
@@ -34,15 +46,25 @@ in
     ninja
 
     doxygen
-    graphviz #-nox
+    graphviz # -nox
   ];
   buildInputs = [
-    libxml2 libffi ncurses zlib
+    libxml2
+    libffi
+    ncurses
+    zlib
     libedit
     grpc
     zstd
-  ] ++ lib.optionals (withOrTools) [
-    or-tools bzip2 cbc eigen glpk re2
-  ] ++ lib.optional (withVerilator) verilator
-    ++ lib.optional (withZ3) z3;
+  ]
+  ++ lib.optionals (withOrTools) [
+    or-tools
+    bzip2
+    cbc
+    eigen
+    glpk
+    re2
+  ]
+  ++ lib.optional (withVerilator) verilator
+  ++ lib.optional (withZ3) z3;
 }

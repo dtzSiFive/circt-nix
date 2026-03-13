@@ -1,7 +1,6 @@
 {
   description = "circt-y things";
 
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/master";
     circt-src = {
@@ -29,26 +28,34 @@
     };
   };
 
-  outputs = { self
-    , nixpkgs
-    , flake-compat, flake-utils
-    , circt-src, llvm-submodule-src
-    , slang-src
-    }: 
-      let
-        overlay = final: prev:
-          let circtFlakePkgs = rec {
-            llvmPackages_circt = prev.lib.recurseIntoAttrs (prev.callPackages ./llvm.nix {
-              inherit llvm-submodule-src;
-              llvmPackages = final.llvmPackages_git;
-              # TODO: Get this handled for us, spliced in?
-              buildLLVMPackages_circt = final.buildPackages.llvmPackages_circt;
-            });
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-compat,
+      flake-utils,
+      circt-src,
+      llvm-submodule-src,
+      slang-src,
+    }:
+    let
+      overlay =
+        final: prev:
+        let
+          circtFlakePkgs = rec {
+            llvmPackages_circt = prev.lib.recurseIntoAttrs (
+              prev.callPackages ./llvm.nix {
+                inherit llvm-submodule-src;
+                llvmPackages = final.llvmPackages_git;
+                # TODO: Get this handled for us, spliced in?
+                buildLLVMPackages_circt = final.buildPackages.llvmPackages_circt;
+              }
+            );
             circt = prev.callPackage ./circt.nix {
               inherit circt-src llvm-submodule-src;
               inherit (llvmPackages_circt) libllvm mlir llvm-third-party-src;
               lit = prev.lit.overrideAttrs (o: {
-                patches = o.patches or [] ++ [
+                patches = o.patches or [ ] ++ [
                   ./patches/lit-shell-script-runner-set-dyld-library-path.patch
                 ];
               });
@@ -56,45 +63,69 @@
               tag = "1.142.0";
             };
 
-            espresso = prev.callPackage ./espresso.nix {};
+            espresso = prev.callPackage ./espresso.nix { };
             slang = prev.callPackage ./slang.nix {
               inherit slang-src;
             };
           };
-          in { inherit circtFlakePkgs; } // circtFlakePkgs;
-      in flake-utils.lib.eachDefaultSystem (system:
-        let pkgs = import nixpkgs { inherit system; overlays = [ overlay ]; };
-        in rec {
-          formatter = pkgs.nixfmt;
-          devShells = {
-            default = import ./shell.nix { inherit pkgs; };
-          } // pkgs.lib.optionalAttrs (!pkgs.stdenv.isDarwin /* libcxxabi git on Darwin is broken?*/) {
-            git = import ./shell.nix {
-               inherit pkgs;
-               llvmPkgs = pkgs.llvmPackages_git; # NOT same as submodule.
-            };
-          };
-          packages = (pkgs.lib.removeAttrs pkgs.circtFlakePkgs ["llvmPackages_circt"]) // {
-            default = pkgs.circt; # default for `nix build` etc.
-            # selectively expose packages from llvmPackages_circt.
-            # clang/etc are not tested and patches/builds may break.
-            inherit (pkgs.circtFlakePkgs.llvmPackages_circt) libllvm mlir;
-          };
-          apps = pkgs.lib.genAttrs [ "firtool" "circt-lsp-server" "circt-verilog-lsp-server" ]
-            (name: flake-utils.lib.mkApp { drv = packages.circt; inherit name; });
-
-          # Expose nixpkgs with overlay applied under legacyPackages.
-          # Can be used for, e.g., cross-compilation.
-          legacyPackages = import nixpkgs {
-            inherit system;
-            overlays = [ overlay ];
-            crossOverlays = [ overlay ];
-          };
+        in
+        { inherit circtFlakePkgs; } // circtFlakePkgs;
+    in
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ overlay ];
+        };
+      in
+      rec {
+        formatter = pkgs.nixfmt;
+        devShells = {
+          default = import ./shell.nix { inherit pkgs; };
         }
-      ) // { overlays.default = overlay; };
+        //
+          pkgs.lib.optionalAttrs
+            (
+              !pkgs.stdenv.isDarwin # libcxxabi git on Darwin is broken?
+            )
+            {
+              git = import ./shell.nix {
+                inherit pkgs;
+                llvmPkgs = pkgs.llvmPackages_git; # NOT same as submodule.
+              };
+            };
+        packages = (pkgs.lib.removeAttrs pkgs.circtFlakePkgs [ "llvmPackages_circt" ]) // {
+          default = pkgs.circt; # default for `nix build` etc.
+          # selectively expose packages from llvmPackages_circt.
+          # clang/etc are not tested and patches/builds may break.
+          inherit (pkgs.circtFlakePkgs.llvmPackages_circt) libllvm mlir;
+        };
+        apps = pkgs.lib.genAttrs [ "firtool" "circt-lsp-server" "circt-verilog-lsp-server" ] (
+          name:
+          flake-utils.lib.mkApp {
+            drv = packages.circt;
+            inherit name;
+          }
+        );
+
+        # Expose nixpkgs with overlay applied under legacyPackages.
+        # Can be used for, e.g., cross-compilation.
+        legacyPackages = import nixpkgs {
+          inherit system;
+          overlays = [ overlay ];
+          crossOverlays = [ overlay ];
+        };
+      }
+    )
+    // {
+      overlays.default = overlay;
+    };
 
   nixConfig = {
     extra-substituters = [ "https://dtz-circt.cachix.org" ];
-    extra-trusted-public-keys = [ "dtz-circt.cachix.org-1:PHe0okMASm5d9SD+UE0I0wptCy58IK8uNF9P3K7f+IU=" ];
+    extra-trusted-public-keys = [
+      "dtz-circt.cachix.org-1:PHe0okMASm5d9SD+UE0I0wptCy58IK8uNF9P3K7f+IU="
+    ];
   };
 }

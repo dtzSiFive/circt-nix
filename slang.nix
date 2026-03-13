@@ -1,19 +1,24 @@
-{ lib, stdenv, slang-src
-, fetchFromGitHub, fetchpatch
-, cmake
-, python3
-, catch2_3
-, mimalloc
-, enableMimalloc ? false
+{
+  lib,
+  stdenv,
+  slang-src,
+  fetchFromGitHub,
+  fetchpatch,
+  cmake,
+  python3,
+  catch2_3,
+  mimalloc,
+  enableMimalloc ? false,
 }:
 
 let
   getRev = src: src.shortRev or "dirty";
-  mkVer = src:
+  mkVer =
+    src:
     let
       date = builtins.substring 0 8 (src.lastModifiedDate or src.lastModified or "19700101");
     in
-      "g${date}_${getRev src}";
+    "g${date}_${getRev src}";
   tag = "10.0";
   version = "${tag}${mkVer slang-src}";
 
@@ -23,8 +28,12 @@ let
     tag = "12.1.0";
     hash = "sha256-ZmI1Dv0ZabPlxa02OpERI47jp7zFfjpeWCy1WyuPYZ0=";
   };
-  catch2_3_pinned = catch2_3.overrideAttrs(o:
-    let version = "3.11.0"; in {
+  catch2_3_pinned = catch2_3.overrideAttrs (
+    o:
+    let
+      version = "3.11.0";
+    in
+    {
       src = fetchFromGitHub {
         owner = "catchorg";
         repo = "catch2";
@@ -32,12 +41,21 @@ let
         hash = "sha256-7Dx7PhtRwkbo8vHF57sAns2fQZ442D3cMyCt25RvzJc=";
       };
       inherit version;
-  });
-in stdenv.mkDerivation {
+    }
+  );
+in
+stdenv.mkDerivation {
   pname = "slang";
   inherit version;
-  nativeBuildInputs = [ cmake python3 ] ++ lib.optional enableMimalloc mimalloc;
-  buildInputs = [ python3 catch2_3_pinned ];
+  nativeBuildInputs = [
+    cmake
+    python3
+  ]
+  ++ lib.optional enableMimalloc mimalloc;
+  buildInputs = [
+    python3
+    catch2_3_pinned
+  ];
   src = slang-src;
 
   patches = [
