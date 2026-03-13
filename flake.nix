@@ -3,15 +3,17 @@
 
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/3b7b015de04db0849ef7b929ee5783247c07d80b";
-    circt-src.url = "github:llvm/circt";
-    circt-src.flake = false;
+    nixpkgs.url = "github:NixOS/nixpkgs/master";
+    circt-src = {
+      url = "github:llvm/circt/firtool-1.142.0";
+      flake = false;
+    };
     llvm-submodule-src = {
       type = "github";
       owner = "llvm";
       repo = "llvm-project";
       # From circt submodule
-      rev = "b32e067e97003db47aed52edc9ef8c3c30899b91";
+      rev = "52dfcab327fe959074563603b6ebaaed314e9677";
       flake = false;
     };
     slang-src.url = "github:MikePopoloski/slang";
@@ -20,7 +22,7 @@
     flake-utils.url = "github:numtide/flake-utils";
     # From README.md: https://github.com/edolstra/flake-compat
     flake-compat = {
-      url = github:edolstra/flake-compat;
+      url = "github:edolstra/flake-compat";
       flake = false;
     };
   };
@@ -41,7 +43,7 @@
               buildLLVMPackages_circt = final.buildPackages.llvmPackages_circt;
             });
             circt = prev.callPackage ./circt.nix {
-              inherit circt-src;
+              inherit circt-src llvm-submodule-src;
               inherit (llvmPackages_circt) libllvm mlir llvm-third-party-src;
               lit = prev.lit.overrideAttrs (o: {
                 patches = o.patches or [] ++ [
@@ -49,6 +51,7 @@
                 ];
               });
               slang = slang_9;
+              tag = "1.142.0";
             };
 
             espresso = prev.callPackage ./espresso.nix {};

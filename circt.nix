@@ -9,6 +9,7 @@
 # TODO: Shouldn't need to specify these deps, fix in upstream nixpkgs!
 , or-tools, bzip2, cbc, eigen, glpk, re2
 , python3
+, llvm-submodule-src
 , llvm-third-party-src
 , ninja
 , doxygen
@@ -21,6 +22,7 @@
 , enableLLHD ? false # Drops llhd-sim -> lib output dep.
 , withVerilator ? !stdenv.hostPlatform.isDarwin && stdenv.buildPlatform == stdenv.hostPlatform
 , z3
+, tag
 }:
 
 
@@ -33,7 +35,6 @@ let
     in
       "g${date}_${rev}";
 
-  tag = "1.139.0";
   versionSuffix = mkVer circt-src;
   version = "${tag}${versionSuffix}";
 in stdenv.mkDerivation {
@@ -47,17 +48,21 @@ in stdenv.mkDerivation {
     ++ lib.optional withVerilator [ verilator ];
   src = circt-src;
 
+  postUnpack = ''
+    rmdir $sourceRoot/llvm
+    ln -s ${llvm-submodule-src} $sourceRoot/llvm
+  '';
+
   patches = [
     ./patches/circt-mlir-tblgen-path.patch
     ./patches/circt-mlir-runner-target.patch
     ./patches/circt-install-dir.patch
-    ./patches/circt-install-includes.patch
     ./patches/circt-lit-dylib-paths.patch
   ];
   postPatch = ''
     substituteInPlace cmake/modules/GenVersionFile.cmake \
       --replace-fail '"unknown git version"' '"firtool-${version}"'
-    
+
     find test -type f -exec \
       sed -i -e 's,--test /usr/bin/env,--test ${lib.getBin coreutils}/bin/env,' \{\} \;
   ''
@@ -68,7 +73,6 @@ in stdenv.mkDerivation {
     substituteInPlace lib/Tools/circt-verilog-lsp-server/VerilogServerImpl/CMakeLists.txt \
       --replace-fail slang_slang slang::slang
   '';
- 
 
   outputs = [ "out" "lib" "dev" ];
 
