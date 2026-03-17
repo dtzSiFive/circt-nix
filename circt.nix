@@ -1,63 +1,101 @@
-{ lib, fetchpatch
-, stdenv, cmake, pkg-config
-, gnugrep
-, coreutils
-, libllvm, mlir, lit
-, circt-src
-, grpc
-, verilator
-# TODO: Shouldn't need to specify these deps, fix in upstream nixpkgs!
-, or-tools, bzip2, cbc, eigen, glpk, re2
-, python3
-, llvm-third-party-src
-, ninja
-, doxygen
-, graphviz-nox
-, enableDocs ? false
-, enableAssertions ? true
-, enableOrTools ? false # stdenv.hostPlatform.isLinux
-, slang
-, enableSlang ? true
-, enableLLHD ? false # Drops llhd-sim -> lib output dep.
-, withVerilator ? !stdenv.hostPlatform.isDarwin && stdenv.buildPlatform == stdenv.hostPlatform
-, z3
+{
+  lib,
+  fetchpatch,
+  stdenv,
+  cmake,
+  pkg-config,
+  gnugrep,
+  coreutils,
+  libllvm,
+  mlir,
+  lit,
+  circt-src,
+  grpc,
+  verilator,
+  # TODO: Shouldn't need to specify these deps, fix in upstream nixpkgs!
+  or-tools,
+  bzip2,
+  cbc,
+  eigen,
+  glpk,
+  re2,
+  python3,
+  llvm-submodule-src,
+  llvm-third-party-src,
+  ninja,
+  doxygen,
+  graphviz-nox,
+  enableDocs ? false,
+  enableAssertions ? true,
+  enableOrTools ? false, # stdenv.hostPlatform.isLinux
+  slang,
+  enableSlang ? true,
+  enableLLHD ? false, # Drops llhd-sim -> lib output dep.
+  withVerilator ? !stdenv.hostPlatform.isDarwin && stdenv.buildPlatform == stdenv.hostPlatform,
+  z3,
+  tag,
+  buildSharedLibs ? libllvm.buildSharedLibs or false,
 }:
-
 
 # TODO: or-tools, needs cmake bits maybe?
 let
-  mkVer = src:
+  mkVer =
+    src:
     let
       date = builtins.substring 0 8 (src.lastModifiedDate or src.lastModified or "19700101");
       rev = src.shortRev or "dirty";
     in
-      "g${date}_${rev}";
+    "g${date}_${rev}";
 
-  tag = "1.139.0";
   versionSuffix = mkVer circt-src;
   version = "${tag}${versionSuffix}";
-in stdenv.mkDerivation {
+in
+stdenv.mkDerivation {
   pname = "circt";
   inherit version;
-  nativeBuildInputs = [ cmake python3 ninja pkg-config ]
-    ++ lib.optionals enableDocs [ doxygen graphviz-nox ];
-  buildInputs = [ mlir libllvm grpc z3 ]
-    ++ lib.optionals enableOrTools [ or-tools bzip2 cbc eigen glpk re2 ]
-    ++ lib.optional enableSlang [ slang ]
-    ++ lib.optional withVerilator [ verilator ];
+  nativeBuildInputs = [
+    cmake
+    python3
+    ninja
+    pkg-config
+  ]
+  ++ lib.optionals enableDocs [
+    doxygen
+    graphviz-nox
+  ];
+  buildInputs = [
+    mlir
+    libllvm
+    grpc
+    z3
+  ]
+  ++ lib.optionals enableOrTools [
+    or-tools
+    bzip2
+    cbc
+    eigen
+    glpk
+    re2
+  ]
+  ++ lib.optional enableSlang [ slang ]
+  ++ lib.optional withVerilator [ verilator ];
   src = circt-src;
+
+  postUnpack = ''
+    rmdir $sourceRoot/llvm
+    ln -s ${llvm-submodule-src} $sourceRoot/llvm
+  '';
 
   patches = [
     ./patches/circt-mlir-tblgen-path.patch
     ./patches/circt-mlir-runner-target.patch
     ./patches/circt-install-dir.patch
-    ./patches/circt-install-includes.patch
     ./patches/circt-lit-dylib-paths.patch
   ];
   postPatch = ''
     substituteInPlace cmake/modules/GenVersionFile.cmake \
       --replace-fail '"unknown git version"' '"firtool-${version}"'
-    
+
     find test -type f -exec \
       sed -i -e 's,--test /usr/bin/env,--test ${lib.getBin coreutils}/bin/env,' \{\} \;
   ''
@@ -68,9 +106,12 @@ in stdenv.mkDerivation {
     substituteInPlace lib/Tools/circt-verilog-lsp-server/VerilogServerImpl/CMakeLists.txt \
       --replace-fail slang_slang slang::slang
   '';
- 
 
-  outputs = [ "out" "lib" "dev" ];
+  outputs = [
+    "out"
+    "lib"
+    "dev"
+  ];
 
   cmakeFlags = [
     "-DLLVM_EXTERNAL_LIT=${lit}/bin/.lit-wrapped" # eep
@@ -81,9 +122,11 @@ in stdenv.mkDerivation {
     "-DCIRCT_LIBRARY_DIR=${placeholder "lib"}/lib"
     "-DCIRCT_LLHD_SIM_ENABLED=${if enableLLHD then "ON" else "OFF"}"
     "-DMLIR_TABLEGEN_EXE=${lib.getOutput "bin" mlir}/bin/mlir-tblgen" # assumes not-cross for now
-  ] ++ lib.optional enableDocs "-DCIRCT_INCLUDE_DOCS=ON"
-    ++ lib.optional enableAssertions "-DLLVM_ENABLE_ASSERTIONS=ON"
-    ++ lib.optionals enableSlang [
+    (lib.cmakeBool "BUILD_SHARED_LIBS" buildSharedLibs)
+  ]
+  ++ lib.optional enableDocs "-DCIRCT_INCLUDE_DOCS=ON"
+  ++ lib.optional enableAssertions "-DLLVM_ENABLE_ASSERTIONS=ON"
+  ++ lib.optionals enableSlang [
     "-DCIRCT_SLANG_FRONTEND_ENABLED=ON"
     "-DCIRCT_SLANG_BUILD_FROM_SOURCE=OFF"
   ];

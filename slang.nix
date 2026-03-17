@@ -1,20 +1,25 @@
-{ lib, stdenv, slang-src
-, fetchFromGitHub, fetchpatch
-, cmake
-, python3
-, catch2_3
-, mimalloc
-, enableMimalloc ? false
+{
+  lib,
+  stdenv,
+  slang-src,
+  fetchFromGitHub,
+  fetchpatch,
+  cmake,
+  python3,
+  catch2_3,
+  mimalloc,
+  enableMimalloc ? false,
 }:
 
 let
   getRev = src: src.shortRev or "dirty";
-  mkVer = src:
+  mkVer =
+    src:
     let
       date = builtins.substring 0 8 (src.lastModifiedDate or src.lastModified or "19700101");
     in
-      "g${date}_${getRev src}";
-  tag = "9.1";
+    "g${date}_${getRev src}";
+  tag = "10.0";
   version = "${tag}${mkVer slang-src}";
 
   fmt_src = fetchFromGitHub {
@@ -23,8 +28,12 @@ let
     tag = "12.1.0";
     hash = "sha256-ZmI1Dv0ZabPlxa02OpERI47jp7zFfjpeWCy1WyuPYZ0=";
   };
-  catch2_3_pinned = catch2_3.overrideAttrs(o:
-    let version = "3.11.0"; in {
+  catch2_3_pinned = catch2_3.overrideAttrs (
+    o:
+    let
+      version = "3.11.0";
+    in
+    {
       src = fetchFromGitHub {
         owner = "catchorg";
         repo = "catch2";
@@ -32,18 +41,27 @@ let
         hash = "sha256-7Dx7PhtRwkbo8vHF57sAns2fQZ442D3cMyCt25RvzJc=";
       };
       inherit version;
-  });
-in stdenv.mkDerivation {
+    }
+  );
+in
+stdenv.mkDerivation {
   pname = "slang";
   inherit version;
-  nativeBuildInputs = [ cmake python3 ] ++ lib.optional enableMimalloc mimalloc;
-  buildInputs = [ python3 catch2_3_pinned ];
+  nativeBuildInputs = [
+    cmake
+    python3
+  ]
+  ++ lib.optional enableMimalloc mimalloc;
+  buildInputs = [
+    python3
+    catch2_3_pinned
+  ];
   src = slang-src;
 
   patches = [
-    ./patches/slang_git-don-t-fetch-fmt.patch
-    ./patches/slang_git-pkgconfig.patch
-    ./patches/slang_git-vendored-boost-headers.patch
+    ./patches/slang-don-t-fetch-fmt.patch
+    ./patches/slang-pkgconfig.patch
+    ./patches/slang-vendored-boost-headers.patch
   ];
 
   # Builds w/mimalloc if have right version, disable for now.
@@ -51,7 +69,7 @@ in stdenv.mkDerivation {
 
   postPatch = ''
     ln -s ${fmt_src} external/fmt
-    
+
     substituteInPlace source/util/VersionInfo.cpp.in \
       --subst-var SLANG_VERSION_MAJOR \
       --subst-var SLANG_VERSION_MINOR \
