@@ -62,6 +62,7 @@ stdenv.mkDerivation {
     ./patches/slang-don-t-fetch-fmt.patch
     ./patches/slang-pkgconfig.patch
     ./patches/slang-vendored-boost-headers.patch
+    ./patches/slang-install-bs-thread-pool.patch
   ];
 
   # Builds w/mimalloc if have right version, disable for now.

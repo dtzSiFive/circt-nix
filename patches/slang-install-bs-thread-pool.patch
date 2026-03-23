@@ -1,0 +1,15 @@
+diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
+index bb468846f..c4d34b9bf 100644
+--- a/external/CMakeLists.txt
++++ b/external/CMakeLists.txt
+@@ -223,6 +223,10 @@ if(SLANG_INCLUDE_INSTALL)
+     FILES ${PROJECT_SOURCE_DIR}/external/expected.hpp
+     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+     COMPONENT slang_Development)
++  install(
++    FILES ${PROJECT_SOURCE_DIR}/external/BS_thread_pool.hpp
++    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
++    COMPONENT slang_Development)
+ 
+   if(NOT fmt_FOUND)
+     install(
