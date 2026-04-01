@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/master";
     circt-src = {
-      url = "github:llvm/circt/firtool-1.143.0";
+      url = "github:llvm/circt/firtool-1.144.0";
       flake = false;
     };
     llvm-submodule-src = {
@@ -60,7 +60,7 @@
                 ];
               });
               slang = slang;
-              tag = "1.143.0";
+              tag = "1.144.0";
             };
 
             espresso = prev.callPackage ./espresso.nix { };
