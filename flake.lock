@@ -3,16 +3,16 @@
     "circt-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1774994140,
-        "narHash": "sha256-5Yh4+sG9hcax83EGfgxliBfZZt3uYN3L3SVTfTPtrxQ=",
+        "lastModified": 1780019240,
+        "narHash": "sha256-EvUEuc0MwHAwohGSLz42DbXYtaHGFeJiI7piKYHMO0Q=",
         "owner": "llvm",
         "repo": "circt",
-        "rev": "5dc62fe46c9dbf8936f4f706083301e7503715eb",
+        "rev": "e217d9938362f01ca0dd7ab0f2ce38b0ca7d8b1b",
         "type": "github"
       },
       "original": {
         "owner": "llvm",
-        "ref": "firtool-1.144.0",
+        "ref": "firtool-1.149.0",
         "repo": "circt",
         "type": "github"
       }
@@ -54,32 +54,32 @@
     "llvm-submodule-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1773296919,
-        "narHash": "sha256-LLBh1Ndj6y8cOjGFcBTeM1x3VOVatok4jjayQnfbijM=",
+        "lastModified": 1780700903,
+        "narHash": "sha256-rms9EtZ/58qdrO45SsxFDGlYIBy1mnIpDZoD/5fyrQ4=",
         "owner": "llvm",
         "repo": "llvm-project",
-        "rev": "7cb3005ba22899b8ab7efe4fe43cba09cb7e12d4",
+        "rev": "b7152ff7026a05282b6ae91ccf150ede0217b08a",
         "type": "github"
       },
       "original": {
         "owner": "llvm",
         "repo": "llvm-project",
-        "rev": "7cb3005ba22899b8ab7efe4fe43cba09cb7e12d4",
+        "rev": "b7152ff7026a05282b6ae91ccf150ede0217b08a",
         "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1781018945,
-        "narHash": "sha256-FLgYaOXr8In0kEIoAEi/u2tRiPPwpUEX57xVKTQ7ePg=",
+        "lastModified": 1781074563,
+        "narHash": "sha256-md8WlXOlfnIeHeOScMTTHFyf2d6iaTwPl2apR5EQ3P4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "fefa3ee5f1cdb26177f55fd702f1acd0b48c0d06",
+        "rev": "9ae611a455b90cf061d8f332b977e387bda8e1ca",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "master",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
