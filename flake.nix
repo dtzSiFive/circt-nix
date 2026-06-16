@@ -2,7 +2,7 @@
   description = "circt-y things";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/master";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     circt-src = {
       url = "github:llvm/circt/firtool-1.149.0";
       flake = false;
