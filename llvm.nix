@@ -87,6 +87,17 @@ let
             passthru = (old.passthru or { }) // {
               inherit buildSharedLibs;
             };
+            # nixpkgs' cc-wrapper unconditionally injects
+            # `-D_LIBCPP_HARDENING_MODE=...` (it's a no-op for our
+            # libstdc++ build), but LLVM's own build also defines it
+            # explicitly (e.g. for third-party/benchmark), so the two
+            # collide as a macro redefinition. That's normally just a
+            # warning, but benchmark's `-pedantic-errors` promotes it to
+            # a hard error, so disable this hardening flag entirely.
+            hardeningDisable = (old.hardeningDisable or [ ]) ++ [
+              "libcxxhardeningextensive"
+              "libcxxhardeningfast"
+            ];
           });
       mlir =
         (superLLVM.mlir.override {
