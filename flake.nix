@@ -3,18 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    circt-src = {
-      url = "github:llvm/circt/firtool-1.149.0";
-      flake = false;
-    };
-    llvm-submodule-src = {
-      type = "github";
-      owner = "llvm";
-      repo = "llvm-project";
-      # From circt submodule
-      rev = "b7152ff7026a05282b6ae91ccf150ede0217b08a";
-      flake = false;
-    };
     slang-src = {
       url = "github:MikePopoloski/slang/v10.0";
       flake = false;
@@ -34,25 +22,43 @@
       nixpkgs,
       flake-compat,
       flake-utils,
-      circt-src,
-      llvm-submodule-src,
       slang-src,
     }:
     let
+      # CIRCT release being tracked, kept up to date by ./update-llvm.sh.
+      # llvmRev is llvm-project's commit for this release's `llvm`
+      # submodule, used only for LLVM's reported version string --
+      # circtSrc below is fetched with submodules included, so build
+      # content always matches it regardless.
+      circtPin = {
+        version = "1.152.0";
+        rev = "267e183e0121c27f017ce317c2d540cff2834b6f";
+        hash = "sha256-VZb5TceGDQO+sLIz2lssKlaRo0bP8WSDWrd9pNiKkQg=";
+        llvmRev = "040a641988f6ed6f4fab250706ca2b620c1de2d8";
+      };
+
       overlay =
         final: prev:
         let
+          circtSrc = prev.fetchFromGitHub {
+            owner = "llvm";
+            repo = "circt";
+            inherit (circtPin) rev hash;
+            fetchSubmodules = true;
+          };
           circtFlakePkgs = rec {
             llvmPackages_circt = prev.lib.recurseIntoAttrs (
               prev.callPackages ./llvm.nix {
-                inherit llvm-submodule-src;
+                inherit circtSrc;
+                inherit (circtPin) llvmRev;
                 llvmPackages = final.llvmPackages_git;
                 # TODO: Get this handled for us, spliced in?
                 buildLLVMPackages_circt = final.buildPackages.llvmPackages_circt;
               }
             );
             circt = prev.callPackage ./circt.nix {
-              inherit circt-src llvm-submodule-src;
+              inherit circtSrc;
+              inherit (circtPin) version;
               inherit (llvmPackages_circt) libllvm mlir llvm-third-party-src;
               lit = prev.lit.overrideAttrs (o: {
                 patches = o.patches or [ ] ++ [
@@ -60,7 +66,6 @@
                 ];
               });
               slang = slang;
-              tag = "1.144.0";
             };
 
             espresso = prev.callPackage ./espresso.nix { };

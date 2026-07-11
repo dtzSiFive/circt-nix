@@ -9,7 +9,8 @@
   libllvm,
   mlir,
   lit,
-  circt-src,
+  circtSrc,
+  version,
   grpc,
   verilator,
   # TODO: Shouldn't need to specify these deps, fix in upstream nixpkgs!
@@ -20,7 +21,6 @@
   glpk,
   re2,
   python3,
-  llvm-submodule-src,
   llvm-third-party-src,
   ninja,
   doxygen,
@@ -33,23 +33,10 @@
   enableLLHD ? false, # Drops llhd-sim -> lib output dep.
   withVerilator ? !stdenv.hostPlatform.isDarwin && stdenv.buildPlatform == stdenv.hostPlatform,
   z3,
-  tag,
   buildSharedLibs ? libllvm.buildSharedLibs or false,
 }:
 
 # TODO: or-tools, needs cmake bits maybe?
-let
-  mkVer =
-    src:
-    let
-      date = builtins.substring 0 8 (src.lastModifiedDate or src.lastModified or "19700101");
-      rev = src.shortRev or "dirty";
-    in
-    "g${date}_${rev}";
-
-  versionSuffix = mkVer circt-src;
-  version = "${tag}${versionSuffix}";
-in
 stdenv.mkDerivation {
   pname = "circt";
   inherit version;
@@ -79,12 +66,8 @@ stdenv.mkDerivation {
   ]
   ++ lib.optional enableSlang [ slang ]
   ++ lib.optional withVerilator [ verilator ];
-  src = circt-src;
-
-  postUnpack = ''
-    rmdir $sourceRoot/llvm
-    ln -s ${llvm-submodule-src} $sourceRoot/llvm
-  '';
+  # circtSrc already includes the llvm submodule content (see flake.nix).
+  src = circtSrc;
 
   patches = [
     ./patches/circt-mlir-tblgen-path.patch

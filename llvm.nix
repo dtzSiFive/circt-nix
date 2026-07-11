@@ -3,7 +3,8 @@
   fetchpatch,
   applyPatches,
   runCommand,
-  llvm-submodule-src,
+  circtSrc,
+  llvmRev,
   llvmPackages,
   enableAssertions ? true,
   hostOnly ? true,
@@ -20,29 +21,24 @@ let
     else
       applyPatches {
         inherit src patches;
-        name = "llvm-src-${version}-patched";
+        name = "llvm-src-patched";
       };
 
-  # LLVM source to use:
-  monorepoSrc =
-    (patchsrc llvm-submodule-src [
-    ])
-    // {
+  # The llvm-project checkout bundled as circtSrc's `llvm` submodule
+  # (circtSrc is fetched with fetchSubmodules in flake.nix) -- always
+  # exactly what the pinned CIRCT release's submodule pin specifies.
+  # Wrapped via runCommand (a symlink, not a copy) to give it a proper
+  # name+passthru, the same way nixpkgs itself wraps monorepoSrc in
+  # pkgs/development/compilers/llvm/common/llvm/default.nix.
+  monorepoSrc = patchsrc (
+    runCommand "llvm-monorepo-src" {
       passthru = {
         owner = "llvm";
         repo = "llvm-project";
-        inherit (llvm-submodule-src) rev;
+        rev = llvmRev;
       };
-    };
-  # Version string:
-  mkVer =
-    src:
-    let
-      date = builtins.substring 0 8 (src.lastModifiedDate or src.lastModified or "19700101");
-      rev = src.shortRev or "dirty";
-    in
-    "${date}_${rev}";
-  version = mkVer llvm-submodule-src;
+    } ''ln -s ${circtSrc}/llvm $out''
+  ) [ ];
 
   release_version = "23.0.0";
 
@@ -63,14 +59,17 @@ let
       doCheck = false;
     });
 
-  # New LLVM package set using the pinned source.
+  # New LLVM package set using the pinned source. rev/rev-version only
+  # feed the reported LLVM version string; nixpkgs' sha256-based fetch of
+  # monorepoSrc (pkgs/development/compilers/llvm/common/common-let.nix) is
+  # never reached since monorepoSrc is supplied directly, so no sha256
+  # field is needed here.
   baseLLVMPkgs = llvmPackages.override {
     inherit monorepoSrc;
     officialRelease = null;
     gitRelease = {
-      rev = llvm-submodule-src.rev or "dirty";
-      rev-version = "${release_version}-${version}";
-      inherit (llvm-submodule-src) sha256;
+      rev = llvmRev;
+      rev-version = "${release_version}-g${builtins.substring 0 8 llvmRev}";
     };
     buildLlvmPackages = buildLLVMPackages_circt;
   };
