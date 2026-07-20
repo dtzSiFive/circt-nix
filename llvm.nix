@@ -111,6 +111,13 @@ let
             passthru = (old.passthru or { }) // {
               inherit buildSharedLibs;
             };
+
+            # Not strictly needed but propagates.
+            hardeningDisable = (old.hardeningDisable or [ ]) ++ [
+              "libcxxhardeningextensive"
+              "libcxxhardeningfast"
+            ];
+
           });
     }
   );
