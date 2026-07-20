@@ -35,9 +35,9 @@
       # circtSrc below is fetched with submodules included, so build
       # content always matches it regardless.
       circtPin = {
-        version = "1.152.0";
-        rev = "267e183e0121c27f017ce317c2d540cff2834b6f";
-        hash = "sha256-VZb5TceGDQO+sLIz2lssKlaRo0bP8WSDWrd9pNiKkQg=";
+        version = "1.153.1";
+        rev = "930f444d6bd072c1111b693f30c5795455d4ea7b";
+        hash = "sha256-pxIJE3IHn2A996kGMTtMeTH7WdYn4Enhf0cLYrPC9xY=";
         llvmRev = "040a641988f6ed6f4fab250706ca2b620c1de2d8";
       };
 
