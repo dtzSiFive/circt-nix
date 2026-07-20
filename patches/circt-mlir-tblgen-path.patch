@@ -8,13 +8,13 @@ Subject: [PATCH] mlir-tblgen: fix
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index a1cad4188..302df463b 100644
+index 7e380f0..4d5ac7a 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -82,6 +82,11 @@ if( CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR )
+@@ -65,6 +65,11 @@ if( CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR )
    set(CIRCT_BUILT_STANDALONE 1)
    set(BACKEND_PACKAGE_STRING "LLVM ${LLVM_PACKAGE_VERSION}")
- 
+
 +  # MLIR doesn't export this target, nor any variable specifying its binary dir.
 +  # Look through LLVM's binary directory as a hint.
 +  find_program(MLIR_TABLEGEN_EXE "mlir-tblgen" HINTS ${LLVM_TOOLS_BINARY_DIR}
@@ -23,14 +23,14 @@ index a1cad4188..302df463b 100644
    # Handle unittests when building out-of-tree against an installed version of
    # LLVM/MLIR (not a build tree). Adapted from `llvm/flang/CMakeLists.txt`.
    set(CIRCT_GTEST_AVAILABLE 0)
-@@ -141,7 +146,6 @@ else()
+@@ -124,7 +129,6 @@ else()
    set(MLIR_MAIN_SRC_DIR ${LLVM_MAIN_SRC_DIR}/../mlir ) # --src-root
    set(MLIR_INCLUDE_DIR ${MLIR_MAIN_SRC_DIR}/include ) # --includedir
    set(MLIR_TABLEGEN_OUTPUT_DIR ${LLVM_BINARY_DIR}/tools/mlir/include)
 -  set(MLIR_TABLEGEN_EXE $<TARGET_FILE:mlir-tblgen>)
-   include_directories(SYSTEM ${MLIR_INCLUDE_DIR})
-   include_directories(SYSTEM ${MLIR_TABLEGEN_OUTPUT_DIR})
- 
--- 
+   # Keep the in-tree MLIR headers ahead of dependency prefixes that might also
+   # contain an installed MLIR checkout.
+   include_directories(BEFORE "${MLIR_INCLUDE_DIR}")
+--
 2.43.2
 

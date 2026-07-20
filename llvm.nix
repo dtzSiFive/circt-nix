@@ -117,8 +117,11 @@ let
 in
 {
   inherit llvmPkgs;
-  llvm-third-party-src = runCommand "third-party-src" { } ''
-    cp -r ${monorepoSrc}/third-party $out
-  '';
+  # Just a subpath of monorepoSrc, not a copy of it: CIRCT only reads
+  # ${LLVM_THIRD_PARTY_DIR}/unittest (for googletest sources), so there's
+  # nothing to be gained from materialising it as its own store path.
+  # Interpolating keeps the string context, so monorepoSrc is still a
+  # build dependency.
+  llvm-third-party-src = "${monorepoSrc}/third-party";
 }
 // llvmPkgs # // tools // libraries

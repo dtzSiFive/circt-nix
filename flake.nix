@@ -3,8 +3,12 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # Pinned to the exact commit CIRCT's CMakeLists.txt FetchContent-pins
+    # (v11.0 + ~85 commits). CIRCT's ImportVerilog tests are tuned to this
+    # revision's diagnostics (llvm/circt#10717), so a plain v11.0 release
+    # tag is not sufficient -- keep this in sync with CIRCT's GIT_TAG.
     slang-src = {
-      url = "github:MikePopoloski/slang/v10.0";
+      url = "github:MikePopoloski/slang/44dc55f99b9c64971893013e7931e643fbedcf23";
       flake = false;
     };
 
@@ -65,7 +69,12 @@
                   ./patches/lit-shell-script-runner-set-dyld-library-path.patch
                 ];
               });
-              slang = slang;
+              # CIRCT statically links slang (libsvlang.a), so this variant is
+              # embedded in CIRCT and never shipped as a CLI -- disabling
+              # threads here matches how CIRCT configures slang when it builds
+              # it from source, while leaving the standalone `slang` package
+              # (with its -j option) untouched.
+              slang = slang.override { enableThreads = false; };
             };
 
             espresso = prev.callPackage ./espresso.nix { };
@@ -114,13 +123,19 @@
           }
         );
 
-        # Expose nixpkgs with overlay applied under legacyPackages.
-        # Can be used for, e.g., cross-compilation.
-        legacyPackages = import nixpkgs {
-          inherit system;
-          overlays = [ overlay ];
-          crossOverlays = [ overlay ];
-        };
+        # Expose nixpkgs with the overlay applied under legacyPackages.
+        #
+        # Was a second `import nixpkgs` that also passed
+        # `crossOverlays = [ overlay ]` (f8b2b85), i.e. an extra nixpkgs
+        # instantiation per system. Redundant: plain `overlays` already
+        # reaches cross sets -- pkgsCross.*.circt still evaluates without it
+        # -- so crossOverlays only applied the overlay a *second* time to the
+        # cross stage. That double application perturbed derivations (native
+        # `hello` included, so legacyPackages.<pkg> silently diverged from
+        # packages.<pkg>) and made tomlplusplus and glibc-iconv hit infinite
+        # recursion. Not specific to our overlay: a trivial
+        # `{ probe = 42; }` crossOverlay reproduces it.
+        legacyPackages = pkgs;
       }
     )
     // {

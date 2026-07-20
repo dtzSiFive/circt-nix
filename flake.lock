@@ -61,17 +61,17 @@
     "slang-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1768519121,
-        "narHash": "sha256-rw+DztENuY+DiAhQR2oNN/dQJzrcP5neF3LoWnqri+c=",
+        "lastModified": 1781906659,
+        "narHash": "sha256-tKse5rV5kHZmCOb8Zb8k4bOw4wN3pDfY5exdpva57bU=",
         "owner": "MikePopoloski",
         "repo": "slang",
-        "rev": "ace09c5d7c9f4e28eed654d2f353c6dc792ebf67",
+        "rev": "44dc55f99b9c64971893013e7931e643fbedcf23",
         "type": "github"
       },
       "original": {
         "owner": "MikePopoloski",
-        "ref": "v10.0",
         "repo": "slang",
+        "rev": "44dc55f99b9c64971893013e7931e643fbedcf23",
         "type": "github"
       }
     },

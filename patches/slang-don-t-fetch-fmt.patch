@@ -3,25 +3,30 @@ From: Will Dietz <will.dietz@sifive.com>
 Date: Tue, 16 Jan 2024 07:27:14 -0600
 Subject: [PATCH] don't fetch fmt.
 
+Use the fmt checkout symlinked into external/fmt by slang.nix instead of
+letting FetchContent reach the network. Deliberately not satisfied with
+nixpkgs' fmt via FIND_PACKAGE_ARGS: a found system fmt makes slang's
+generated slangConfig.cmake emit find_dependency(fmt), which would push
+a new configure-time dependency onto every consumer (i.e. CIRCT).
 ---
- external/CMakeLists.txt | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ external/CMakeLists.txt | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
 diff --git a/external/CMakeLists.txt b/external/CMakeLists.txt
-index 4f8c5168..d686d6f5 100644
+index 512ae5c..905e761 100644
 --- a/external/CMakeLists.txt
 +++ b/external/CMakeLists.txt
-@@ -14,19 +14,13 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24.0")
-   set(find_pkg_args "FIND_PACKAGE_ARGS" "${fmt_min_version}")
- endif()
- 
+@@ -8,19 +8,12 @@ set(FMT_SYSTEM_HEADERS
+     ON
+     CACHE INTERNAL "")
+
 -FetchContent_Declare(
 -  fmt
 -  GIT_REPOSITORY https://github.com/fmtlib/fmt.git
 -  GIT_TAG 12.1.0
 -  GIT_SHALLOW ON
--  ${find_pkg_args})
- 
+-  FIND_PACKAGE_ARGS 12.1)
+-
  # Force fmtlib to always be a static lib if we pull it via FetchContent (i.e.
  # not intercepted by find_package), since it's a private dependency that's
  # mostly header-only already.
@@ -30,9 +35,9 @@ index 4f8c5168..d686d6f5 100644
 -FetchContent_MakeAvailable(fmt)
 +add_subdirectory(external/fmt)
  set(BUILD_SHARED_LIBS ${saved_build_shared_libs})
- 
- if(NOT TARGET fmt::fmt)
-@@ -176,7 +170,7 @@ if(SLANG_INCLUDE_INSTALL)
+
+ if((SLANG_INCLUDE_PYLIB OR BUILD_SHARED_LIBS) AND NOT fmt_FOUND)
+@@ -192,7 +185,7 @@ if(SLANG_INCLUDE_INSTALL)
        PUBLIC_HEADER EXCLUDE_FROM_ALL
        PRIVATE_HEADER EXCLUDE_FROM_ALL)
      install(
@@ -41,6 +46,6 @@ index 4f8c5168..d686d6f5 100644
        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
        COMPONENT slang_Development)
    endif()
--- 
+--
 2.42.0
 
