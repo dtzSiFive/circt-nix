@@ -156,6 +156,12 @@ stdenv.mkDerivation {
     install -Dt $out/bin bin/arcilator-runtime.h
   '';
 
+  # Avoid redefinition warning spam.
+  hardeningDisable = [
+    "libcxxhardeningextensive"
+    "libcxxhardeningfast"
+  ];
+
   meta = with lib; {
     description = " Circuit IR Compilers and Tools";
     mainProgram = "firtool";
