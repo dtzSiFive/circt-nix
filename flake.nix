@@ -57,8 +57,15 @@
         );
 
       # mkApp: build a flake `app` output pointing at a binary in `drv`.
-      mkApp = { drv, name ? drv.meta.mainProgram or drv.pname, }:
-        { type = "app"; program = "${drv}/bin/${name}"; };
+      mkApp =
+        {
+          drv,
+          name ? drv.meta.mainProgram or drv.pname,
+        }:
+        {
+          type = "app";
+          program = "${drv}/bin/${name}";
+        };
 
       # CIRCT release being tracked, kept up to date by ./update-llvm.sh.
       # llvmRev is llvm-project's commit for this release's `llvm`

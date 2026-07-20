@@ -30,15 +30,13 @@ let
   # Wrapped via runCommand (a symlink, not a copy) to give it a proper
   # name+passthru, the same way nixpkgs itself wraps monorepoSrc in
   # pkgs/development/compilers/llvm/common/llvm/default.nix.
-  monorepoSrc = patchsrc (
-    runCommand "llvm-monorepo-src" {
-      passthru = {
-        owner = "llvm";
-        repo = "llvm-project";
-        rev = llvmRev;
-      };
-    } ''ln -s ${circtSrc}/llvm $out''
-  ) [ ];
+  monorepoSrc = patchsrc (runCommand "llvm-monorepo-src" {
+    passthru = {
+      owner = "llvm";
+      repo = "llvm-project";
+      rev = llvmRev;
+    };
+  } "ln -s ${circtSrc}/llvm $out") [ ];
 
   release_version = "23.0.0";
 
