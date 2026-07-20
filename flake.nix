@@ -12,7 +12,6 @@
       flake = false;
     };
 
-    flake-utils.url = "github:numtide/flake-utils";
     # From README.md: https://github.com/edolstra/flake-compat
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -25,10 +24,42 @@
       self,
       nixpkgs,
       flake-compat,
-      flake-utils,
       slang-src,
     }:
     let
+      inherit (nixpkgs) lib;
+
+      # Systems we build for.
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "aarch64-darwin"
+      ];
+
+      # Helper utilities for our flake.
+      # "Borrowed" from flake-utils.
+      #
+      # eachSystem: call `f system` for each system and transpose the
+      # results, so `{ packages = ...; }` per system becomes the flake's
+      # `{ packages.<system> = ...; }`. Attrs missing on some systems are
+      # only emitted for the systems that provide them.
+      eachSystem =
+        f:
+        let
+          perSystem = lib.genAttrs systems f;
+          attrNames = lib.unique (lib.concatMap lib.attrNames (lib.attrValues perSystem));
+        in
+        lib.genAttrs attrNames (
+          attr:
+          lib.genAttrs (lib.filter (system: perSystem.${system} ? ${attr}) systems) (
+            system: perSystem.${system}.${attr}
+          )
+        );
+
+      # mkApp: build a flake `app` output pointing at a binary in `drv`.
+      mkApp = { drv, name ? drv.meta.mainProgram or drv.pname, }:
+        { type = "app"; program = "${drv}/bin/${name}"; };
+
       # CIRCT release being tracked, kept up to date by ./update-llvm.sh.
       # llvmRev is llvm-project's commit for this release's `llvm`
       # submodule, used only for LLVM's reported version string --
@@ -85,7 +116,7 @@
         in
         { inherit circtFlakePkgs; } // circtFlakePkgs;
     in
-    flake-utils.lib.eachDefaultSystem (
+    eachSystem (
       system:
       let
         pkgs = import nixpkgs {
@@ -117,7 +148,7 @@
         };
         apps = pkgs.lib.genAttrs [ "firtool" "circt-lsp-server" "circt-verilog-lsp-server" ] (
           name:
-          flake-utils.lib.mkApp {
+          mkApp {
             drv = packages.circt;
             inherit name;
           }
