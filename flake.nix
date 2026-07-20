@@ -125,7 +125,7 @@
         };
       in
       rec {
-        formatter = pkgs.nixfmt;
+        formatter = pkgs.nixfmt-tree;
         devShells = {
           default = import ./shell.nix { inherit pkgs; };
         }
