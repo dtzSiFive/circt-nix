@@ -48,6 +48,7 @@ in
     doxygen
     graphviz # -nox
   ];
+
   buildInputs = [
     libxml2
     libffi
@@ -67,4 +68,10 @@ in
   ]
   ++ lib.optional (withVerilator) verilator
   ++ lib.optional (withZ3) z3;
+
+  # Avoid redefinition warning spam.
+  hardeningDisable = [
+    "libcxxhardeningextensive"
+    "libcxxhardeningfast"
+  ];
 }
