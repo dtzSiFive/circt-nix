@@ -102,7 +102,13 @@
               inherit circtSrc;
               inherit (circtPin) version;
               inherit (llvmPackages_circt) libllvm mlir llvm-third-party-src;
+
+              # Override nixpkgs' lit, it uses pypi which is pinned to 18.1.8.
+              # We need newer version. Fix this upstream!
               lit = prev.lit.overrideAttrs (o: {
+                name = "lit-${llvmPackages_circt.libllvm.version}";
+                version = llvmPackages_circt.libllvm.version;
+                src = "${circtSrc}/llvm/llvm/utils/lit";
                 patches = o.patches or [ ] ++ [
                   ./patches/lit-shell-script-runner-set-dyld-library-path.patch
                 ];
