@@ -1,0 +1,36 @@
+diff --git a/test/lit.cfg.py b/test/lit.cfg.py
+index 9feb06073d..8493bbaf83 100644
+--- a/test/lit.cfg.py
++++ b/test/lit.cfg.py
+@@ -107,3 +107,31 @@ if config.circt_tools_driver_enabled:
+   tools.append('circt-driver')
+ 
+ llvm_config.add_tool_substitutions(tools, tool_dirs)
++
++
++def find_shlibpath_var():
++    if platform.system() in ["Linux", "FreeBSD", "NetBSD", "OpenBSD", "SunOS"]:
++        yield "LD_LIBRARY_PATH"
++    elif platform.system() == "Darwin":
++        yield "DYLD_LIBRARY_PATH"
++    elif platform.system() == "Windows":
++        yield "PATH"
++    elif platform.system() == "AIX":
++        yield "LIBPATH"
++
++
++for shlibpath_var in find_shlibpath_var():
++    # in stand-alone builds, shlibdir is clang's build tree
++    # while llvm_libs_dir is installed LLVM (and possibly older clang)
++    shlibpath = os.path.pathsep.join(
++        (
++            config.circt_shlib_dir,
++            config.environment.get(shlibpath_var, ""),
++        )
++    )
++    config.environment[shlibpath_var] = shlibpath
++    break
++else:
++    lit_config.warning(
++        "unable to inject shared library path on '{}'".format(platform.system())
++    )

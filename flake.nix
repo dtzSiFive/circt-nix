@@ -125,6 +125,88 @@
             slang = prev.callPackage ./slang.nix {
               inherit slang-src;
             };
+
+            # CIRCT with the option-clean tools folded into one multicall
+            # binary (bin/circt-driver + symlinks): software multiplexing
+            # (Dietz & Adve, OOPSLA 2018, doi:10.1145/3276524) as automatic
+            # multicall, built from the local feature/circt-multicall-v2
+            # branch. That branch's llvm submodule is the same rev as
+            # circtPin's, so libllvm/mlir above are reused as-is and only
+            # CIRCT itself rebuilds.
+            #
+            # Plugin hosting is kept ON (the branch default): the driver
+            # exports its symbols so --load-pass-plugin and friends resolve
+            # against it. That pins the folded union as GC roots (measured on
+            # the branch, Release: 175.4 -> 274.4 MB), so link with lld's
+            # --icf=all to fold identical code back down (274.4 -> 231.3 on
+            # the branch). A build that never loads plugins can add
+            # -DCIRCT_TOOLS_DRIVER_PLUGIN_SUPPORT=OFF to reclaim the rest.
+            circt-multicall =
+              let
+                branchSrc = builtins.fetchGit {
+                  url = "file:///home/will/src/sifive/circt";
+                  ref = "refs/heads/feature/circt-multicall-v2";
+                  rev = "f13084d794e65d63bc5cd7027f3f46d3c1cd66cc";
+                };
+                # fetchGit leaves the llvm submodule as an empty directory;
+                # graft in the pinned source's copy (same rev, b1c56fb53a9c).
+                srcWithLLVM = prev.runCommand "circt-multicall-src" { } ''
+                  cp -r ${branchSrc} $out
+                  chmod -R u+w $out
+                  rm -rf $out/llvm
+                  cp -r ${circtSrc}/llvm $out/llvm
+                '';
+                # nixpkgs stdenvAdapters has useGoldLinker/useMoldLinker/
+                # useWildLinker but no useLLDLinker; roll one (native-only: no
+                # target-prefix handling). Upstream candidate.
+                #
+                # NOT the mold adapter's raw-symlink trick: a raw linker
+                # bypasses ld-wrapper.sh, so binaries lose the RUNPATHs it
+                # injects per -L dir -- the freshly linked circt-tblgen then
+                # dies mid-build unable to find libz. Instead merge ld.lld
+                # into the unwrapped binutils: the bintools wrapper's `ld.*`
+                # glob then wraps it exactly like ld.gold, rpath handling and
+                # all.
+                useLLDLinker =
+                  stdenv:
+                  let
+                    bintoolsUnwrapped = prev.symlinkJoin {
+                      name = "${prev.binutils-unwrapped.name}-with-lld";
+                      paths = [
+                        prev.binutils-unwrapped
+                        prev.buildPackages.lld
+                      ];
+                      inherit (prev.binutils-unwrapped) passthru;
+                    };
+                    bintools = stdenv.cc.bintools.override {
+                      bintools = bintoolsUnwrapped;
+                    };
+                  in
+                  stdenv.override (old: {
+                    allowedRequisites = null;
+                    cc = stdenv.cc.override { inherit bintools; };
+                  });
+              in
+              (circt.override {
+                stdenv = useLLDLinker prev.stdenv;
+                version = "1.154.0-multicall";
+              }).overrideAttrs
+                (o: {
+                  pname = "circt-multicall";
+                  src = srcWithLLVM;
+                  # The branch moved this patch's context in test/lit.cfg.py;
+                  # same payload, regenerated against the branch.
+                  patches =
+                    (prev.lib.filter (
+                      p: baseNameOf p != "circt-lit-dylib-paths.patch"
+                    ) o.patches)
+                    ++ [ ./patches/circt-lit-dylib-paths-multicall.patch ];
+                  cmakeFlags = o.cmakeFlags ++ [
+                    "-DCIRCT_TOOLS_DRIVER=ON"
+                    # Executables only: fold identical code across the union.
+                    "-DCMAKE_EXE_LINKER_FLAGS=-fuse-ld=lld -Wl,--icf=all"
+                  ];
+                });
           };
         in
         { inherit circtFlakePkgs; } // circtFlakePkgs;
