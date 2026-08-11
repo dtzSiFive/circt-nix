@@ -73,10 +73,10 @@
       # circtSrc below is fetched with submodules included, so build
       # content always matches it regardless.
       circtPin = {
-        version = "1.154.0";
-        rev = "87898a876f730a2ebc607dc9b83da487cba49119";
-        hash = "sha256-J8zEiD/RrLuFTIpbskfYjsED+MsNecO4ARiis/YX410=";
-        llvmRev = "b1c56fb53a9c76d6b045ede49083b647ae049ffe";
+        version = "1.155.0";
+        rev = "be4ed8ff94d7f8e0a1bf92fb59b30ddfdf2ec104";
+        hash = "sha256-a64OuNuu2FHONVgG0+V2RYPq+V18rrQGdcXS6hwoTks=";
+        llvmRev = "f1ba92abeffcd4d262d70843fa083c10b179cb4d";
       };
 
       overlay =

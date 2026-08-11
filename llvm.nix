@@ -38,7 +38,7 @@ let
     };
   } "ln -s ${circtSrc}/llvm $out") [ ];
 
-  release_version = "23.0.0";
+  release_version = "24.0.0";
 
   commonExtraCMakeFlags = [
     (lib.cmakeBool "LLVM_BUILD_UTILS" true)
