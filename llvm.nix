@@ -3,7 +3,7 @@
   fetchpatch,
   applyPatches,
   runCommand,
-  circtSrc,
+  llvmSrc,
   llvmRev,
   llvmPackages,
   enableAssertions ? true,
@@ -24,9 +24,7 @@ let
         name = "llvm-src-patched";
       };
 
-  # The llvm-project checkout bundled as circtSrc's `llvm` submodule
-  # (circtSrc is fetched with fetchSubmodules in flake.nix) -- always
-  # exactly what the pinned CIRCT release's submodule pin specifies.
+  # CIRCT's LLVM submodule, extracted into a content-addressed source path.
   # Wrapped via runCommand (a symlink, not a copy) to give it a proper
   # name+passthru, the same way nixpkgs itself wraps monorepoSrc in
   # pkgs/development/compilers/llvm/common/llvm/default.nix.
@@ -36,7 +34,7 @@ let
       repo = "llvm-project";
       rev = llvmRev;
     };
-  } "ln -s ${circtSrc}/llvm $out") [ ];
+  } "ln -s ${llvmSrc} $out") [ ];
 
   release_version = "24.0.0";
 

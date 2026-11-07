@@ -88,10 +88,14 @@
             inherit (circtPin) rev hash;
             fetchSubmodules = true;
           };
+          llvmSrc = builtins.path {
+            path = "${circtSrc}/llvm";
+            name = "llvm-src";
+          };
           circtFlakePkgs = rec {
             llvmPackages_circt = prev.lib.recurseIntoAttrs (
               prev.callPackages ./llvm.nix {
-                inherit circtSrc;
+                inherit llvmSrc;
                 inherit (circtPin) llvmRev;
                 llvmPackages = final.llvmPackages_git;
                 # TODO: Get this handled for us, spliced in?
@@ -108,7 +112,7 @@
               lit = prev.lit.overrideAttrs (o: {
                 name = "lit-${llvmPackages_circt.libllvm.version}";
                 version = llvmPackages_circt.libllvm.version;
-                src = "${circtSrc}/llvm/llvm/utils/lit";
+                src = "${llvmSrc}/llvm/utils/lit";
                 patches = o.patches or [ ] ++ [
                   ./patches/lit-shell-script-runner-set-dyld-library-path.patch
                 ];
